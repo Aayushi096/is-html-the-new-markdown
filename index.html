@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is HTML the new Markdown?</title>
+<meta name="description" content="You scrolled past my text post, so I rebuilt it in HTML. An interactive version of my LinkedIn carousel on Markdown, HTML and how we read AI output.">
+<meta name="author" content="Aayushi Solanki">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Is HTML the new Markdown?">
+<meta property="og:description" content="You scrolled past my text post. So I rebuilt it in HTML. Tap, edit, toggle and flip it back to Markdown.">
+<meta property="og:url" content="https://aayushi096.github.io/is-html-the-new-markdown/">
+<meta property="og:image" content="https://aayushi096.github.io/is-html-the-new-markdown/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23161833'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='%23ffe05a' text-anchor='middle'%3E%3C/%3E%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#161833; --muted:#5d6283; --blue:#3b55f5; --yellow:#ffe05a;
+  --paper:#fbfbfd; --line:#dfe1ee; --soft:#eef1ff;
+  --dark:#1e2040; --dark2:#272b54; --dline:#383d6e; --dmuted:#a9aed6; --orange:#f0915f;
+  --display:'Bricolage Grotesque',system-ui,sans-serif;
+  --sans:'Instrument Sans',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0}
+*,*::before,*::after{font-variant-ligatures:none!important;font-feature-settings:"calt" 0,"liga" 0,"dlig" 0!important}
+html{height:100%}
+body{
+  min-height:100%; padding:20px 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  background:#e8eaf2 radial-gradient(#d2d5e6 1px,transparent 1px) 0 0/22px 22px;
+  color:var(--ink); font-family:var(--sans); -webkit-font-smoothing:antialiased;
+  font-variant-ligatures:none; font-feature-settings:"calt" 0, "liga" 0;
+}
+button,input,textarea{font:inherit;color:inherit;font-variant-ligatures:none;font-feature-settings:"calt" 0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+/* ---------- the browser window ---------- */
+.stage{width:min(580px,100%,max(320px,calc((100svh - 150px) * .8)))}
+.card{
+  container-type:inline-size; position:relative; display:flex; flex-direction:column;
+  aspect-ratio:4/5; overflow:clip; border-radius:18px;
+  background:var(--paper); border:1px solid var(--line);
+  box-shadow:0 30px 60px -24px rgba(22,24,51,.32),0 2px 6px rgba(22,24,51,.06);
+  transition:background .35s,border-color .35s;
+}
+.card.dark{background:var(--dark);border-color:var(--dline)}
+.bar{position:relative;display:flex;align-items:center;gap:3cqi;padding:2.4cqi 3cqi;background:#f2f3f7;border-bottom:1px solid var(--line);transition:inherit}
+.lights{display:flex;gap:1.5cqi}
+.lights i{width:2cqi;height:2cqi;border-radius:50%;background:#f26b6b}
+.lights i:nth-child(2){background:#f7c64b}.lights i:nth-child(3){background:#5bcb74}
+.url{flex:1;min-width:0;font:400 max(10px,2.3cqi)/1 var(--mono);color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:1.7cqi 2.8cqi;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:inherit}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;background:var(--blue);transition:width .45s cubic-bezier(.2,.7,.2,1)}
+.card.dark .bar{background:var(--dark);border-color:var(--dline)}
+.card.dark .url{background:var(--dark2);border-color:var(--dline);color:var(--dmuted)}
+.card.dark .progress{background:var(--orange)}
+
+.viewport{flex:1;display:grid;position:relative;touch-action:pan-y}
+.slide{
+  grid-area:1/1; display:flex; flex-direction:column; padding:7cqi 7.5cqi 5.6cqi;
+  opacity:0; visibility:hidden; transform:translateX(3%);
+  transition:opacity .3s,transform .45s cubic-bezier(.2,.7,.2,1),visibility 0s .3s;
+}
+.viewport.back .slide:not(.active){transform:translateX(-3%)}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .35s,transform .45s cubic-bezier(.2,.7,.2,1)}
+.slide.dark{color:#fff}
+
+/* ---------- shared type ---------- */
+.cmt{font:400 max(10px,2.4cqi)/1.2 var(--mono);color:var(--blue);margin-bottom:3.2cqi}
+.dark .cmt{color:var(--dmuted)}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.035em}
+.hero{font-size:9.4cqi;line-height:1.02}
+h2{font-size:7.9cqi;line-height:1;margin-bottom:4.4cqi}
+mark{color:inherit;background:linear-gradient(transparent 52%,var(--yellow) 52%) no-repeat 0 0/0% 100%;transition:background-size .7s .35s cubic-bezier(.2,.7,.2,1)}
+.active mark{background-size:100% 100%}
+.lead{font-size:3.7cqi;line-height:1.4;margin-top:3.4cqi}
+.foot{margin-top:auto;padding-top:4cqi;display:flex;justify-content:space-between;align-items:center;gap:3cqi;font:400 max(10px,2.4cqi)/1.3 var(--mono);color:var(--muted)}
+.foot .go{font:700 max(10px,2.4cqi) var(--mono);color:var(--ink);background:none;border:0;cursor:pointer;padding:1cqi;white-space:nowrap}
+.foot .go:hover{color:var(--blue)}
+.dark .foot{color:var(--dmuted)} .dark .foot .go{color:#fff}
+.mini{display:inline-flex;align-items:center;gap:1.2cqi;font:500 max(10px,2.3cqi) var(--mono);color:var(--blue);background:var(--soft);border:1px solid #d3d9fb;border-radius:99px;padding:1.4cqi 2.6cqi;cursor:pointer;text-decoration:none;white-space:nowrap}
+.mini:hover{background:#e2e7ff}
+
+/* ---------- 1 · hook ---------- */
+.strike{position:relative;color:#5d6283}
+.strike::after{content:"";position:absolute;left:0;top:52%;height:.1em;width:0;background:var(--blue);transition:width .55s .45s ease}
+.active .strike::after{width:100%}
+.caret{display:inline-block;width:.09em;height:.82em;margin-left:.08em;vertical-align:-.05em;background:var(--blue);animation:blink 1.05s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.stamp{align-self:flex-start;margin-top:4cqi;font:400 max(10px,2.4cqi) var(--mono);color:var(--blue);border:1px dashed var(--blue);border-radius:1.6cqi;padding:2cqi 2.8cqi;transform:rotate(-1.5deg)}
+.hint{margin-top:4.4cqi;font:400 max(10px,2.2cqi)/1.5 var(--mono);color:var(--muted)}
+.hint kbd{font:inherit;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 .5em;background:#fff;color:var(--ink)}
+
+/* ---------- 2 · same words ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:3cqi;flex:1 1 0;min-height:56cqi}
+.pane{display:flex;flex-direction:column;min-width:0;border-radius:2.2cqi;padding:4cqi}
+.pane.code{background:var(--dark);color:#d9dcf5}
+.pane.view{background:var(--soft);border:1px solid #d9def9}
+.plabel{display:flex;justify-content:space-between;gap:1cqi;font:400 max(9px,2.1cqi) var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#8f95c7;margin-bottom:3cqi}
+.view .plabel{color:var(--blue)}
+.edithint{margin-top:3cqi;padding:1.3cqi 0;font:400 max(10px,2.3cqi)/1.3 var(--mono);color:var(--orange);cursor:text}
+.editor{position:relative;flex:1;min-height:30cqi}
+.editor pre,.editor textarea{position:absolute;inset:0;margin:0;padding:0;border:0;font:400 max(10px,2.7cqi)/2.2 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2;overflow:hidden}
+.editor pre{color:#d9dcf5;pointer-events:none}
+.editor pre b{color:var(--orange);font-weight:400}
+.editor textarea{background:transparent;color:transparent;caret-color:#fff;resize:none;outline:none;overflow:auto;scrollbar-width:none}
+.editor textarea::-webkit-scrollbar{display:none}
+.editor textarea::selection{background:rgba(255,255,255,.22);color:transparent}
+.outwrap{position:relative;flex:1;min-height:30cqi}
+.md-out{position:absolute;inset:0;overflow:auto;scrollbar-width:thin}
+.md-out h1,.md-out h2,.md-out h3,.md-out h4{font-size:5.2cqi;line-height:1.02;letter-spacing:-.03em;margin:0 0 3cqi}
+.md-out p{font-size:3cqi;line-height:1.4;margin-bottom:2.4cqi}
+.md-out p.pill{background:var(--blue);color:#fff;border-radius:99px;padding:1.1cqi 2.6cqi;font-weight:600}
+.md-out p.pill a{color:#fff}
+.md-out ul,.md-out ol{padding-left:4.2cqi;font-size:3cqi;line-height:1.55;margin-bottom:2.4cqi}
+.md-out blockquote{border-left:.8cqi solid var(--yellow);padding-left:2.4cqi;font-size:3cqi;margin-bottom:2.4cqi}
+.md-out a{color:var(--blue);font-weight:500}
+.md-out code{font:max(10px,2.5cqi) var(--mono);background:#fff;padding:0 .3em;border-radius:4px}
+.md-out.detailed ul{list-style:none;padding:0}
+.md-out.detailed li{display:flex;gap:1.6cqi;align-items:center;background:#fff;border:1px solid #d9def9;border-radius:1.4cqi;padding:1cqi 2cqi;margin-bottom:1.2cqi}
+.md-out.detailed li::before{content:"✓";color:var(--blue);font-weight:700}
+.stats{display:none;margin-top:2cqi;border-top:1px dashed #b8c1f6;padding-top:2.2cqi;font:400 max(9px,2.1cqi)/1.7 var(--mono);color:var(--muted)}
+.md-out.detailed .stats{display:block}
+.stats b{color:var(--ink);font-weight:600}
+.seg{display:flex;gap:1.4cqi;margin-top:3cqi}
+.seg button{font:500 max(10px,2.4cqi) var(--sans);padding:1.3cqi 2.4cqi;border-radius:1.2cqi;border:1px solid var(--line);background:#fff;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* ---------- 3 · quote ---------- */
+.qmark{font:800 16cqi/1 var(--display);color:var(--blue);height:8cqi;overflow:hidden;margin-top:-1cqi}
+blockquote.big{font:700 5.6cqi/1.14 var(--display);letter-spacing:-.025em;margin:2cqi 0 5.4cqi}
+.attr{font-size:3cqi;line-height:1.5;color:var(--muted)}
+.attr b{color:var(--ink);font-weight:600}
+.btnrow{display:flex;flex-wrap:wrap;gap:2cqi;margin-top:3.4cqi}
+.closing{font-size:3.6cqi;line-height:1.45;margin-top:5.4cqi}
+.longbox{display:none;margin-top:4cqi}
+.slide.open .longbox{display:block}
+.slide.open .closing{display:none}
+.longmd{height:30cqi;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:2cqi;padding:2.4cqi 3cqi;font:400 max(10px,2.2cqi)/1.75 var(--mono);color:var(--muted);white-space:pre}
+.longmd .n{display:inline-block;width:3.2em;color:#b4b8d4;user-select:none}
+.lcount{margin-top:1.6cqi;font:500 max(10px,2.2cqi) var(--mono);color:var(--blue)}
+
+/* ---------- 4 / 5 · tiles ---------- */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:2.8cqi;flex:1}
+.tile{display:flex;flex-direction:column;min-width:0;padding:3.8cqi 4cqi;border:1px solid var(--line);border-radius:2.2cqi;background:#fff;text-align:left;transition:border-color .2s,box-shadow .2s,transform .2s}
+.tiles.live .tile{cursor:pointer}
+.tiles.live .tile:hover{border-color:#b9c2fb;transform:translateY(-2px)}
+.tile.on{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,85,245,.13)}
+.tag{font:400 max(10px,2.4cqi) var(--mono);color:var(--blue);margin-bottom:1.8cqi}
+.tile h3{font-size:4.1cqi;line-height:1.05;letter-spacing:-.02em;margin-bottom:1.6cqi}
+.tile p{font-size:3cqi;line-height:1.38;color:var(--muted)}
+.run{margin-top:auto;padding-top:2cqi;font:400 max(9px,2cqi) var(--mono);color:#9095b6}
+.tile.on .run{color:var(--blue)}
+.demo{display:none;font-size:2.8cqi}
+.tile.on .demo{display:block}
+.tile.on .desc{display:none}
+.tabs{display:flex;gap:1cqi;margin-bottom:1.6cqi}
+.tabs button{font:500 max(10px,2.3cqi) var(--sans);padding:.8cqi 1.8cqi;border:1px solid var(--line);border-radius:99px;background:#fff;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.tabtext{color:var(--muted);line-height:1.35;min-height:2.7em}
+.chart{width:100%;height:16cqi;display:block}
+.chart rect{transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.tile.on .chart rect{transform:scaleY(1)}
+.chart rect:nth-child(2){transition-delay:.06s}.chart rect:nth-child(3){transition-delay:.12s}.chart rect:nth-child(4){transition-delay:.18s}.chart rect:nth-child(5){transition-delay:.24s}
+.demo small{display:block;margin-top:1.4cqi;font:400 max(9px,2cqi) var(--mono);color:var(--muted)}
+.demo input[type=range]{width:100%;accent-color:var(--blue);margin:.6cqi 0 1.2cqi}
+.lvltext{color:var(--ink);line-height:1.35}
+.tiles.dk .tile{background:var(--dark2);border-color:var(--dline)}
+.tiles.dk .tag{color:var(--orange)}
+.tiles.dk .tile p{color:var(--dmuted)}
+.tiles.dk .tile{padding:3cqi 3.8cqi}
+h2.tight{font-size:7.1cqi}
+.dark .tiles{flex:none}
+
+.meter{margin-top:3cqi}
+.meter .say{font-size:3.2cqi;line-height:1.35;color:#d5d8f5;margin-bottom:2cqi}
+.mrow{display:grid;grid-template-columns:15cqi 1fr 15cqi;align-items:center;gap:2.2cqi;margin-bottom:1.5cqi;font:400 max(10px,2.3cqi) var(--mono);color:var(--dmuted)}
+.mrow output{text-align:right;color:#fff}
+.track{height:2.4cqi;border-radius:99px;background:var(--dark2);overflow:hidden}
+.fill{height:100%;width:0;border-radius:99px;background:var(--orange);transition:width .9s cubic-bezier(.2,.7,.2,1)}
+.fill.h{background:#8090ff}
+.mnote{font:400 max(9px,2cqi)/1.5 var(--mono);color:#7e84b6;margin-top:1cqi}
+
+/* ---------- 6 · handoff ---------- */
+.flow{margin-top:1cqi}
+.node{display:grid;grid-template-columns:22cqi 1fr;align-items:center;padding:4.4cqi 4.4cqi;border:1px solid var(--ink);border-radius:2.4cqi;background:#fff}
+.node b{font:800 5.6cqi/1 var(--display);letter-spacing:-.035em}
+.node span{font-size:3.3cqi;color:var(--muted)}
+.node.ai{background:#161833;color:#fff}
+.node.ai span{color:#b5b9e0}
+.link{display:flex;align-items:center;gap:2.6cqi;padding:2.4cqi 0 2.4cqi 5.4cqi;font:400 max(10px,2.8cqi) var(--mono)}
+.arrow{font:400 4.2cqi/1 var(--sans)}
+.chip{font:600 max(10px,2.6cqi) var(--mono);padding:1.2cqi 2.8cqi;border-radius:99px;background:var(--dark);color:#d9dcf5}
+.chip.html{background:var(--blue);color:#fff}
+.flow .step{transition:opacity .35s,transform .35s,box-shadow .35s}
+.flow.armed .step{opacity:.28}
+.flow.armed .step.lit{opacity:1}
+.node.lit{box-shadow:0 0 0 4px rgba(59,85,245,.16)}
+.link.lit .arrow{animation:drop .5s ease}
+@keyframes drop{0%{transform:translateY(-40%);opacity:0}100%{transform:none;opacity:1}}
+
+/* ---------- 7 · the catch ---------- */
+.polish{display:flex;align-items:center;gap:3cqi;font:400 max(10px,2.4cqi) var(--mono);color:var(--muted);margin-bottom:2.4cqi}
+.polish input{flex:1;accent-color:var(--blue)}
+.polish output{width:5ch;text-align:right;color:var(--ink)}
+.answer{position:relative;min-height:19cqi;margin-bottom:3.2cqi;padding:2.8cqi 3.4cqi;border:1px dashed #c9cce0;border-radius:2cqi;background:#fff;transition:border-color .3s,box-shadow .3s}
+.answer.p3,.answer.p4{border-style:solid;border-color:#d7dcfa;box-shadow:0 10px 24px -14px rgba(59,85,245,.45)}
+.a0{font:400 max(10px,2.6cqi) var(--mono);color:var(--muted)}
+.a1{font-size:3.3cqi}
+.kpi{display:flex;align-items:center;gap:3cqi}
+.kpi strong{font:800 8cqi/1 var(--display);letter-spacing:-.04em;color:var(--blue)}
+.kpi span{font-size:3cqi;line-height:1.3}
+.spark{width:22cqi;height:9cqi;margin-left:auto;flex:none}
+.badge{position:absolute;top:-1.6cqi;right:2.4cqi;font:600 max(9px,2cqi) var(--mono);background:#e6f7ea;color:#1d7a3a;border:1px solid #b7e3c3;border-radius:99px;padding:.6cqi 1.8cqi}
+.src{font:400 max(9px,2cqi) var(--mono);color:var(--muted);margin-top:1.2cqi}
+.brow{display:flex;justify-content:space-between;align-items:center;font:400 max(10px,2.6cqi) var(--mono);margin-bottom:1.3cqi}
+.brow button{font:600 max(10px,2.4cqi) var(--mono);background:none;border:1px solid var(--ink);border-radius:99px;padding:.5cqi 2cqi;cursor:pointer}
+.brow button:hover{background:var(--ink);color:#fff}
+.btrack{height:3.4cqi;border-radius:99px;background:#e6e8f3;overflow:hidden;margin-bottom:2.8cqi}
+.bfill{height:100%;border-radius:99px;background:var(--blue);transition:width .25s}
+.btrack.unknown{background:repeating-linear-gradient(-45deg,#e4e6f3 0 1.4cqi,#cfd2e8 1.4cqi 2.8cqi)}
+.btrack.false{background:repeating-linear-gradient(-45deg,#fde6e6 0 1.4cqi,#f4b8b8 1.4cqi 2.8cqi)}
+.callout{background:#fff8dc;border-left:1.1cqi solid var(--yellow);border-radius:0 2cqi 2cqi 0;padding:3.2cqi 4cqi;font-size:3.3cqi;line-height:1.45}
+
+/* ---------- 8 · verdict ---------- */
+.verdict h2{font-size:7.6cqi}
+.ask{font:800 4.3cqi/1.15 var(--display);letter-spacing:-.02em;margin-top:4.6cqi}
+.poll{display:grid;grid-template-columns:1fr 1fr;gap:2.4cqi;margin-top:2.8cqi}
+.poll button{display:flex;flex-direction:column;gap:.8cqi;text-align:left;padding:2.6cqi 3cqi;border:1px solid var(--line);border-radius:2cqi;background:#fff;cursor:pointer;font:600 3cqi/1.2 var(--sans);transition:border-color .2s,background .2s}
+.poll button small{font:400 max(9px,2cqi) var(--mono);color:var(--muted)}
+.poll button:hover{border-color:#b9c2fb}
+.poll button[aria-pressed=true]{border-color:var(--blue);background:var(--soft)}
+.pollres{min-height:2.6em;margin-top:2cqi;font:400 max(10px,2.3cqi)/1.5 var(--mono);color:var(--blue)}
+.author{margin-top:auto;padding-top:3.6cqi;border-top:1px solid var(--line);display:flex;align-items:center;gap:3cqi}
+.av{flex:none;width:10cqi;height:10cqi;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:800 3.6cqi var(--display)}
+.author b{font:800 3.6cqi var(--display);letter-spacing:-.02em}
+.author span{display:block;font-size:2.9cqi;color:var(--muted)}
+.author .mini{margin-left:auto}
+
+/* ---------- markdown view ---------- */
+.mdview{position:absolute;inset:0;z-index:3;display:none;overflow:auto;padding:7cqi 7.5cqi;background:var(--paper);font:400 max(11px,2.8cqi)/1.75 var(--mono);color:#3a3e5c;white-space:pre-wrap;overflow-wrap:anywhere}
+.card.md .mdview{display:block}
+.card.md .slide.active{visibility:hidden}
+.mdnote{display:block;margin-top:5cqi;padding-top:3cqi;border-top:1px dashed var(--line);color:var(--blue);font-size:max(10px,2.3cqi)}
+
+/* ---------- controls outside the card ---------- */
+.controls{width:min(580px,100%);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
+.nav{display:flex;align-items:center;gap:10px}
+.nav button.arr{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:17px;display:grid;place-items:center;transition:background .2s,opacity .2s}
+.nav button.arr:hover:not(:disabled){background:var(--ink);color:#fff;border-color:var(--ink)}
+.nav button.arr:disabled{opacity:.35;cursor:default}
+.dots{display:flex;gap:6px}
+.dots button{width:8px;height:8px;padding:0;border:0;border-radius:99px;background:#c3c7dc;cursor:pointer;transition:width .3s,background .3s}
+.dots button[aria-current=true]{width:22px;background:var(--blue)}
+.mode{display:flex;align-items:center;gap:8px;font:400 12px var(--mono);color:var(--muted)}
+.mode .seg{margin:0;gap:0;border:1px solid var(--line);border-radius:10px;padding:3px;background:#fff}
+.mode .seg button{font:600 12px var(--mono);border:0;border-radius:7px;padding:6px 11px}
+.credit{font:400 11px/1.5 var(--mono);color:#7d82a3;text-align:center}
+.credit a{color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<main class="stage">
+  <div class="card" id="card">
+    <div class="bar">
+      <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="url" id="url">is-html-the-new-markdown.html</div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="viewport" id="viewport">
+
+      <!-- 1 -->
+      <section class="slide" data-file="is-html-the-new-markdown.html" aria-label="Slide 1 of 8">
+        <p class="cmt">&lt;!-- slide 1 of 8 --&gt;</p>
+        <h1 class="hero">You scrolled past<br>my <span class="strike">text post.</span><br>So I rebuilt it in<br><mark>HTML</mark>.<span class="caret" aria-hidden="true"></span></h1>
+        <p class="lead">Which is kind of the whole point of this post.</p>
+        <span class="stamp">rendered for humans, not for parsers</span>
+        <p class="hint">Tap things. Edit things. Flip any slide to <b>Markdown</b> with the switch below (or press <kbd>M</kbd>) to see what you’d have got instead.</p>
+        <div class="foot"><span>Aayushi Solanki</span><button class="go" data-next>swipe →</button></div>
+      </section>
+
+      <!-- 2 -->
+      <section class="slide" data-file="same-words-two-formats.html" aria-label="Slide 2 of 8">
+        <p class="cmt">&lt;!-- slide 2 of 8 --&gt;</p>
+        <h2>Same words.<br>Two formats.</h2>
+        <div class="split">
+          <div class="pane code">
+            <div class="plabel"><span>What the AI reads</span></div>
+            <div class="editor">
+              <pre id="hl" aria-hidden="true"></pre>
+              <textarea id="src" spellcheck="false" aria-label="Markdown source, editable"></textarea>
+            </div>
+            <label class="edithint" for="src">✎ edit me, the right side follows</label>
+          </div>
+          <div class="pane view">
+            <div class="plabel"><span>What you see</span></div>
+            <div class="outwrap"><div class="md-out" id="out" aria-live="polite"></div></div>
+            <div class="seg" role="group" aria-label="Rendering detail">
+              <button aria-pressed="true" data-detail="0">Simple</button>
+              <button aria-pressed="false" data-detail="1">Detailed</button>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><span>One is for machines. One is for you.</span><button class="go" data-next aria-label="Next slide">→</button></div>
+      </section>
+
+      <!-- 3 -->
+      <section class="slide" data-file="thariqs.github.io/html-effectiveness" aria-label="Slide 3 of 8" id="s3">
+        <p class="cmt">&lt;!-- slide 3 of 8 · the spark --&gt;</p>
+        <div class="qmark" aria-hidden="true">“</div>
+        <blockquote class="big">I find it difficult to read a Markdown file of more than a hundred lines.</blockquote>
+        <p class="attr"><b>Thariq Shihipar</b>, Claude Code team, in “Using Claude Code: The Unreasonable Effectiveness of HTML” (May 2026). He has stopped using Markdown for almost all of Claude's output.</p>
+        <div class="btnrow">
+          <button class="mini" id="tryLong">Try reading 120 lines ↓</button>
+          <a class="mini" href="https://thariqs.github.io/html-effectiveness/" target="_blank" rel="noopener">See his HTML examples ↗</a>
+        </div>
+        <div class="longbox">
+          <div class="longmd" id="longmd" tabindex="0" aria-label="A 120-line Markdown file"></div>
+          <div class="lcount" id="lcount">line 1 of 120</div>
+        </div>
+        <p class="closing">If someone on the team that builds the AI reads it that way, it's worth asking who Markdown is really for.</p>
+        <div class="foot"><span>Personal views of the author</span><button class="go" data-next aria-label="Next slide">→</button></div>
+      </section>
+
+      <!-- 4 -->
+      <section class="slide" data-file="why-humans-like-html.html" aria-label="Slide 4 of 8">
+        <p class="cmt">&lt;!-- slide 4 of 8 · reader = human --&gt;</p>
+        <h2>Why HTML wins when<br><mark>you</mark> are the reader</h2>
+        <div class="tiles live" id="tiles">
+          <div class="tile" tabindex="0" role="button" aria-expanded="false">
+            <div class="tag">&lt;section&gt;</div>
+            <h3>Readable at length</h3>
+            <p class="desc">Tabs and sections instead of a 300-line scroll.</p>
+            <div class="demo">
+              <div class="tabs" role="tablist">
+                <button role="tab" aria-selected="true" data-t="0">Why</button>
+                <button role="tab" aria-selected="false" data-t="1">How</button>
+                <button role="tab" aria-selected="false" data-t="2">Risks</button>
+              </div>
+              <p class="tabtext" id="tabtext">Jump straight to the part you need.</p>
+            </div>
+            <div class="run">▶ tap to run</div>
+          </div>
+          <div class="tile" tabindex="0" role="button" aria-expanded="false">
+            <div class="tag">&lt;svg&gt;</div>
+            <h3>Actually visual</h3>
+            <p class="desc">Real tables, diagrams and colors, not ASCII art.</p>
+            <div class="demo">
+              <svg class="chart" viewBox="0 0 100 44" preserveAspectRatio="none" aria-label="Bar chart">
+                <rect x="2" y="26" width="15" height="18" rx="2" fill="#c9d0fb"/>
+                <rect x="22" y="18" width="15" height="26" rx="2" fill="#a3b0fa"/>
+                <rect x="42" y="12" width="15" height="32" rx="2" fill="#7b8cf8"/>
+                <rect x="62" y="6" width="15" height="38" rx="2" fill="#5a6ff6"/>
+                <rect x="82" y="1" width="15" height="43" rx="2" fill="#3b55f5"/>
+              </svg>
+              <small>vs. ▇▇▇░░ in a code block</small>
+            </div>
+            <div class="run">▶ tap to run</div>
+          </div>
+          <div class="tile" tabindex="0" role="button" aria-expanded="false">
+            <div class="tag">&lt;a href&gt;</div>
+            <h3>Easy to share</h3>
+            <p class="desc">A link gets opened. An attachment gets ignored.</p>
+            <div class="demo">
+              <button class="mini" id="copy">Copy link</button>
+              <small id="copied">One URL. No download, no viewer.</small>
+            </div>
+            <div class="run">▶ tap to run</div>
+          </div>
+          <div class="tile" tabindex="0" role="button" aria-expanded="false">
+            <div class="tag">&lt;input&gt;</div>
+            <h3>Keeps you in the loop</h3>
+            <p class="desc">Sliders and toggles let you explore the answer.</p>
+            <div class="demo">
+              <input type="range" min="0" max="2" value="1" id="lvl" aria-label="Detail level">
+              <p class="lvltext" id="lvltext">HTML for people, Markdown for models.</p>
+            </div>
+            <div class="run">▶ tap to run</div>
+          </div>
+        </div>
+        <div class="foot"><span>We scan, click and explore</span><button class="go" data-next aria-label="Next slide">→</button></div>
+      </section>
+
+      <!-- 5 -->
+      <section class="slide dark" data-theme="dark" data-file="why-ai-still-likes-markdown.md" aria-label="Slide 5 of 8">
+        <p class="cmt">&lt;!-- slide 5 of 8 · reader = AI --&gt;</p>
+        <h2 class="tight">Why Markdown wins<br>when the AI is the reader</h2>
+        <div class="tiles dk">
+          <div class="tile"><div class="tag">tokens--</div><h3>Lightweight</h3><p>Fewer tokens for the same meaning.</p></div>
+          <div class="tile"><div class="tag"># ## -</div><h3>Easy to parse</h3><p>Structure without any noise.</p></div>
+          <div class="tile"><div class="tag">git diff</div><h3>Easy to edit</h3><p>Readable diffs, simple to version.</p></div>
+          <div class="tile"><div class="tag">CLAUDE.md</div><h3>The language of context</h3><p>Prompts, instructions and knowledge bases.</p></div>
+        </div>
+        <div class="meter">
+          <p class="say">Even the HTML fans admit it: HTML costs more tokens.</p>
+          <div class="mrow"><span>Markdown</span><div class="track"><div class="fill" id="fillMd"></div></div><output id="tokMd">0</output></div>
+          <div class="mrow"><span>HTML</span><div class="track"><div class="fill h" id="fillHtml"></div></div><output id="tokHtml">0</output></div>
+          <p class="mnote" id="mnote">Measured live from the text on slide 2 (about 4 characters per token).</p>
+        </div>
+        <div class="foot"><span>Plain text is still how we brief a model</span><button class="go" data-next aria-label="Next slide">→</button></div>
+      </section>
+
+      <!-- 6 -->
+      <section class="slide" data-file="the-handoff.html" aria-label="Slide 6 of 8">
+        <p class="cmt">&lt;!-- slide 6 of 8 · so which one? --&gt;</p>
+        <h2>It isn't a competition.<br>It's a handoff.</h2>
+        <div class="flow" id="flow">
+          <div class="node step"><b>You</b><span>think, brief, give context</span></div>
+          <div class="link step"><span class="arrow">↓</span><span class="chip">Markdown</span><span>how we talk to AI</span></div>
+          <div class="node ai step"><b>AI</b><span>reasons, builds, formats</span></div>
+          <div class="link step"><span class="arrow">↓</span><span class="chip html">HTML</span><span>how AI talks back</span></div>
+          <div class="node step"><b>You</b><span>read, explore, decide</span></div>
+        </div>
+        <div class="foot"><span>Pick the format by who reads it</span><span><button class="go" id="replay">↺ replay</button><button class="go" data-next aria-label="Next slide">→</button></span></div>
+      </section>
+
+      <!-- 7 -->
+      <section class="slide" data-file="the-catch.html" aria-label="Slide 7 of 8">
+        <p class="cmt">&lt;!-- slide 7 of 8 · the catch --&gt;</p>
+        <h2>A beautiful page<br>can make a shallow<br>answer look deep.</h2>
+        <label class="polish"><span>polish</span><input type="range" id="polish" min="0" max="100" value="0"><output id="polishOut">0%</output></label>
+        <div class="answer" id="answer"></div>
+        <div class="brow"><span>looks right</span><span id="looksPct">0%</span></div>
+        <div class="btrack"><div class="bfill" id="looks" style="width:0"></div></div>
+        <div class="brow"><span>is right</span><button id="check">??? check it</button></div>
+        <div class="btrack unknown" id="isTrack"></div>
+        <p class="callout" id="callout">Tabs and diagrams make an answer easier to read. They don't make it true. The more polished AI output gets, the more carefully we have to read it.</p>
+        <div class="foot"><span>The format improved. Our judgment has to keep up.</span><button class="go" data-next aria-label="Next slide">→</button></div>
+      </section>
+
+      <!-- 8 -->
+      <section class="slide verdict" data-file="verdict.html" aria-label="Slide 8 of 8">
+        <p class="cmt">&lt;!-- slide 8 of 8 · verdict --&gt;</p>
+        <h2>HTML isn't the<br>new Markdown.<br>It's Markdown's <mark>new partner</mark>.</h2>
+        <p class="lead">Markdown for the machine. HTML for the human. Your judgment for both.</p>
+        <p class="ask">Would you rather get a clean page of text or an interactive page from AI?</p>
+        <div class="poll" id="poll">
+          <button aria-pressed="false" data-v="text">Clean page of text<small># just tell me</small></button>
+          <button aria-pressed="false" data-v="html">Interactive page<small>&lt;let me explore&gt;</small></button>
+        </div>
+        <p class="pollres" id="pollres" aria-live="polite"></p>
+        <div class="author">
+          <div class="av" aria-hidden="true">AS</div>
+          <div><b>Aayushi Solanki</b><span>Exploring how we work with AI</span></div>
+          <button class="mini" id="restart">↺ start over</button>
+        </div>
+      </section>
+
+      <pre class="mdview" id="mdview" tabindex="0" aria-label="This slide as Markdown"></pre>
+    </div>
+  </div>
+</main>
+
+<div class="controls">
+  <div class="nav">
+    <button class="arr" id="prev" aria-label="Previous slide">←</button>
+    <div class="dots" id="dots"></div>
+    <button class="arr" id="next" aria-label="Next slide">→</button>
+  </div>
+  <div class="mode">
+    <span>read as</span>
+    <div class="seg" role="group" aria-label="Read this slide as">
+      <button aria-pressed="true" data-mode="html">HTML</button>
+      <button aria-pressed="false" data-mode="md">Markdown</button>
+    </div>
+  </div>
+</div>
+<p class="credit">Swipe or use ← → · press M to flip formats · <a href="https://github.com/Aayushi096/is-html-the-new-markdown" target="_blank" rel="noopener">source</a></p>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const card = $('#card'), viewport = $('#viewport'), slides = $$('.slide');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur = 0, mdMode = false;
+
+  /* ---------- tiny Markdown renderer (enough for slide 2) ---------- */
+  const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const safeUrl = u => /^(https?:|\.{0,2}\/|#)/.test(u) ? u : '#';
+  const inline = s => esc(s)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>')
+    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, t, u) => `<a href="${safeUrl(u)}">${t}</a>`);
+
+  function toHtml(md, pretty) {
+    const out = []; let list = null;
+    const close = () => { if (list) { out.push(`</${list}>`); list = null; } };
+    for (const raw of md.split('\n')) {
+      const line = raw.trimEnd();
+      let m;
+      if (!line.trim()) { close(); continue; }
+      if ((m = line.match(/^(#{1,6})\s+(.*)$/))) { close(); out.push(`<h${m[1].length}>${inline(m[2])}</h${m[1].length}>`); }
+      else if ((m = line.match(/^\s*[-*+]\s+(.*)$/))) { if (list !== 'ul') { close(); out.push('<ul>'); list = 'ul'; } out.push(`<li>${inline(m[1])}</li>`); }
+      else if ((m = line.match(/^\s*\d+[.)]\s+(.*)$/))) { if (list !== 'ol') { close(); out.push('<ol>'); list = 'ol'; } out.push(`<li>${inline(m[1])}</li>`); }
+      else if ((m = line.match(/^>\s?(.*)$/))) { close(); out.push(`<blockquote>${inline(m[1])}</blockquote>`); }
+      else { close(); out.push(pretty && /^\*\*/.test(line) ? `<p class="pill">${inline(line)}</p>` : `<p>${inline(line)}</p>`); }
+    }
+    close();
+    return out.join('\n');
+  }
+
+  function highlight(md) {
+    return md.split('\n').map(l => esc(l)
+      .replace(/^(#{1,6})(\s)/, '<b>$1</b>$2')
+      .replace(/^(\s*-)(\s)/, '<b>$1</b>$2')
+      .replace(/\*\*/g, '<b>**</b>')
+      .replace(/\[([^\]]*)\]\(([^)]*)\)/g, '<b>[</b>$1<b>](</b>$2<b>)</b>')
+    ).join('\n') + '\n';
+  }
+
+  /* ---------- slide 2: live editor ---------- */
+  const src = $('#src'), hl = $('#hl'), out = $('#out');
+  src.value = '## Why it matters\n**Faster** answers\n- fewer tokens\n- easy to parse\n[docs](./ref.md)';
+  const tokens = s => Math.max(1, Math.ceil(s.length / 4));
+  function renderEditor() {
+    const md = src.value;
+    hl.innerHTML = highlight(md);
+    hl.scrollTop = src.scrollTop;
+    const htmlClean = toHtml(md, false);
+    const words = (md.match(/[A-Za-z0-9']+/g) || []).length;
+    out.innerHTML = toHtml(md, true) +
+      `<div class="stats"><b>${words}</b> words · <b>${(md.match(/^\s*[-*+]\s/gm) || []).length}</b> list items<br>` +
+      `~<b>${tokens(md)}</b> tokens as Markdown<br>~<b>${tokens(htmlClean)}</b> tokens as HTML</div>`;
+  }
+  src.addEventListener('input', renderEditor);
+  src.addEventListener('scroll', () => { hl.scrollTop = src.scrollTop; });
+  out.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (a && !/^https?:/.test(a.getAttribute('href'))) { e.preventDefault(); a.textContent += ' (demo link)'; }
+  });
+  $$('[data-detail]').forEach(b => b.addEventListener('click', () => {
+    $$('[data-detail]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    out.classList.toggle('detailed', b.dataset.detail === '1');
+  }));
+  renderEditor();
+
+  /* ---------- slide 3: a hundred lines of Markdown ---------- */
+  const LONG = 120;
+  const lines = ['# Q3 planning notes', '', '## Context', '- Revenue is up, margins are flat', '- Two teams own the same pipeline', '- **Decision needed** by Friday', '', '## Options', '1. Merge the teams', '2. Split the pipeline', '3. Do nothing (not really an option)', '', '> See appendix B for the numbers', '', '### Risks', '- [ ] Hiring freeze', '- [ ] Vendor contract renewal', '- [ ] Migration window overlaps holidays', ''];
+  $('#longmd').innerHTML = Array.from({length: LONG}, (_, i) =>
+    `<span class="n">${i + 1}</span>${esc(lines[i % lines.length])}`).join('\n');
+  $('#tryLong').addEventListener('click', e => {
+    const s = $('#s3'), open = s.classList.toggle('open');
+    e.currentTarget.textContent = open ? 'Close the file ↑' : 'Try reading 120 lines ↓';
+    if (open) { $('#longmd').scrollTop = 0; $('#lcount').textContent = 'line 1 of 120'; }
+  });
+  $('#longmd').addEventListener('scroll', e => {
+    const el = e.target, lh = el.scrollHeight / LONG;
+    const bottom = Math.min(LONG, Math.round((el.scrollTop + el.clientHeight) / lh));
+    $('#lcount').textContent = bottom >= LONG ? 'line 120 of 120. You made it. Did you keep any of it?' : `line ${bottom} of 120 · still with me?`;
+  });
+
+  /* ---------- slide 4: tiles that run their tag ---------- */
+  const TABS = ['Jump straight to the part you need.', 'Steps stay in their own panel.', 'Caveats get a tab instead of getting buried.'];
+  const LVLS = ['HTML for people.', 'HTML for people, Markdown for models.', 'Markdown is how we brief a model. HTML is how a model shows its work back. Use both.'];
+  $$('#tiles .tile').forEach(t => {
+    const toggle = () => { const on = t.classList.toggle('on'); t.setAttribute('aria-expanded', on); $('.run', t).textContent = on ? '■ tap to close' : '▶ tap to run'; };
+    t.addEventListener('click', e => { if (!e.target.closest('.demo')) toggle(); });
+    t.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target === t) { e.preventDefault(); toggle(); } });
+  });
+  $$('.tabs button').forEach(b => b.addEventListener('click', () => {
+    $$('.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
+    $('#tabtext').textContent = TABS[b.dataset.t];
+  }));
+  $('#lvl').addEventListener('input', e => { $('#lvltext').textContent = LVLS[e.target.value]; });
+  $('#copy').addEventListener('click', async () => {
+    const url = location.href.split('#')[0];
+    try { await navigator.clipboard.writeText(url); $('#copied').textContent = 'Copied ✓ Paste it anywhere.'; }
+    catch { $('#copied').textContent = url; }
+  });
+
+  /* ---------- slide 5: token meter (from slide 2's text) ---------- */
+  function fillMeter() {
+    const md = tokens(src.value), html = tokens(toHtml(src.value, false));
+    const max = Math.max(md, html);
+    $('#tokMd').textContent = `~${md}`; $('#tokHtml').textContent = `~${html}`;
+    $('#fillMd').style.width = '0'; $('#fillHtml').style.width = '0';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      $('#fillMd').style.width = (md / max * 100) + '%';
+      $('#fillHtml').style.width = (html / max * 100) + '%';
+    }));
+    const pct = Math.round((html / md - 1) * 100);
+    $('#mnote').textContent = `Measured live from your text on slide 2: HTML is ${pct > 0 ? pct + '% heavier' : 'about the same'} (≈4 characters per token).`;
+  }
+
+  /* ---------- slide 6: play the handoff ---------- */
+  let flowTimers = [];
+  function playFlow() {
+    const flow = $('#flow'), steps = $$('.step', flow);
+    flowTimers.forEach(clearTimeout); flowTimers = [];
+    steps.forEach(s => s.classList.remove('lit'));
+    if (reduced) { flow.classList.remove('armed'); return; }
+    flow.classList.add('armed');
+    steps.forEach((s, i) => flowTimers.push(setTimeout(() => {
+      steps.forEach(x => x.classList.remove('lit'));
+      s.classList.add('lit');
+      if (i === steps.length - 1) flowTimers.push(setTimeout(() => { flow.classList.remove('armed'); s.classList.remove('lit'); }, 900));
+    }, 250 + i * 650)));
+  }
+  $('#replay').addEventListener('click', playFlow);
+
+  /* ---------- slide 7: polish vs truth ---------- */
+  const polish = $('#polish'), answer = $('#answer');
+  const spark = '<svg class="spark" viewBox="0 0 60 24" aria-hidden="true"><polyline points="2,4 14,6 26,9 38,15 50,19 58,22" fill="none" stroke="#3b55f5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const LEVELS = [
+    '<p class="a0">markdown usage dropped 73% in 2026</p>',
+    '<p class="a1">Markdown usage dropped <b>73%</b> in 2026.</p>',
+    '<div class="kpi"><strong>−73%</strong><span>Markdown usage<br>in 2026</span></div>',
+    `<div class="kpi"><strong>−73%</strong><span>Markdown usage<br>in 2026</span>${spark}</div>`,
+    `<span class="badge">✓ verified insight</span><div class="kpi"><strong>−73%</strong><span>Markdown usage<br>in 2026</span>${spark}</div><p class="src">Source: 2026 industry report</p>`
+  ];
+  let checked = false, swept = false, userPolished = false, level = -1;
+  function setPolish(v) {
+    polish.value = v;
+    $('#polishOut').textContent = v + '%';
+    $('#looks').style.width = Math.max(4, v) + '%';
+    $('#looksPct').textContent = v + '%';
+    const l = Math.min(4, Math.floor(v / 20));
+    if (l !== level) { level = l; answer.innerHTML = LEVELS[l]; answer.className = 'answer p' + l; }
+  }
+  polish.addEventListener('input', () => { userPolished = true; setPolish(+polish.value); });
+  $('#check').addEventListener('click', () => {
+    checked = !checked;
+    $('#isTrack').className = 'btrack ' + (checked ? 'false' : 'unknown');
+    $('#check').textContent = checked ? '0% · no source' : '??? check it';
+    $('#callout').innerHTML = checked
+      ? '<b>There is no report.</b> I made up 73% for this slide. Every notch of polish made it look more true. None of it made it true.'
+      : "Tabs and diagrams make an answer easier to read. They don't make it true. The more polished AI output gets, the more carefully we have to read it.";
+  });
+  function sweep() {
+    if (swept) return; swept = true;
+    if (reduced) return setPolish(100);
+    const t0 = performance.now();
+    const step = t => { const p = Math.min(1, (t - t0) / 2200); if (userPolished) return; setPolish(Math.round(p * 100)); if (p < 1 && cur === 6) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  setPolish(0);
+
+  /* ---------- slide 8: poll ---------- */
+  const PICK = {
+    text: 'Fair. Then the text post was for you. Tell me why in the comments.',
+    html: 'You just answered with a &lt;button&gt;. Try doing that in Markdown. Tell me why in the comments.'
+  };
+  function showVote(v) {
+    $$('#poll button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === v));
+    $('#pollres').innerHTML = PICK[v] || '';
+  }
+  $$('#poll button').forEach(b => b.addEventListener('click', () => {
+    showVote(b.dataset.v);
+    try { localStorage.setItem('ihtnm-vote', b.dataset.v); } catch {}
+  }));
+  try { const v = localStorage.getItem('ihtnm-vote'); if (v) showVote(v); } catch {}
+  $('#restart').addEventListener('click', () => go(0));
+
+  /* ---------- Markdown view of every slide ---------- */
+  const MD = [
+    () => `<!-- slide 1 of 8 -->
+
+# You scrolled past my ~~text post.~~ So I rebuilt it in **HTML**.
+
+Which is kind of the whole point of this post.
+
+> rendered for humans, not for parsers
+
+Tap things. Edit things. Press M to see this as Markdown.
+
+Aayushi Solanki · swipe →`,
+    () => `<!-- slide 2 of 8 -->
+
+# Same words. Two formats.
+
+## What the AI reads
+
+${src.value}
+
+## What you see
+
+(the same text, rendered. Switch back to HTML to see it.)
+
+One is for machines. One is for you.`,
+    () => `<!-- slide 3 of 8 · the spark -->
+
+> I find it difficult to read a Markdown file
+> of more than a hundred lines.
+
+**Thariq Shihipar**, Claude Code team, in "Using Claude Code:
+The Unreasonable Effectiveness of HTML" (May 2026). He has stopped
+using Markdown for almost all of Claude's output.
+
+[See his HTML examples](https://thariqs.github.io/html-effectiveness/)
+
+If someone on the team that builds the AI reads it that way,
+it's worth asking who Markdown is really for.
+
+*Personal views of the author*`,
+    () => `<!-- slide 4 of 8 · reader = human -->
+
+# Why HTML wins when *you* are the reader
+
+- **Readable at length**: tabs and sections instead of a 300-line scroll.
+- **Actually visual**: real tables, diagrams and colors, not ASCII art.
+- **Easy to share**: a link gets opened. An attachment gets ignored.
+- **Keeps you in the loop**: sliders and toggles let you explore the answer.
+
+We scan, click and explore.`,
+    () => `<!-- slide 5 of 8 · reader = AI -->
+
+# Why Markdown wins when the AI is the reader
+
+- **Lightweight**: fewer tokens for the same meaning.
+- **Easy to parse**: structure without any noise.
+- **Easy to edit**: readable diffs, simple to version.
+- **The language of context**: prompts, instructions and knowledge bases.
+
+Even the HTML fans admit it: HTML costs more tokens.
+Your slide 2 text: ~${tokens(src.value)} tokens as Markdown, ~${tokens(toHtml(src.value, false))} as HTML.
+
+Plain text is still how we brief a model.`,
+    () => `<!-- slide 6 of 8 · so which one? -->
+
+# It isn't a competition. It's a handoff.
+
+1. **You**: think, brief, give context
+   ↓ *Markdown*: how we talk to AI
+2. **AI**: reasons, builds, formats
+   ↓ *HTML*: how AI talks back
+3. **You**: read, explore, decide
+
+Pick the format by who reads it.`,
+    () => `<!-- slide 7 of 8 · the catch -->
+
+# A beautiful page can make a shallow answer look deep.
+
+| looks right | is right       |
+|-------------|----------------|
+| 100%        | ??? check it   |
+
+Tabs and diagrams make an answer easier to read.
+They don't make it true. The more polished AI output gets,
+the more carefully we have to read it.
+
+The format improved. Our judgment has to keep up.`,
+    () => `<!-- slide 8 of 8 · verdict -->
+
+# HTML isn't the new Markdown. It's Markdown's ==new partner==.
+
+Markdown for the machine. HTML for the human. Your judgment for both.
+
+**Would you rather get a clean page of text or an interactive page from AI?**
+
+- [ ] Clean page of text
+- [ ] Interactive page
+
+**Aayushi Solanki** · Exploring how we work with AI`
+  ];
+  const mdview = $('#mdview');
+  function renderMd() {
+    mdview.innerHTML = esc(MD[cur]()) + `<span class="mdnote">That's this slide as Markdown. You can't click any of it. Press M or tap HTML to switch back.</span>`;
+    mdview.scrollTop = 0;
+  }
+  function setMode(md) {
+    mdMode = md;
+    card.classList.toggle('md', md);
+    $$('[data-mode]').forEach(b => b.setAttribute('aria-pressed', (b.dataset.mode === 'md') === md));
+    sync();
+  }
+  $$('[data-mode]').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode === 'md')));
+
+  /* ---------- navigation ---------- */
+  const dots = $('#dots');
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    b.addEventListener('click', () => go(i));
+    dots.appendChild(b);
+  });
+  const ENTER = { 4: fillMeter, 5: playFlow, 6: sweep };
+
+  function sync() {
+    const s = slides[cur], file = s.dataset.file;
+    card.classList.toggle('dark', !mdMode && s.dataset.theme === 'dark');
+    $('#url').textContent = mdMode ? file.replace(/\.html$/, '.md').replace(/^[^/]+\/html-effectiveness$/, 'the-spark.md') : file;
+    if (mdMode) renderMd();
+  }
+  function go(i, fromHash) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    viewport.classList.toggle('back', i < cur);
+    cur = i;
+    slides.forEach((s, k) => { const on = k === i; s.classList.toggle('active', on); s.inert = !on; });
+    $$('button', dots).forEach((d, k) => d.setAttribute('aria-current', k === i));
+    $('#progress').style.width = ((i + 1) / slides.length * 100) + '%';
+    $('#prev').disabled = i === 0;
+    $('#next').disabled = i === slides.length - 1;
+    sync();
+    if (!fromHash) history.replaceState(null, '', '#' + (i + 1));
+    ENTER[i]?.();
+  }
+  $('#prev').addEventListener('click', () => go(cur - 1));
+  $('#next').addEventListener('click', () => go(cur + 1));
+  $$('[data-next]').forEach(b => b.addEventListener('click', () => go(cur + 1)));
+
+  document.addEventListener('keydown', e => {
+    if (e.target.closest('textarea, input')) return;
+    if (e.key === 'ArrowRight') go(cur + 1);
+    else if (e.key === 'ArrowLeft') go(cur - 1);
+    else if (e.key.toLowerCase() === 'm' && !e.metaKey && !e.ctrlKey) setMode(!mdMode);
+  });
+
+  let sx = null, sy = 0;
+  viewport.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' || e.target.closest('textarea, input, .longmd, .md-out, .demo')) { sx = null; return; }
+    sx = e.clientX; sy = e.clientY;
+  });
+  viewport.addEventListener('pointerup', e => {
+    if (sx === null) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) go(cur + (dx < 0 ? 1 : -1));
+    sx = null;
+  });
+  viewport.addEventListener('pointercancel', () => { sx = null; });
+
+  window.addEventListener('hashchange', () => go((parseInt(location.hash.slice(1), 10) || 1) - 1, true));
+  go((parseInt(location.hash.slice(1), 10) || 1) - 1, true);
+})();
+</script>
+</body>
+</html>
