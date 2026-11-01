@@ -152,45 +152,6 @@ mark{color:inherit;background:linear-gradient(transparent 58%,var(--lime) 58%) n
 .midlife{max-width:760px;margin:32px auto 0;font:600 italic clamp(1.3rem,2.4vw,1.9rem)/1.3 var(--serif);color:var(--ink)}
 .midlife::before{content:"So…";display:block;font:700 .74rem var(--mono);font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:10px}
 
-/* ---------- 3 · timeline ---------- */
-.axis{position:relative;display:flex;justify-content:space-between;margin:10px 0 26px}
-.axis::before,.axis .fillln{content:"";position:absolute;left:12px;right:12px;top:11px;height:3px;background:var(--line);border-radius:9px}
-.axis .fillln{right:auto;width:0;background:var(--accent);transition:width .45s cubic-bezier(.2,.7,.2,1)}
-.pt{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;padding:0;cursor:pointer;font:700 .9rem var(--mono);color:var(--muted)}
-.pt i{width:25px;height:25px;border-radius:50%;background:var(--page);border:3px solid var(--line);transition:.3s}
-.pt.past i{border-color:var(--accent);background:var(--accent)}
-.pt[aria-current=true] i{border-color:var(--ink);background:var(--lime);box-shadow:0 0 0 7px rgba(206,236,146,.45)}
-.pt[aria-current=true]{color:var(--ink)}
-.tl-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:18px}
-.tl-track::-webkit-scrollbar{display:none}
-.tl-card{flex:0 0 100%;scroll-snap-align:start;min-height:250px;padding:clamp(24px,4vw,42px) clamp(24px,4vw,48px);border:1px solid var(--line);border-radius:18px;background:var(--paper);display:grid;grid-template-columns:auto 1fr;gap:8px clamp(24px,4vw,56px);align-items:center}
-.tl-card .yr{grid-row:span 4;font:600 clamp(3rem,7vw,5.6rem)/1 var(--serif);letter-spacing:-.04em;color:var(--accent)}
-.tl-card .who{display:flex;align-items:center;gap:10px;font:400 .9rem var(--mono);color:var(--muted)}
-.tl-card .who b{color:var(--ink);font-weight:700}
-.badge{display:inline-flex;align-items:center;gap:6px;font:700 .72rem var(--mono);color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:3px 9px 3px 7px}
-.tl-card .big{font:600 clamp(1.8rem,3.4vw,2.7rem)/1.08 var(--serif);letter-spacing:-.025em}
-.tl-card p{font-size:1.05rem;line-height:1.55;color:var(--muted);max-width:560px}
-.tl-card a{font:600 .85rem var(--mono);color:var(--accent-dark);text-decoration:none}
-.tl-card a:hover{text-decoration:underline}
-.tl-card.last{background:var(--deep);border-color:var(--deep);color:#f4f6f3}
-.tl-card.last .yr{color:var(--lime)}
-.tl-card.last p,.tl-card.last .who{color:var(--dmuted)}
-.tl-card.last .who b{color:#fff}
-.tl-card.last .badge{background:var(--deep2);border-color:var(--dline);color:#fff}
-.tl-card.last a{color:var(--lime)}
-.tl-card.last mark{background-image:linear-gradient(transparent 62%,rgba(206,236,146,.38) 62%)}
-@media (max-width:640px){.tl-card{grid-template-columns:1fr}.tl-card .yr{grid-row:auto}.tl-card .who{flex-wrap:wrap}}
-.tlrow{display:flex;align-items:center;gap:24px;margin-top:22px;flex-wrap:wrap}
-.vis{flex:1;min-width:240px}
-.vis .lbl{display:flex;justify-content:space-between;font:400 .85rem var(--mono);color:var(--muted);margin-bottom:8px}
-.vis .lbl b{color:var(--ink);font-weight:700}
-.vis .track{height:12px;border-radius:99px;background:var(--soft);border:1px solid var(--line);overflow:hidden}
-.vis .fill{height:100%;width:12%;border-radius:99px;background:linear-gradient(90deg,#f0a08f,var(--accent));transition:width .6s cubic-bezier(.2,.7,.2,1)}
-.tlnav{display:flex;gap:8px}
-.tlnav button{width:42px;height:42px;border-radius:50%;border:1px solid var(--ink);background:var(--paper);cursor:pointer;font-size:1rem;transition:background .2s,color .2s}
-.tlnav button:hover:not(:disabled){background:var(--ink);color:var(--page)}
-.tlnav button:disabled{opacity:.3;cursor:default}
-
 /* ---------- 4 · quote ---------- */
 .quote{max-width:940px;margin:0 auto}
 .pull{background:var(--lime);color:#16222a;border-radius:18px;padding:clamp(28px,4.5vw,48px);transform:rotate(-1.2deg);box-shadow:0 24px 60px rgba(35,47,48,.12);margin-bottom:34px}
@@ -274,29 +235,49 @@ mark{color:inherit;background:linear-gradient(transparent 58%,var(--lime) 58%) n
 .three div{border:1px solid var(--line);border-radius:12px;background:var(--page);padding:14px}
 .three .e{font-size:1.4rem;line-height:1}
 .three b{display:block;font:600 1.02rem/1.2 var(--serif);margin-top:8px}
+.three.duo{grid-template-columns:1fr 1fr}
+.three p{margin-top:4px;font-size:.88rem;line-height:1.45;color:var(--muted)}
+.mile{display:flex;gap:12px;align-items:flex-start;min-height:74px;margin:-6px 0 22px;padding:12px 14px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:.96rem;line-height:1.45}
+.mile .my{flex:none;font:700 .8rem var(--mono);background:var(--ink);color:var(--lime);border-radius:6px;padding:3px 8px;margin-top:2px}
+.mile p a{font:600 .8rem var(--mono);color:var(--accent-dark);text-decoration:none;white-space:nowrap}
+.mile p a:hover{text-decoration:underline}
 .callout{background:var(--lime);color:#16222a;border-radius:14px;padding:22px 24px;font:600 clamp(1.15rem,1.7vw,1.4rem)/1.35 var(--serif);margin-top:26px;transform:rotate(-1deg);box-shadow:0 18px 40px rgba(35,47,48,.1)}
 
-/* ---------- 7 · chooser ---------- */
-.chooser{border:1px solid var(--line);border-radius:18px;background:var(--paper);overflow:hidden;box-shadow:0 24px 60px rgba(35,47,48,.08)}
-.chooser-grid{display:grid;grid-template-columns:300px 1fr}
-.tasks{display:flex;flex-direction:column;gap:6px;padding:18px;border-right:1px solid var(--line);background:var(--soft)}
-.tasks .tl{font:700 .7rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:4px 6px 8px}
-.tasks button{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid transparent;border-radius:10px;background:transparent;cursor:pointer;font:600 .96rem/1.2 var(--sans);text-align:left;transition:background .2s,color .2s}
-.tasks button:hover{background:var(--paper);border-color:var(--line)}
-.tasks button[aria-pressed=true]{background:var(--ink);color:var(--page)}
-.answer{padding:clamp(24px,4vw,40px)}
-.spec{position:relative;margin:14px 18px 0}
-.spec .bar2{height:14px;border-radius:99px;background:linear-gradient(90deg,var(--deep) 0%,#7f8a86 50%,var(--accent) 100%)}
-.spec .ends{display:flex;justify-content:space-between;margin-top:12px;font:700 .82rem var(--mono)}
-.spec .ends span:first-child{color:var(--deep)}
-.spec .ends span:nth-child(2){color:var(--muted)}
-.spec .ends span:last-child{color:var(--accent-dark)}
-.pin{position:absolute;top:-13px;left:5%;transform:translateX(-50%);width:40px;height:40px;border-radius:50%;background:var(--lime);border:4px solid var(--ink);box-shadow:0 6px 14px rgba(22,32,42,.25);transition:left .6s cubic-bezier(.3,1.4,.4,1)}
-.vw{font:600 clamp(2.1rem,4vw,3.2rem)/1.08 var(--serif);letter-spacing:-.03em;margin-top:34px}
-.rd{display:inline-block;font:700 .78rem var(--mono);color:var(--deep);background:var(--lime-soft);border-radius:99px;padding:4px 10px;margin:12px 0 12px}
-.why{font-size:1.08rem;line-height:1.6;color:var(--muted);max-width:540px}
-.moral{margin-top:10px;font-weight:700;font-size:.9rem;color:var(--accent-dark)}
-@media (max-width:760px){.chooser-grid{grid-template-columns:1fr}.tasks{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr}.tasks .tl{grid-column:1/-1}}
+/* ---------- 6 · decision matrix ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin:18px 0 12px;font:400 .8rem var(--mono);color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.dot{width:10px;height:10px;border-radius:50%;border:2px solid #b9beb6;display:inline-block;flex:none}
+.dot.h{background:var(--accent);border-color:var(--accent)}
+.mx-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--paper);box-shadow:0 24px 60px rgba(35,47,48,.08)}
+.mx{width:100%;min-width:860px;border-collapse:collapse;font-size:.95rem}
+.mx th,.mx td{padding:13px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+.mx thead th{font:700 .7rem/1.35 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--soft)}
+.mx tbody th,.mx tfoot th{font:600 .98rem var(--sans);white-space:nowrap}
+.mx tbody tr{cursor:pointer;transition:background .15s}
+.mx tbody tr:hover{background:#f7f5ec}
+.mx tbody tr[aria-selected=true]{background:var(--lime-soft)}
+.mx tbody tr[aria-selected=true] th{box-shadow:inset 4px 0 0 var(--accent)}
+.cell{display:inline-flex;align-items:center;gap:7px;font:500 .86rem var(--mono);white-space:nowrap}
+.cell.h{color:var(--accent-dark)}
+.cell.h .dot{background:var(--accent);border-color:var(--accent)}
+.pips{display:inline-flex;align-items:center;gap:4px;font:700 .85rem var(--mono)}
+.pips i{width:9px;height:18px;border-radius:3px;background:var(--soft);border:1px solid var(--line)}
+.pips i.on{background:var(--accent);border-color:var(--accent)}
+.pips b{margin-left:6px}
+.vp{display:inline-block;font:700 .78rem var(--mono);padding:5px 10px;border-radius:99px;white-space:nowrap}
+.vp.md{background:var(--deep);color:#fff}
+.vp.both{background:var(--lime);color:var(--ink)}
+.vp.view{background:#f6d5cd;color:var(--accent-dark)}
+.vp.html{background:var(--accent);color:#fff}
+.mine{background:#fbfaf3}
+.mine th small{display:block;font:400 .72rem var(--mono);color:var(--muted)}
+.mine td button{border:1px dashed #b9beb6;background:var(--paper);border-radius:8px;padding:6px 10px;cursor:pointer}
+.mine td button:hover{border-color:var(--accent)}
+.mwhy{display:flex;gap:18px;align-items:flex-start;margin-top:18px;padding:18px 22px;border-radius:14px;background:var(--paper);border:1px solid var(--line)}
+.mwhy .mv{flex:none;margin-top:3px}
+.mwhy b{font:600 1.15rem var(--serif)}
+.mwhy p{margin-top:4px;color:var(--muted);line-height:1.55}
+.mwhy p em{font-style:normal;color:var(--accent-dark);font-weight:600}
 
 /* ---------- 8 · catch ---------- */
 .quote2{font:600 clamp(2rem,4.2vw,3.3rem)/1.1 var(--serif);letter-spacing:-.025em;padding-left:24px;border-left:8px solid var(--accent)}
@@ -437,55 +418,32 @@ body.md .scrollcue{display:none}
     </div></div>
   </section>
 
-  <!-- 3 · who said what -->
-  <section class="sec paper" id="s3" data-file="who-put-html-back.html">
-    <div class="wrap"><div class="inner">
-      <p class="kicker">03 / Who said what</p>
-      <h2>So who put HTML back in the <em>group chat?</em></h2>
-      <div class="axis" id="axis"><span class="fillln" id="axisFill"></span></div>
-      <div class="tl-track" id="tlTrack">
-        <article class="tl-card">
-          <div class="yr">2004</div>
-          <div class="who"><b>John Gruber</b> · Markdown arrives</div>
-          <div class="big">Make <mark>writing</mark> simpler.</div>
-          <p>Write plain text, let a script make the tags. HTML moves backstage.</p>
-          <a href="https://daringfireball.net/2004/03/introducing_markdown" target="_blank" rel="noopener">The original announcement ↗</a>
-        </article>
-        <article class="tl-card">
-          <div class="yr">2011</div>
-          <div class="who"><b>Bret Victor</b> · Explorable Explanations</div>
-          <div class="big">Make <mark>reading</mark> active.</div>
-          <p>Let readers change the assumptions and watch what happens. Great idea, expensive to build.</p>
-          <a href="https://worrydream.com/ExplorableExplanations/" target="_blank" rel="noopener">Explorable Explanations ↗</a>
-        </article>
-        <article class="tl-card">
-          <div class="yr">2024</div>
-          <div class="who"><span class="badge"><svg class="am"><use href="#anthropic"/></svg>Anthropic</span> Artifacts</div>
-          <div class="big">Make AI output <mark>openable</mark>.</div>
-          <p>Generated pages sit beside the chat as things you use, not code you copy.</p>
-          <a href="https://www.anthropic.com/news/claude-3-5-sonnet" target="_blank" rel="noopener">The announcement ↗</a>
-        </article>
-        <article class="tl-card">
-          <div class="yr">2025</div>
-          <div class="who"><b>Simon Willison</b> · HTML tools</div>
-          <div class="big">Make tiny tools <mark>cheap</mark>.</div>
-          <p>150+ single-file HTML tools, almost all written by LLMs. No frontend empire required.</p>
-          <a href="https://simonwillison.net/2025/Dec/10/html-tools/" target="_blank" rel="noopener">Useful patterns for HTML tools ↗</a>
-        </article>
-        <article class="tl-card last">
-          <div class="yr">2026</div>
-          <div class="who"><b>Thariq Shihipar</b> <span class="badge"><svg class="am"><use href="#anthropic"/></svg>Claude Code team</span></div>
-          <div class="big">Make agent output <mark>explorable</mark>.</div>
-          <p>HTML is back, as the format AI uses to show its work to people.</p>
-          <a href="https://claude.dev/blog/using-claude-code-the-unreasonable-effectiveness-of-html/" target="_blank" rel="noopener">The Unreasonable Effectiveness of HTML ↗</a>
-        </article>
+  <!-- 3 · why now (with the history) -->
+  <section class="sec paper" id="s6" data-file="why-now.html">
+    <div class="wrap"><div class="inner two">
+      <div>
+        <p class="kicker">03 / Why now</p>
+        <h2>The browser didn't get smarter. Building for it got <em>cheaper</em>.</h2>
+        <p class="sub">HTML never left the browser. It left our keyboards, because writing it by hand cost too much. Drag through 22 years: the cost of building collapses, the time you have to read doesn't move.</p>
+        <p class="callout">Markdown won because it was easy for humans to write. HTML is coming back because it's easy for machines to generate.</p>
       </div>
-      <div class="tlrow">
-        <div class="vis">
-          <div class="lbl"><span>HTML: <b id="visText">backstage</b></span><span>a vibe, not a metric</span></div>
-          <div class="track"><div class="fill" id="visFill"></div></div>
+      <div class="panel">
+        <div class="yearsl">
+          <input type="range" id="yr" min="0" max="4" step="1" value="0" aria-label="Year">
+          <div class="yticks" id="yticks"><span>2004</span><span>2011</span><span>2024</span><span>2025</span><span>2026</span></div>
         </div>
-        <div class="tlnav"><button id="tlPrev" aria-label="Previous year">←</button><button id="tlNext" aria-label="Next year">→</button></div>
+        <div class="mile" aria-live="polite"><span class="my" id="mileYear">2004</span><p id="mileText"></p></div>
+        <div class="cost">
+          <div class="row"><span>Effort to build an interactive page</span><span id="effLbl">days of hand-coding</span></div>
+          <div class="track"><div class="fill" id="effFill" style="width:100%"></div></div>
+          <div class="row"><span>Time you have to review it</span><span>unchanged</span></div>
+          <div class="track"><div class="fill att" style="width:100%"></div></div>
+        </div>
+        <p class="note" style="margin:-6px 0 18px">Illustrative, not measured. Drag the year.</p>
+        <div class="three duo">
+          <div><span class="e">⚙️</span><b>Generation got cheap</b><p>An agent builds a one-off interface for a single question.</p></div>
+          <div><span class="e">👀</span><b>Attention didn't scale</b><p>You still have the same few minutes to review it.</p></div>
+        </div>
       </div>
     </div></div>
   </section>
@@ -574,64 +532,21 @@ Which consumers must be updated together?</pre>
     </div></div>
   </section>
 
-  <!-- 6 · why now -->
-  <section class="sec" id="s6" data-file="why-now.html">
-    <div class="wrap"><div class="inner two">
-      <div>
-        <p class="kicker">06 / Why now</p>
-        <h2>The browser didn't get smarter. Building for it got <em>cheaper</em>.</h2>
-        <p class="callout">Markdown won because it was easy for humans to write. HTML is coming back because it's easy for machines to generate.</p>
-      </div>
-      <div class="panel">
-        <div class="yearsl">
-          <input type="range" id="yr" min="0" max="4" step="1" value="0" aria-label="Year">
-          <div class="yticks" id="yticks"><span>2004</span><span>2011</span><span>2024</span><span>2025</span><span>2026</span></div>
-        </div>
-        <div class="cost">
-          <div class="row"><span>Effort to build an interactive page</span><span id="effLbl">days of hand-coding</span></div>
-          <div class="track"><div class="fill" id="effFill" style="width:100%"></div></div>
-          <div class="row"><span>Time you have to review it</span><span>unchanged</span></div>
-          <div class="track"><div class="fill att" style="width:100%"></div></div>
-        </div>
-        <p class="note" style="margin:-6px 0 18px">Illustrative, not measured. Drag the year.</p>
-        <div class="three">
-          <div><span class="e">⚙️</span><b>Generation got cheap</b></div>
-          <div><span class="e">👀</span><b>Attention didn't scale</b></div>
-          <div><span class="e">🌐</span><b>The runtime is everywhere</b></div>
-        </div>
-      </div>
-    </div></div>
-  </section>
-
-  <!-- 7 · choose -->
-  <section class="sec paper" id="s7" data-file="pick-your-format.html">
+  <!-- 6 · decision matrix -->
+  <section class="sec paper" id="s7" data-file="decision-matrix.html">
     <div class="wrap"><div class="inner">
-      <p class="kicker">07 / Choose your weapon (responsibly)</p>
+      <p class="kicker">06 / Choose your weapon (responsibly)</p>
       <h2>Does every document need to become an app? Absolutely <em>not.</em></h2>
-      <div class="chooser" style="margin-top:8px">
-        <div class="chooser-grid">
-          <div class="tasks" id="tasks" role="group" aria-label="What are you making?">
-            <div class="tl">What are you making?</div>
-            <button data-task="prompt" aria-pressed="true">🤖 Prompt / CLAUDE.md</button>
-            <button data-task="readme" aria-pressed="false">📘 README / runbook</button>
-            <button data-task="contract" aria-pressed="false">🔗 Data contract</button>
-            <button data-task="incident" aria-pressed="false">🚨 Incident review</button>
-            <button data-task="arch" aria-pressed="false">🧭 Architecture review</button>
-            <button data-task="pr" aria-pressed="false">🔍 Complex PR review</button>
-          </div>
-          <div class="answer" aria-live="polite">
-            <div class="spec">
-              <div class="bar2"></div>
-              <span class="pin" id="pin" aria-hidden="true"></span>
-              <div class="ends"><span>Markdown</span><span>both</span><span>HTML</span></div>
-            </div>
-            <div class="vw" id="vWord">Markdown.</div>
-            <div class="rd" id="vReader">who reads it: the model</div>
-            <p class="why" id="vWhy"></p>
-            <p class="moral" id="vMoral"></p>
-          </div>
-        </div>
+      <p class="sub" style="max-width:760px">Score it on four questions. Every answer that leans HTML adds a point. <b>0–1</b> stay in Markdown. <b>2</b> use both. <b>3–4</b> keep a plain source and add an HTML view.</p>
+      <div class="legend"><span><i class="dot h"></i>leans HTML (+1)</span><span><i class="dot"></i>leans Markdown (0)</span><span>tap a row for the reasoning</span></div>
+      <div class="mx-wrap">
+        <table class="mx">
+          <thead><tr><th>Document</th><th>Who reads it?</th><th>Lives in Git?</th><th>Readers explore or compare?</th><th>Shared beyond the team?</th><th>Score</th><th>Verdict</th></tr></thead>
+          <tbody id="mrows"></tbody>
+          <tfoot><tr id="mine" class="mine"><th>✎ Your doc <small>tap to toggle</small></th><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>
+        </table>
       </div>
+      <div class="mwhy" aria-live="polite"><span class="mv" id="mVerdict"></span><div><b id="mName"></b><p id="mWhy"></p></div></div>
     </div></div>
   </section>
 
@@ -639,7 +554,7 @@ Which consumers must be updated together?</pre>
   <section class="sec" id="s8" data-file="the-catch.html">
     <div class="wrap"><div class="inner two">
       <div>
-        <p class="kicker">08 / The catch</p>
+        <p class="kicker">07 / The catch</p>
         <p class="quote2">A beautiful page can make a shallow answer look deep.</p>
         <p class="note" style="margin-top:22px">The format improved. Our judgment has to keep up.</p>
       </div>
@@ -656,7 +571,7 @@ Which consumers must be updated together?</pre>
   <section class="sec paper" id="s9" data-file="try-it.html">
     <div class="wrap"><div class="inner two l">
       <div>
-        <p class="kicker">09 / Take it into your next review</p>
+        <p class="kicker">08 / Take it into your next review</p>
         <h2>Give your agent a better job than “write me a document.”</h2>
         <p class="sub">Try it on one real review and compare what people catch in five minutes. Measure understanding, not animations.</p>
       </div>
@@ -682,7 +597,7 @@ Only add interaction where it helps understanding.</pre>
   <!-- 10 · plot twist -->
   <section class="sec" id="s10" data-file="the-plot-twist.html">
     <div class="wrap"><div class="inner lastword">
-      <p class="kicker">10 / The actual plot twist</p>
+      <p class="kicker">09 / The actual plot twist</p>
       <h2>HTML isn't the new Markdown. It's Markdown's <em>new partner.</em></h2>
       <p class="lead">Markdown for the record. HTML for the reasoning. Your judgment for both.</p>
       <p class="markup">We spent 22 years trying not to write HTML, only to ask our agents to write it for us. Markup my words.</p>
@@ -768,34 +683,6 @@ Only add interaction where it helps understanding.</pre>
   }
   $('#replay').addEventListener('click', playIrony);
 
-  /* ---------- 03 · timeline scroller ---------- */
-  const YEARS = ['2004', '2011', '2024', '2025', '2026'];
-  const VIS = [['backstage', 12], ['a big idea, rarely built', 30], ['back, as AI output', 60], ['cheap enough to throw away', 80], ['front and centre', 100]];
-  const track = $('#tlTrack'), axis = $('#axis');
-  YEARS.forEach((y, i) => {
-    const b = document.createElement('button');
-    b.className = 'pt'; b.innerHTML = `<i></i>${y}`; b.setAttribute('aria-label', `Go to ${y}`);
-    b.addEventListener('click', () => scrollToPoint(i));
-    axis.appendChild(b);
-  });
-  let tlIndex = -1;
-  function setPoint(i) {
-    if (i === tlIndex) return; tlIndex = i;
-    $$('.pt', axis).forEach((p, k) => { p.setAttribute('aria-current', k === i); p.classList.toggle('past', k < i); });
-    $('#axisFill').style.width = `calc((100% - 24px) * ${i / (YEARS.length - 1)})`;
-    $('#visText').textContent = VIS[i][0];
-    $('#visFill').style.width = VIS[i][1] + '%';
-    $('#tlPrev').disabled = i === 0; $('#tlNext').disabled = i === YEARS.length - 1;
-  }
-  function scrollToPoint(i) {
-    i = Math.max(0, Math.min(YEARS.length - 1, i));
-    track.scrollTo({ left: i * track.clientWidth, behavior: reduced ? 'auto' : 'smooth' }); setPoint(i);
-  }
-  track.addEventListener('scroll', () => setPoint(Math.round(track.scrollLeft / Math.max(1, track.clientWidth))), { passive: true });
-  $('#tlPrev').addEventListener('click', () => scrollToPoint(tlIndex - 1));
-  $('#tlNext').addEventListener('click', () => scrollToPoint(tlIndex + 1));
-  setPoint(0);
-
   /* ---------- 04 · a hundred lines of Markdown ---------- */
   const LONG = 120;
   const lines = ['# Q3 planning notes', '', '## Context', '- Revenue is up, margins are flat', '- Two teams own the same pipeline', '- **Decision needed** by Friday', '', '## Options', '1. Merge the teams', '2. Split the pipeline', '3. Do nothing (not really an option)', '', '> See appendix B for the numbers', '', '### Risks', '- [ ] Hiring freeze', '- [ ] Vendor contract renewal', '- [ ] Migration window overlaps holidays', ''];
@@ -870,8 +757,15 @@ Only add interaction where it helps understanding.</pre>
   }
   $$('[data-fmt]').forEach(b => b.addEventListener('click', () => setFmt(b.dataset.fmt)));
 
-  /* ---------- 06 · why now ---------- */
+  /* ---------- 03 · why now: the history on a slider ---------- */
   const EFFORT = [['days of hand-coding', 100], ['a whole frontend project', 82], ['a chat message', 34], ['one prompt, one file', 16], ['one sentence to an agent', 6]];
+  const MILES = [
+    ['2004', '<b>John Gruber</b> ships Markdown so nobody has to type tags. HTML goes backstage.', 'https://daringfireball.net/2004/03/introducing_markdown'],
+    ['2011', '<b>Bret Victor</b> pitches explorable explanations. Great idea, expensive to build.', 'https://worrydream.com/ExplorableExplanations/'],
+    ['2024', '<svg class="am"><use href="#anthropic"/></svg> <b>Anthropic</b> launches Artifacts. AI output becomes something you open, not copy.', 'https://www.anthropic.com/news/claude-3-5-sonnet'],
+    ['2025', '<b>Simon Willison</b> has built 150+ single-file HTML tools, mostly written by LLMs.', 'https://simonwillison.net/2025/Dec/10/html-tools/'],
+    ['2026', '<svg class="am"><use href="#anthropic"/></svg> <b>Thariq Shihipar</b>, Claude Code team, makes HTML the agent\'s output format.', 'https://claude.dev/blog/using-claude-code-the-unreasonable-effectiveness-of-html/']
+  ];
   const yr = $('#yr');
   let yrTouched = false;
   function setYear(i) {
@@ -879,34 +773,55 @@ Only add interaction where it helps understanding.</pre>
     $('#effLbl').textContent = EFFORT[i][0];
     $('#effFill').style.width = EFFORT[i][1] + '%';
     $$('#yticks span').forEach((s, k) => s.classList.toggle('on', k === +i));
+    $('#mileYear').textContent = MILES[i][0];
+    $('#mileText').innerHTML = `${MILES[i][1]} <a href="${MILES[i][2]}" target="_blank" rel="noopener">source ↗</a>`;
   }
   yr.addEventListener('input', () => { yrTouched = true; setYear(+yr.value); });
   function sweepYears() {
     if (reduced) return setYear(4);
-    [1, 2, 3, 4].forEach((v, k) => setTimeout(() => { if (!yrTouched) setYear(v); }, 600 + k * 700));
+    [1, 2, 3, 4].forEach((v, k) => setTimeout(() => { if (!yrTouched) setYear(v); }, 900 + k * 1300));
   }
   setYear(0);
 
-  /* ---------- 07 · chooser ---------- */
-  const TASKS = {
-    prompt:   { pos: 5,  word: 'Markdown.', reader: 'the model', why: 'Light, cheap on tokens and easy to diff. Models read it best.', moral: 'Your CLAUDE.md does not need a carousel.' },
-    readme:   { pos: 16, word: 'Markdown first.', reader: 'whoever installs it', why: 'Setup steps and reference content need search and clean diffs.', moral: 'A README does not need a hover animation to install dependencies.' },
-    contract: { pos: 46, word: 'Structured source + HTML.', reader: 'machines and people', why: 'Keep the contract versioned and machine-readable. Generate a view to see who it breaks.', moral: 'A schema is a promise. The dashboard should not find out last.' },
-    incident: { pos: 56, word: 'Both, often.', reader: 'the team, later', why: 'Facts in an auditable record. An interactive timeline to explain them.', moral: 'A chart can explain the fire. It should not invent the smoke.' },
-    arch:     { pos: 76, word: 'Both. Intentionally.', reader: 'reviewers deciding', why: 'Decision record in Git, plus an HTML walkthrough where dependencies and options need exploring.', moral: 'The source of truth stays boring. The review can be interesting.' },
-    pr:       { pos: 90, word: 'HTML for exploration.', reader: 'the reviewer', why: 'The diff stays in Git. An annotated map of the logic makes review less painful.', moral: 'Keep the diff. Lose the archaeological expedition.' }
-  };
-  function pick(k) {
-    const t = TASKS[k];
-    $$('#tasks button').forEach(b => b.setAttribute('aria-pressed', b.dataset.task === k));
-    $('#pin').style.left = t.pos + '%';
-    $('#vWord').textContent = t.word;
-    $('#vReader').textContent = 'who reads it: ' + t.reader;
-    $('#vWhy').textContent = t.why;
-    $('#vMoral').textContent = t.moral;
+  /* ---------- 06 · decision matrix ---------- */
+  const CRIT = [['Model', 'People'], ['Yes', 'No'], ['No', 'Yes'], ['No', 'Yes']];
+  const DOCS = [
+    ['🤖 Prompt / CLAUDE.md', ['Model', 0], ['Yes', 0], ['No', 0], ['No', 0], 'Light, cheap on tokens and easy to diff. Models read it best.', 'Your CLAUDE.md does not need a carousel.'],
+    ['📘 README / runbook', ['People', 1], ['Yes', 0], ['No', 0], ['No', 0], 'Setup steps need search and clean diffs, not hover animations.', 'A README does not need a hover animation to install dependencies.'],
+    ['🔍 Complex PR review', ['People', 1], ['Yes', 0], ['Yes', 1], ['No', 0], 'The diff stays in Git. Add an annotated map of the logic for the reviewer.', 'Keep the diff. Lose the archaeological expedition.'],
+    ['🔗 Data contract', ['Machines + people', 1], ['Yes', 0], ['Yes', 1], ['Yes', 1], 'Keep the contract versioned and machine-readable. Generate a view that shows who it breaks.', 'A schema is a promise. The dashboard should not find out last.'],
+    ['🚨 Incident review', ['People', 1], ['Yes', 0], ['Yes', 1], ['Yes', 1], 'Facts go in an auditable record. An interactive timeline explains them.', 'A chart can explain the fire. It should not invent the smoke.'],
+    ['🧭 Architecture review', ['People', 1], ['Yes', 0], ['Yes', 1], ['Yes', 1], 'Decision record in Git, plus an HTML walkthrough of dependencies and options.', 'The source of truth stays boring. The review can be interesting.'],
+    ['📣 Stakeholder explainer', ['People', 1], ['No', 1], ['Yes', 1], ['Yes', 1], 'Nobody will diff it. Everybody needs to get it. Build the page.', 'This page is one of these.']
+  ];
+  const VERDICT = n => n <= 1 ? ['Markdown', 'md'] : n === 2 ? ['Both', 'both'] : n === 3 ? ['Source + HTML view', 'view'] : ['HTML page', 'html'];
+  const cell = ([label, lean]) => `<span class="cell${lean ? ' h' : ''}"><i class="dot"></i>${label}</span>`;
+  const pips = n => `<span class="pips">${[0, 1, 2, 3].map(k => `<i class="${k < n ? 'on' : ''}"></i>`).join('')}<b>${n}/4</b></span>`;
+  const vpill = n => { const [t, c] = VERDICT(n); return `<span class="vp ${c}">${t}</span>`; };
+  const score = d => d.slice(1, 5).reduce((a, c) => a + c[1], 0);
+  $('#mrows').innerHTML = DOCS.map((d, i) => `<tr data-i="${i}" tabindex="0" aria-selected="false"><th>${d[0]}</th>${d.slice(1, 5).map(c => `<td>${cell(c)}</td>`).join('')}<td>${pips(score(d))}</td><td>${vpill(score(d))}</td></tr>`).join('');
+  function pickRow(i) {
+    $$('#mrows tr').forEach(r => r.setAttribute('aria-selected', r.dataset.i == i));
+    const d = DOCS[i];
+    $('#mVerdict').innerHTML = vpill(score(d));
+    $('#mName').textContent = d[0].replace(/^\S+\s/, '');
+    $('#mWhy').innerHTML = `${d[5]} <em>${d[6]}</em>`;
   }
-  $$('#tasks button').forEach(b => b.addEventListener('click', () => pick(b.dataset.task)));
-  pick('prompt');
+  $$('#mrows tr').forEach(r => {
+    r.addEventListener('click', () => pickRow(+r.dataset.i));
+    r.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickRow(+r.dataset.i); } });
+  });
+  pickRow(0);
+  const mine = [1, 0, 1, 0];
+  function renderMine() {
+    const tds = $$('#mine td'), n = mine.reduce((a, b) => a + b, 0);
+    mine.forEach((v, k) => {
+      tds[k].innerHTML = `<button aria-label="Toggle ${CRIT[k].join(' or ')}">${cell([CRIT[k][v], v])}</button>`;
+      tds[k].firstChild.onclick = () => { mine[k] ^= 1; renderMine(); };
+    });
+    tds[4].innerHTML = pips(n); tds[5].innerHTML = vpill(n);
+  }
+  renderMine();
 
   /* ---------- 09 · copy prompt ---------- */
   $('#copyPrompt').addEventListener('click', async () => {
@@ -960,15 +875,20 @@ The web has an excellent sense of irony. It just renders it differently.
 
 So are documents turning into tiny apps, or are we just giving
 our READMEs a midlife crisis?`,
-    () => `## 03 / So who put HTML back in the group chat?
+    () => `## 03 / Why now
 
-- **2004** · John Gruber: make *writing* simpler. HTML moves backstage.
-- **2011** · Bret Victor: make *reading* active.
-- **2024** · Anthropic, Artifacts: make AI output *openable*.
-- **2025** · Simon Willison: make tiny tools *cheap*.
-- **2026** · Thariq Shihipar, Claude Code team: make agent output *explorable*.
+# The browser didn't get smarter. Building for it got cheaper.
 
-(There was a timeline you could scrub here. Lists don't scrub.)`,
+| year | effort to build an interactive page |
+|------|-------------------------------------|
+| 2004 | days of hand-coding                 |
+| 2011 | a whole frontend project            |
+| 2024 | a chat message                      |
+| 2025 | one prompt, one file                |
+| 2026 | one sentence to an agent            |
+
+Markdown won because it was easy for humans to write.
+HTML is coming back because it's easy for machines to generate.`,
     () => `## 04 / The spark
 
 > I find it difficult to read a Markdown file
@@ -993,30 +913,22 @@ C. Rename source.customer_id to account_id
 
 Which consumers must be updated together?
 (Good luck. In HTML you could have just clicked.)`,
-    () => `## 06 / Why now
-
-# The browser didn't get smarter. Building for it got cheaper.
-
-| year | effort to build an interactive page |
-|------|-------------------------------------|
-| 2004 | days of hand-coding                 |
-| 2026 | one sentence to an agent            |
-
-Markdown won because it was easy for humans to write.
-HTML is coming back because it's easy for machines to generate.`,
-    () => `## 07 / Choose your weapon (responsibly)
+    () => `## 06 / Choose your weapon (responsibly)
 
 # Does every document need to become an app? Absolutely not.
 
-| you're making       | pick                      |
-|---------------------|---------------------------|
-| Prompt / CLAUDE.md  | Markdown                  |
-| README / runbook    | Markdown first            |
-| Data contract       | Structured source + HTML  |
-| Incident review     | Both, often               |
-| Architecture review | Both. Intentionally       |
-| Complex PR review   | HTML for exploration      |`,
-    () => `## 08 / The catch
+| document              | reader | in Git | explore | shared | score | verdict            |
+|-----------------------|--------|--------|---------|--------|-------|--------------------|
+| Prompt / CLAUDE.md    | model  | yes    | no      | no     | 0/4   | Markdown           |
+| README / runbook      | people | yes    | no      | no     | 1/4   | Markdown           |
+| Complex PR review     | people | yes    | yes     | no     | 2/4   | Both               |
+| Data contract         | both   | yes    | yes     | yes    | 3/4   | Source + HTML view |
+| Incident review       | people | yes    | yes     | yes    | 3/4   | Source + HTML view |
+| Architecture review   | people | yes    | yes     | yes    | 3/4   | Source + HTML view |
+| Stakeholder explainer | people | no     | yes     | yes    | 4/4   | HTML page          |
+
+(A table you can read. Not one you can score your own doc in.)`,
+    () => `## 07 / The catch
 
 > A beautiful page can make a shallow answer look deep.
 
@@ -1024,12 +936,12 @@ HTML is coming back because it's easy for machines to generate.`,
 2. **Polish isn't proof.** Easier to read doesn't mean true.
 3. **Generated code is code.** Never put secrets on a static page.
 4. **Complexity must earn its keep.** If a paragraph works, publish a paragraph.`,
-    () => `## 09 / Take it into your next review
+    () => `## 08 / Take it into your next review
 
 \`\`\`
 ${$('#agentPrompt').textContent.trim()}
 \`\`\``,
-    () => `## 10 / The actual plot twist
+    () => `## 09 / The actual plot twist
 
 # HTML isn't the new Markdown. It's Markdown's new partner.
 
@@ -1072,7 +984,7 @@ Markdown for the record. HTML for the reasoning. Your judgment for both.
     const a = document.createElement('a'); a.href = '#' + s.id; a.setAttribute('aria-label', `Section ${i + 1}`);
     side.appendChild(a);
   });
-  const ONCE = { 1: autoScroll, 2: playIrony, 6: sweepYears };
+  const ONCE = { 1: autoScroll, 2: playIrony, 3: sweepYears };
   function syncBar() {
     const s = secs[cur];
     let file = s.dataset.fileHtml && demoFmt === 'html' ? s.dataset.fileHtml : s.dataset.file;
