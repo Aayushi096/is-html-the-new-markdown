@@ -4,26 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Is HTML the new Markdown?</title>
-<meta name="description" content="You scrolled past my text post, so I rebuilt it in HTML. How HTML left, how AI brought it back, a demo you can break, and when to pick which format.">
+<meta name="description" content="You scrolled past my text post, so I rebuilt it in HTML. How HTML left, who brought it back, a document you can break, and when to pick which format.">
 <meta name="author" content="Aayushi Solanki">
+<meta name="theme-color" content="#f8f6ef">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Is HTML the new Markdown?">
-<meta property="og:description" content="You scrolled past my text post. So I rebuilt it in HTML. 22 years of irony, a demo you can break, and a format picker.">
+<meta property="og:description" content="You scrolled past my text post. So I rebuilt it in HTML. 22 years of irony, a document you can break, and a format picker.">
 <meta property="og:url" content="https://aayushi096.github.io/is-html-the-new-markdown/">
 <meta property="og:image" content="https://aayushi096.github.io/is-html-the-new-markdown/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="627">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23161833'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='%23ffe05a' text-anchor='middle'%3E%3C/%3E%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316202a'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='%23ceec92' text-anchor='middle'%3E%3C/%3E%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#161833; --muted:#5d6283; --blue:#3b55f5; --yellow:#ffe05a;
-  --paper:#fbfbfd; --page2:#f3f4f9; --line:#dfe1ee; --soft:#eef1ff;
-  --dark:#1e2040; --dark2:#272b54; --dline:#383d6e; --dmuted:#a9aed6; --orange:#f0915f; --lime:#ceec92;
-  --display:'Bricolage Grotesque',system-ui,sans-serif;
+  --page:#f8f6ef; --paper:#fffefa; --soft:#f0f0e8; --ink:#16202a; --muted:#5a656c; --line:#d9dcd6;
+  --accent:#e45339; --accent-dark:#bf3a26; --lime:#ceec92; --lime-soft:#eef7d9;
+  --deep:#172333; --deep2:#24344a; --dline:#3a4e64; --dmuted:#b6c6d1;
+  --serif:'Fraunces',Georgia,serif;
   --sans:'Instrument Sans',system-ui,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
   --bar:58px;
@@ -32,255 +33,295 @@
 *,*::before,*::after{font-variant-ligatures:none!important;font-feature-settings:"calt" 0,"liga" 0,"dlig" 0!important}
 html{scroll-behavior:smooth;scroll-padding-top:var(--bar)}
 @media (min-width:900px) and (min-height:680px){html{scroll-snap-type:y proximity}}
-body{background:var(--paper);color:var(--ink);font:400 1.0625rem/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+body{background:var(--page);color:var(--ink);font:400 1.0625rem/1.6 var(--sans);-webkit-font-smoothing:antialiased}
 button,input{font:inherit;color:inherit}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+::selection{background:var(--lime);color:var(--ink)}
+svg.am{width:1em;height:1em;vertical-align:-.12em;flex:none}
 
 /* ---------- browser bar ---------- */
-.topbar{position:sticky;top:0;z-index:50;height:var(--bar);display:flex;align-items:center;gap:18px;padding:0 clamp(16px,3vw,28px);background:rgba(242,243,247,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:background .35s,border-color .35s}
+.topbar{position:sticky;top:0;z-index:50;height:var(--bar);display:flex;align-items:center;gap:18px;padding:0 clamp(16px,3vw,28px);background:rgba(248,246,239,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:background .35s,border-color .35s}
 .lights{display:flex;gap:7px;flex:none}
-.lights i{width:12px;height:12px;border-radius:50%;background:#f26b6b}
-.lights i:nth-child(2){background:#f7c64b}.lights i:nth-child(3){background:#5bcb74}
+.lights i{width:12px;height:12px;border-radius:50%;background:#ff6e68}
+.lights i:nth-child(2){background:#ffd17a}.lights i:nth-child(3){background:#8cc9a0}
 .url{flex:1;max-width:620px;margin:0 auto;min-width:0;font:400 13px/1 var(--mono);color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:10px 16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:inherit}
 .mode{display:flex;align-items:center;gap:8px;font:400 12px var(--mono);color:var(--muted);flex:none}
-.mode .seg{display:flex;border:1px solid var(--line);border-radius:10px;padding:3px;background:#fff}
+.mode .seg{display:flex;border:1px solid var(--line);border-radius:10px;padding:3px;background:var(--paper)}
 .mode .seg button{font:600 12px var(--mono);border:0;border-radius:7px;padding:6px 11px;background:none;cursor:pointer}
-.mode .seg button[aria-pressed=true]{background:var(--ink);color:#fff}
-.progress{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--blue)}
-body.on-dark .topbar{background:rgba(30,32,64,.94);border-color:var(--dline)}
-body.on-dark .url{background:var(--dark2);border-color:var(--dline);color:var(--dmuted)}
+.mode .seg button[aria-pressed=true]{background:var(--ink);color:var(--page)}
+.progress{position:absolute;left:0;bottom:-1px;height:3px;width:0;background:var(--accent)}
+body.on-dark .topbar{background:rgba(23,35,51,.94);border-color:var(--dline)}
+body.on-dark .url{background:var(--deep2);border-color:var(--dline);color:var(--dmuted)}
 body.on-dark .mode{color:var(--dmuted)}
-body.on-dark .progress{background:var(--orange)}
+body.on-dark .progress{background:var(--lime)}
 @media (max-width:600px){.mode>span{display:none}.lights{display:none}}
 
 /* ---------- side nav ---------- */
 .sidenav{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:10px}
-.sidenav a{display:block;width:9px;height:9px;border-radius:99px;background:#c3c7dc;transition:height .3s,background .3s}
-.sidenav a[aria-current=true]{height:24px;background:var(--blue)}
-body.on-dark .sidenav a{background:#4d5390}
-body.on-dark .sidenav a[aria-current=true]{background:var(--orange)}
+.sidenav a{display:block;width:9px;height:9px;border-radius:99px;background:#c8ccc4;transition:height .3s,background .3s}
+.sidenav a[aria-current=true]{height:24px;background:var(--accent)}
+body.on-dark .sidenav a{background:#4a5d72}
+body.on-dark .sidenav a[aria-current=true]{background:var(--lime)}
 @media (max-width:1000px){.sidenav{display:none}}
 
 /* ---------- sections ---------- */
 .sec{position:relative;min-height:calc(100svh - var(--bar));display:flex;align-items:center;padding:clamp(64px,10vh,110px) 0;border-bottom:1px solid var(--line);scroll-snap-align:start}
-.sec.alt{background:var(--page2)}
-.sec.dark{background:var(--dark);color:#fff;border-color:var(--dline)}
+.sec.paper{background:var(--paper)}
+.sec.dark{background:var(--deep);color:#f4f6f3;border-color:var(--dline)}
 .wrap{width:min(1120px,100% - 48px);margin:0 auto}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,6vw,88px);align-items:center}
 .two.l{grid-template-columns:.9fr 1.1fr}
 @media (max-width:860px){.two,.two.l{grid-template-columns:1fr}}
-.cmt{font:400 .85rem/1.3 var(--mono);color:var(--blue);margin-bottom:20px}
-.dark .cmt{color:var(--dmuted)}
-h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.035em}
-.hero{font-size:clamp(3.1rem,8.6vw,7.6rem);line-height:1}
-h2{font-size:clamp(2.3rem,4.9vw,4.2rem);line-height:1.02;margin-bottom:24px}
-.lead{font-size:clamp(1.15rem,1.8vw,1.5rem);line-height:1.45}
-.sub{font-size:1.1rem;line-height:1.55;color:var(--muted)}
+.kicker{display:flex;align-items:center;gap:10px;font:700 .74rem/1.4 var(--mono);text-transform:uppercase;letter-spacing:.14em;color:var(--accent-dark);margin-bottom:22px}
+.kicker::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px rgba(228,83,57,.16);flex:none}
+.dark .kicker{color:var(--lime)}
+.dark .kicker::before{background:var(--lime);box-shadow:0 0 0 5px rgba(206,236,146,.16)}
+.center{text-align:center}
+.center .kicker{justify-content:center}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.025em}
+.hero{font-size:clamp(3rem,8vw,7rem);line-height:1.02}
+h2{font-size:clamp(2.2rem,4.6vw,3.9rem);line-height:1.06;margin-bottom:22px}
+h2 em{font-style:italic;color:var(--accent)}
+.dark h2 em{color:var(--lime)}
+.lead{font-size:clamp(1.15rem,1.8vw,1.45rem);line-height:1.5}
+.sub{font-size:1.12rem;line-height:1.65;color:var(--muted)}
 .dark .sub{color:var(--dmuted)}
-.note{font:400 .82rem/1.5 var(--mono);color:var(--muted)}
+.note{font:400 .82rem/1.55 var(--mono);color:var(--muted)}
 .dark .note{color:var(--dmuted)}
-mark{color:inherit;background:linear-gradient(transparent 55%,var(--yellow) 55%) no-repeat 0 0/0% 100%;transition:background-size .8s .3s cubic-bezier(.2,.7,.2,1)}
+mark{color:inherit;background:linear-gradient(transparent 58%,var(--lime) 58%) no-repeat 0 0/0% 100%;transition:background-size .8s .3s cubic-bezier(.2,.7,.2,1)}
 .seen mark{background-size:100% 100%}
-.dark mark{background-image:linear-gradient(transparent 60%,rgba(240,145,95,.6) 60%)}
-.mini{display:inline-flex;align-items:center;gap:8px;font:500 .85rem var(--mono);color:var(--blue);background:var(--soft);border:1px solid #d3d9fb;border-radius:99px;padding:9px 16px;cursor:pointer;text-decoration:none;white-space:nowrap}
-.mini:hover{background:#e2e7ff}
+.dark mark{background-image:linear-gradient(transparent 62%,rgba(206,236,146,.38) 62%)}
+.mini{display:inline-flex;align-items:center;gap:8px;font:600 .82rem var(--mono);color:var(--ink);background:var(--paper);border:1px solid var(--ink);border-radius:99px;padding:9px 16px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .2s,color .2s,transform .15s}
+.mini:hover{background:var(--ink);color:var(--page);transform:translateY(-1px)}
 
 /* ---------- 1 · hook ---------- */
-.strike{position:relative;color:#5d6283}
-.strike::after{content:"";position:absolute;left:0;top:52%;height:.09em;width:0;background:var(--blue);transition:width .6s .5s ease}
-.seen .strike::after{width:100%}
-.caret{display:inline-block;width:.08em;height:.8em;margin-left:.08em;vertical-align:-.04em;background:var(--blue);animation:blink 1.05s steps(1) infinite}
+.strike{position:relative;color:#8a948f}
+.strike::after{content:"";position:absolute;left:-.02em;right:-.02em;top:54%;height:.08em;transform:scaleX(0);transform-origin:left;background:var(--accent);transition:transform .6s .5s ease}
+.seen .strike::after{transform:scaleX(1)}
+.caret{display:inline-block;width:.06em;height:.78em;margin-left:.06em;vertical-align:-.04em;background:var(--accent);animation:blink 1.05s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-.stamp{display:inline-block;margin-top:28px;font:400 .95rem var(--mono);color:var(--blue);border:1px dashed var(--blue);border-radius:10px;padding:12px 18px;transform:rotate(-1.5deg)}
-.hint{margin-top:30px;max-width:560px;font:400 .85rem/1.6 var(--mono);color:var(--muted)}
-.hint kbd{font:inherit;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 .45em;background:#fff;color:var(--ink)}
+.stamp{display:inline-block;margin-top:28px;background:var(--lime);color:#202a23;font:700 .85rem var(--mono);padding:10px 15px;transform:rotate(-3deg);box-shadow:4px 5px 0 rgba(0,0,0,.12)}
+.hint{margin-top:32px;max-width:580px;font:400 .86rem/1.65 var(--mono);color:var(--muted)}
+.hint kbd{font:inherit;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 .45em;background:var(--paper);color:var(--ink)}
 .scrollcue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);font:600 .8rem var(--mono);color:var(--muted);text-decoration:none;animation:bob 2s ease-in-out infinite}
 @keyframes bob{50%{transform:translate(-50%,6px)}}
-.byline{margin-top:22px;font:400 .85rem var(--mono);color:var(--muted)}
+.byline{margin-top:20px;font:400 .85rem var(--mono);color:var(--muted)}
 
 /* ---------- 2 · irony ---------- */
-.eras{display:flex;flex-direction:column;align-items:stretch}
-.era{border:1px solid var(--line);border-radius:16px;background:#fff;padding:24px 28px}
-.era .yr{font:700 .8rem var(--mono);color:var(--muted);letter-spacing:.1em}
-.era .say{font:800 clamp(1.5rem,2.4vw,2rem)/1.12 var(--display);letter-spacing:-.025em;margin:8px 0 16px}
-.flowline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font:400 .85rem var(--mono);color:var(--muted)}
-.flowline code{font:inherit;color:var(--ink);background:var(--soft);border-radius:6px;padding:4px 9px}
-.era.now{background:var(--dark);border-color:var(--dark);color:#fff}
-.era.now .yr,.era.now .flowline{color:var(--dmuted)}
-.era.now .flowline code{background:var(--dark2);color:#fff}
-.era.now .flowline code.h{background:var(--blue)}
-.ff{align-self:center;margin:16px 0}
-.later{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s cubic-bezier(.2,.7,.2,1)}
-.later.show{opacity:1;transform:none}
-.ironyline{margin-top:26px;font-size:clamp(1.15rem,1.6vw,1.35rem);line-height:1.4}
+.comic{max-width:920px;margin:0 auto;border:1.5px dashed #c5c9c0;border-radius:22px;background:var(--paper);padding:clamp(28px,5vw,56px)}
+.line{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2.4vw,28px);align-items:baseline;text-align:left}
+.line+.line{margin-top:clamp(18px,3vw,30px)}
+.line .yr{font:700 clamp(1rem,1.6vw,1.3rem) var(--mono);color:var(--accent)}
+.line q{font:600 clamp(1.7rem,3.6vw,3rem)/1.15 var(--serif);letter-spacing:-.02em;quotes:"“" "”"}
+.line.now q{font-style:italic}
+.line.now .yr{color:var(--ink);background:var(--lime);padding:2px 8px;border-radius:6px}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .55s,transform .55s cubic-bezier(.2,.7,.2,1)}
+.reveal.show{opacity:1;transform:none}
+.punch{margin-top:clamp(26px,4vw,40px);padding-top:clamp(20px,3vw,28px);border-top:1px solid var(--line);font-size:clamp(1.1rem,1.7vw,1.35rem);color:var(--muted);text-align:left}
+.punch b{color:var(--ink);font-weight:600}
+.replay{margin-top:26px}
 
 /* ---------- 3 · timeline ---------- */
 .axis{position:relative;display:flex;justify-content:space-between;margin:10px 0 26px}
 .axis::before,.axis .fillln{content:"";position:absolute;left:12px;right:12px;top:11px;height:3px;background:var(--line);border-radius:9px}
-.axis .fillln{right:auto;width:0;background:var(--blue);transition:width .45s cubic-bezier(.2,.7,.2,1)}
-.pt{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;padding:0;cursor:pointer;font:600 .9rem var(--mono);color:var(--muted)}
-.pt i{width:25px;height:25px;border-radius:50%;background:var(--paper);border:3px solid var(--line);transition:.3s}
-.pt.past i{border-color:var(--blue);background:var(--blue)}
-.pt[aria-current=true] i{border-color:var(--blue);box-shadow:0 0 0 7px rgba(59,85,245,.16)}
-.pt[aria-current=true]{color:var(--blue)}
+.axis .fillln{right:auto;width:0;background:var(--accent);transition:width .45s cubic-bezier(.2,.7,.2,1)}
+.pt{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;padding:0;cursor:pointer;font:700 .9rem var(--mono);color:var(--muted)}
+.pt i{width:25px;height:25px;border-radius:50%;background:var(--page);border:3px solid var(--line);transition:.3s}
+.pt.past i{border-color:var(--accent);background:var(--accent)}
+.pt[aria-current=true] i{border-color:var(--ink);background:var(--lime);box-shadow:0 0 0 7px rgba(206,236,146,.45)}
+.pt[aria-current=true]{color:var(--ink)}
 .tl-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:18px}
 .tl-track::-webkit-scrollbar{display:none}
-.tl-card{flex:0 0 100%;scroll-snap-align:start;min-height:240px;padding:clamp(24px,4vw,40px) clamp(24px,4vw,48px);border:1px solid var(--line);border-radius:18px;background:#fff;display:grid;grid-template-columns:auto 1fr;gap:6px clamp(24px,4vw,56px);align-items:center}
-.tl-card .yr{grid-row:span 4;font:800 clamp(3rem,7vw,5.6rem)/1 var(--display);letter-spacing:-.05em;color:var(--blue)}
-.tl-card .who{font:400 .9rem var(--mono);color:var(--muted)}
+.tl-card{flex:0 0 100%;scroll-snap-align:start;min-height:250px;padding:clamp(24px,4vw,42px) clamp(24px,4vw,48px);border:1px solid var(--line);border-radius:18px;background:var(--paper);display:grid;grid-template-columns:auto 1fr;gap:8px clamp(24px,4vw,56px);align-items:center}
+.tl-card .yr{grid-row:span 4;font:600 clamp(3rem,7vw,5.6rem)/1 var(--serif);letter-spacing:-.04em;color:var(--accent)}
+.tl-card .who{display:flex;align-items:center;gap:10px;font:400 .9rem var(--mono);color:var(--muted)}
 .tl-card .who b{color:var(--ink);font-weight:700}
-.tl-card .big{font:800 clamp(1.8rem,3.4vw,2.8rem)/1.05 var(--display);letter-spacing:-.035em}
-.tl-card p{font-size:1.05rem;line-height:1.5;color:var(--muted);max-width:560px}
-.tl-card a{font:500 .85rem var(--mono);color:var(--blue);text-decoration:none}
-.tl-card.last{background:var(--dark);border-color:var(--dark);color:#fff}
-.tl-card.last .yr{color:var(--orange)}
+.badge{display:inline-flex;align-items:center;gap:6px;font:700 .72rem var(--mono);color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:3px 9px 3px 7px}
+.tl-card .big{font:600 clamp(1.8rem,3.4vw,2.7rem)/1.08 var(--serif);letter-spacing:-.025em}
+.tl-card p{font-size:1.05rem;line-height:1.55;color:var(--muted);max-width:560px}
+.tl-card a{font:600 .85rem var(--mono);color:var(--accent-dark);text-decoration:none}
+.tl-card a:hover{text-decoration:underline}
+.tl-card.last{background:var(--deep);border-color:var(--deep);color:#f4f6f3}
+.tl-card.last .yr{color:var(--lime)}
 .tl-card.last p,.tl-card.last .who{color:var(--dmuted)}
 .tl-card.last .who b{color:#fff}
-.tl-card.last a{color:#aab6ff}
-@media (max-width:640px){.tl-card{grid-template-columns:1fr}.tl-card .yr{grid-row:auto}}
+.tl-card.last .badge{background:var(--deep2);border-color:var(--dline);color:#fff}
+.tl-card.last a{color:var(--lime)}
+.tl-card.last mark{background-image:linear-gradient(transparent 62%,rgba(206,236,146,.38) 62%)}
+@media (max-width:640px){.tl-card{grid-template-columns:1fr}.tl-card .yr{grid-row:auto}.tl-card .who{flex-wrap:wrap}}
 .tlrow{display:flex;align-items:center;gap:24px;margin-top:22px;flex-wrap:wrap}
 .vis{flex:1;min-width:240px}
 .vis .lbl{display:flex;justify-content:space-between;font:400 .85rem var(--mono);color:var(--muted);margin-bottom:8px}
 .vis .lbl b{color:var(--ink);font-weight:700}
-.vis .track{height:12px;border-radius:99px;background:#e6e8f3;overflow:hidden}
-.vis .fill{height:100%;width:12%;border-radius:99px;background:linear-gradient(90deg,#9aa8fb,var(--blue));transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.vis .track{height:12px;border-radius:99px;background:var(--soft);border:1px solid var(--line);overflow:hidden}
+.vis .fill{height:100%;width:12%;border-radius:99px;background:linear-gradient(90deg,#f0a08f,var(--accent));transition:width .6s cubic-bezier(.2,.7,.2,1)}
 .tlnav{display:flex;gap:8px}
-.tlnav button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:1rem}
-.tlnav button:hover:not(:disabled){background:var(--ink);color:#fff}
-.tlnav button:disabled{opacity:.35;cursor:default}
+.tlnav button{width:42px;height:42px;border-radius:50%;border:1px solid var(--ink);background:var(--paper);cursor:pointer;font-size:1rem;transition:background .2s,color .2s}
+.tlnav button:hover:not(:disabled){background:var(--ink);color:var(--page)}
+.tlnav button:disabled{opacity:.3;cursor:default}
 
 /* ---------- 4 · quote ---------- */
-.quote{max-width:920px;margin:0 auto}
-.qmark{font:800 9rem/1 var(--display);color:var(--blue);height:5.2rem;overflow:hidden}
-blockquote.big{font:700 clamp(2rem,4.4vw,3.6rem)/1.1 var(--display);letter-spacing:-.03em;margin:8px 0 30px}
-.attr{font-size:1.05rem;line-height:1.55;color:var(--muted);max-width:720px}
+.quote{max-width:940px;margin:0 auto}
+.pull{background:var(--lime);color:#16222a;border-radius:18px;padding:clamp(28px,4.5vw,48px);transform:rotate(-1.2deg);box-shadow:0 24px 60px rgba(35,47,48,.12);margin-bottom:34px}
+.pull blockquote{font:600 clamp(1.9rem,4vw,3.3rem)/1.12 var(--serif);letter-spacing:-.025em}
+.pull blockquote::before{content:"“";display:block;font-size:2em;line-height:.6;color:var(--accent);margin-bottom:.1em}
+.attr{display:flex;gap:16px;align-items:flex-start;max-width:760px}
+.amchip{flex:none;width:52px;height:52px;border-radius:14px;background:#f0eee6;border:1px solid var(--line);display:grid;place-items:center;font-size:26px;color:#141413}
+.attr p{font-size:1.05rem;line-height:1.55;color:var(--muted)}
 .attr b{color:var(--ink);font-weight:600}
 .btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.closing{font-size:clamp(1.15rem,1.7vw,1.4rem);line-height:1.45;margin-top:32px;max-width:720px}
-.longbox{display:none;margin-top:24px;max-width:720px}
+.closing{font-size:clamp(1.15rem,1.7vw,1.4rem);line-height:1.5;margin-top:30px;max-width:760px}
+.longbox{display:none;margin-top:24px;max-width:760px}
 .quote.open .longbox{display:block}
-.longmd{height:260px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;font:400 .85rem/1.75 var(--mono);color:var(--muted);white-space:pre}
-.longmd .n{display:inline-block;width:3.2em;color:#b4b8d4;user-select:none}
-.lcount{margin-top:8px;font:500 .85rem var(--mono);color:var(--blue)}
+.longmd{height:260px;overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font:400 .85rem/1.75 var(--mono);color:var(--muted);white-space:pre}
+.longmd .n{display:inline-block;width:3.2em;color:#b9beb6;user-select:none}
+.lcount{margin-top:8px;font:600 .85rem var(--mono);color:var(--accent-dark)}
 
-/* ---------- 5 · break it (dark) ---------- */
-.challenge{font-size:1.15rem;line-height:1.5;color:#d5d8f5;margin-bottom:22px}
-.challenge code{font:600 .95em var(--mono);color:var(--orange)}
-.fmt{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;border-radius:12px;background:var(--dark2);border:1px solid var(--dline);margin-bottom:18px;max-width:460px}
-.fmt button{border:0;border-radius:8px;padding:12px;background:transparent;color:var(--dmuted);font:600 .9rem var(--mono);cursor:pointer;transition:background .2s,color .2s}
-.fmt button[aria-pressed=true]{background:var(--lime);color:#172333}
+/* ---------- 5 · break it (dark, centered) ---------- */
+.demohead{max-width:820px;margin:0 auto 30px;text-align:center}
+.demohead .kicker{justify-content:center}
+.demohead .sub{margin:0 auto;max-width:680px}
+.fmt{display:inline-grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;border-radius:12px;background:var(--deep2);border:1px solid var(--dline)}
+.fmtwrap{text-align:center;margin-bottom:18px}
+.fmt button{border:0;border-radius:8px;padding:12px 22px;background:transparent;color:var(--dmuted);font:700 .88rem var(--mono);cursor:pointer;transition:background .2s,color .2s}
+.fmt button[aria-pressed=true]{background:var(--lime);color:var(--deep)}
 .fmt button.nudge{animation:nudge 1.6s ease-in-out infinite}
-@keyframes nudge{50%{box-shadow:0 0 0 5px rgba(206,236,146,.35);color:#fff}}
-.dcap{font:400 .9rem/1.6 var(--mono);color:var(--dmuted);min-height:3.2em;max-width:460px}
-.dcap b{color:var(--lime);font-weight:600}
-.dstage{position:relative;height:470px;border-radius:16px;border:1px solid var(--dline);background:#171a36;overflow:hidden}
-.dpanel{position:absolute;inset:0;padding:24px;display:flex;flex-direction:column}
+@keyframes nudge{50%{box-shadow:0 0 0 5px rgba(206,236,146,.3);color:#fff}}
+.dstage{max-width:1000px;margin:0 auto;border:1px solid var(--dline);background:#1d2b3f;border-radius:18px;padding:clamp(16px,3vw,30px);min-height:430px}
 .dpanel[hidden]{display:none}
-.mdspec{flex:1;overflow:auto;margin:0;font:400 .9rem/1.75 var(--mono);color:#d3dbf0;white-space:pre-wrap}
-.mdspec b{color:var(--orange);font-weight:400}
-.dlabel{font:400 .72rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#8f95c7;margin-bottom:12px}
-.scen{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
-.scen button{font:500 .85rem var(--mono);padding:7px 13px;border-radius:99px;border:1px solid #535a92;background:transparent;color:#e8ebff;cursor:pointer}
-.scen button[aria-pressed=true]{background:#ffd58b;border-color:#ffd58b;color:#172333;font-weight:700}
-.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px}
-.node{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:14px 11px;min-width:0;border-radius:10px;border:1px solid #4b5288;background:#232859;color:#e9ecff;cursor:pointer;text-align:left;transition:background .2s,border-color .2s}
-.node:not(:last-child)::after{content:"→";position:absolute;right:-14px;top:50%;transform:translateY(-50%);font-size:.9rem;color:#7d84b9}
-.node .ic{font-size:1.3rem;line-height:1}
-.node b{font:600 .85rem/1.15 var(--sans)}
-.node small{font:400 .72rem var(--mono);color:#9aa1d6}
-.node.hit{background:#4b3946;border-color:#f4b27f}
-.node.hit small{color:#ffd39a}
+.mdbox{border:1px solid var(--dline);border-radius:12px;background:#111c2a;padding:22px 24px}
+.mdspec{margin:0;font:400 .9rem/1.85 var(--mono);color:#d3e1e8;white-space:pre-wrap}
+.mdspec b{color:var(--lime);font-weight:400}
+.dlabel{font:400 .7rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#8ea3b4;margin-bottom:12px}
+.dtop{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.livepill{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:5px 11px;font:700 .72rem var(--mono);background:var(--lime-soft);color:var(--deep)}
+.livepill::before{content:"";width:7px;height:7px;border-radius:50%;background:#4f9a3c;animation:blink 1.6s steps(1) infinite}
+.scen{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.scen button{font:600 .85rem var(--sans);padding:9px 15px;border-radius:9px;border:1px solid #4f6479;background:transparent;color:#edf3f4;cursor:pointer;transition:background .2s,color .2s}
+.scen button:hover{border-color:var(--lime)}
+.scen button[aria-pressed=true]{background:var(--lime);border-color:var(--lime);color:var(--deep)}
+.pipe{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;margin-bottom:18px}
+.node{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:118px;padding:14px 13px;min-width:0;border-radius:11px;border:1px solid #4f6479;background:var(--deep2);color:#e9f1f5;cursor:pointer;text-align:left;transition:background .25s,border-color .25s,transform .2s}
+.node:hover{transform:translateY(-2px)}
+.node:not(:last-child)::after{content:"→";position:absolute;right:-16px;top:50%;transform:translateY(-50%);font-size:1rem;color:#7f95a8}
+.node .ic{font-size:1.3rem;line-height:1;margin-bottom:4px}
+.node b{font:700 .9rem/1.2 var(--sans)}
+.node small{margin-top:auto;font:600 .72rem var(--mono);color:#8ea3b4}
+.node.hit{border-color:var(--accent);background:rgba(228,83,57,.16);box-shadow:inset 0 0 0 1px rgba(228,83,57,.5)}
+.node.hit small{color:#ffab92}
 .node.sel{outline:3px solid var(--lime);outline-offset:2px}
-.dres{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:start;padding-top:18px;border-top:1px dashed var(--dline);font-size:1rem;line-height:1.45;color:#c8cdee}
-.dres .cnt{font:800 2.6rem/1 var(--display);color:#ffd58b;grid-row:span 2}
-.dres b{color:#fff;font-weight:600}
-@media (max-width:560px){.dstage{height:auto;min-height:420px}.dpanel{position:relative;inset:auto}.mdspec{max-height:420px}.pipe{grid-template-columns:1fr 1fr;gap:10px}.node::after{display:none}}
+.dres{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rcard{background:#142338;border:1px solid var(--dline);border-radius:11px;padding:18px}
+.rcard h4{margin:4px 0 8px;font:700 1.05rem var(--sans);color:#fff}
+.rcard h4 .cnt{font:700 1.6rem var(--mono);color:var(--lime)}
+.rcard p{font-size:.95rem;line-height:1.6;color:#c8d3dd}
+.dcap{max-width:1000px;margin:18px auto 0;text-align:center;font:400 .92rem/1.6 var(--mono);color:var(--dmuted)}
+.dcap b{color:var(--lime);font-weight:600}
+@media (max-width:720px){
+  .pipe{grid-template-columns:1fr;gap:12px}
+  .node{min-height:0;display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:0 10px}
+  .node .ic{margin:0}.node small{margin:0}
+  .node:not(:last-child)::after{content:"↓";right:18px;top:auto;bottom:-17px;transform:none}
+  .dres{grid-template-columns:1fr}
+}
 
 /* ---------- 6 · why now ---------- */
-.panel{border:1px solid var(--line);border-radius:18px;background:#fff;padding:clamp(22px,3vw,32px)}
-.yearsl input{width:100%;accent-color:var(--blue)}
+.panel{border:1px solid var(--line);border-radius:18px;background:var(--paper);padding:clamp(22px,3vw,32px);box-shadow:0 24px 60px rgba(35,47,48,.07)}
+.yearsl input{width:100%;accent-color:var(--accent)}
 .yticks{display:flex;justify-content:space-between;font:400 .8rem var(--mono);color:var(--muted);margin:4px 0 22px}
-.yticks span.on{color:var(--blue);font-weight:700}
+.yticks span.on{color:var(--accent-dark);font-weight:700}
 .cost .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font:400 .88rem var(--mono);margin-bottom:8px}
 .cost .row span:last-child{color:var(--muted);text-align:right}
-.cost .track{height:16px;border-radius:99px;background:#e6e8f3;overflow:hidden;margin-bottom:20px}
-.cost .fill{height:100%;border-radius:99px;background:var(--blue);transition:width .5s cubic-bezier(.2,.7,.2,1)}
-.cost .fill.att{background:var(--ink)}
+.cost .track{height:16px;border-radius:99px;background:var(--soft);border:1px solid var(--line);overflow:hidden;margin-bottom:20px}
+.cost .fill{height:100%;border-radius:99px;background:var(--accent);transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.cost .fill.att{background:var(--deep)}
 .three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
-.three div{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:14px}
+.three div{border:1px solid var(--line);border-radius:12px;background:var(--page);padding:14px}
 .three .e{font-size:1.4rem;line-height:1}
-.three b{display:block;font:800 1rem/1.15 var(--display);letter-spacing:-.02em;margin-top:8px}
-.callout{background:#fff8dc;border-left:6px solid var(--yellow);border-radius:0 12px 12px 0;padding:18px 22px;font-size:1.15rem;line-height:1.5;margin-top:24px}
+.three b{display:block;font:600 1.02rem/1.2 var(--serif);margin-top:8px}
+.callout{background:var(--lime);color:#16222a;border-radius:14px;padding:22px 24px;font:600 clamp(1.15rem,1.7vw,1.4rem)/1.35 var(--serif);margin-top:26px;transform:rotate(-1deg);box-shadow:0 18px 40px rgba(35,47,48,.1)}
 
 /* ---------- 7 · chooser ---------- */
-.tasks{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.tasks button{display:flex;align-items:center;gap:10px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;font:500 1rem/1.2 var(--sans);text-align:left;transition:border-color .2s,background .2s,transform .2s}
-.tasks button:hover{border-color:#b9c2fb;transform:translateY(-2px)}
-.tasks button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
-.spec{position:relative;margin:26px 14px 0}
-.spec .bar2{height:14px;border-radius:99px;background:linear-gradient(90deg,var(--dark) 0%,#5b5f97 50%,var(--blue) 100%)}
-.spec .ends{display:flex;justify-content:space-between;margin-top:10px;font:600 .85rem var(--mono)}
+.chooser{border:1px solid var(--line);border-radius:18px;background:var(--paper);overflow:hidden;box-shadow:0 24px 60px rgba(35,47,48,.08)}
+.chooser-grid{display:grid;grid-template-columns:300px 1fr}
+.tasks{display:flex;flex-direction:column;gap:6px;padding:18px;border-right:1px solid var(--line);background:var(--soft)}
+.tasks .tl{font:700 .7rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:4px 6px 8px}
+.tasks button{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid transparent;border-radius:10px;background:transparent;cursor:pointer;font:600 .96rem/1.2 var(--sans);text-align:left;transition:background .2s,color .2s}
+.tasks button:hover{background:var(--paper);border-color:var(--line)}
+.tasks button[aria-pressed=true]{background:var(--ink);color:var(--page)}
+.answer{padding:clamp(24px,4vw,40px)}
+.spec{position:relative;margin:14px 18px 0}
+.spec .bar2{height:14px;border-radius:99px;background:linear-gradient(90deg,var(--deep) 0%,#7f8a86 50%,var(--accent) 100%)}
+.spec .ends{display:flex;justify-content:space-between;margin-top:12px;font:700 .82rem var(--mono)}
+.spec .ends span:first-child{color:var(--deep)}
 .spec .ends span:nth-child(2){color:var(--muted)}
-.spec .ends span:last-child{color:var(--blue)}
-.pin{position:absolute;top:-13px;left:5%;transform:translateX(-50%);width:40px;height:40px;border-radius:50%;background:#fff;border:5px solid var(--yellow);box-shadow:0 6px 14px rgba(22,24,51,.25);transition:left .6s cubic-bezier(.3,1.4,.4,1)}
-.verdict{margin-top:28px;padding:24px 26px;border-radius:14px;background:var(--soft);border:1px solid #d9def9}
-.verdict .vw{font:800 clamp(1.9rem,3.4vw,2.7rem)/1.05 var(--display);letter-spacing:-.035em}
-.verdict .rd{font:400 .85rem var(--mono);color:var(--blue);margin:10px 0 10px}
-.verdict p{font-size:1.05rem;line-height:1.5;color:var(--muted)}
+.spec .ends span:last-child{color:var(--accent-dark)}
+.pin{position:absolute;top:-13px;left:5%;transform:translateX(-50%);width:40px;height:40px;border-radius:50%;background:var(--lime);border:4px solid var(--ink);box-shadow:0 6px 14px rgba(22,32,42,.25);transition:left .6s cubic-bezier(.3,1.4,.4,1)}
+.vw{font:600 clamp(2.1rem,4vw,3.2rem)/1.08 var(--serif);letter-spacing:-.03em;margin-top:34px}
+.rd{display:inline-block;font:700 .78rem var(--mono);color:var(--deep);background:var(--lime-soft);border-radius:99px;padding:4px 10px;margin:12px 0 12px}
+.why{font-size:1.08rem;line-height:1.6;color:var(--muted);max-width:540px}
+.moral{margin-top:10px;font-weight:700;font-size:.9rem;color:var(--accent-dark)}
+@media (max-width:760px){.chooser-grid{grid-template-columns:1fr}.tasks{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr}.tasks .tl{grid-column:1/-1}}
 
 /* ---------- 8 · catch ---------- */
-.quote2{font:700 clamp(2rem,4.2vw,3.4rem)/1.08 var(--display);letter-spacing:-.03em;padding-left:24px;border-left:8px solid var(--yellow)}
+.quote2{font:600 clamp(2rem,4.2vw,3.3rem)/1.1 var(--serif);letter-spacing:-.025em;padding-left:24px;border-left:8px solid var(--accent)}
 .four{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.four div{border:1px solid var(--line);border-radius:14px;background:#fff;padding:22px;transition:transform .2s,border-color .2s}
-.four div:hover{transform:translateY(-3px);border-color:#b9c2fb}
-.four .e{font-size:1.8rem;line-height:1}
-.four b{display:block;font:800 1.25rem/1.12 var(--display);letter-spacing:-.02em;margin:12px 0 6px}
-.four p{font-size:.98rem;line-height:1.45;color:var(--muted)}
+.four div{border-top:3px solid var(--accent);background:var(--paper);border-radius:0 0 14px 14px;padding:20px 22px;box-shadow:0 14px 30px rgba(35,47,48,.06);transition:transform .2s}
+.four div:hover{transform:translateY(-3px)}
+.four .e{font-size:1.6rem;line-height:1}
+.four b{display:block;font:600 1.25rem/1.15 var(--serif);margin:12px 0 6px}
+.four p{font-size:.98rem;line-height:1.5;color:var(--muted)}
 @media (max-width:480px){.four{grid-template-columns:1fr}}
 
 /* ---------- 9 · prompt ---------- */
-.prompt{background:var(--dark);border-radius:18px;padding:clamp(22px,3vw,32px);color:#e5e9fb}
+.prompt{background:var(--deep);border-radius:18px;padding:clamp(22px,3vw,34px);color:#ecf3ef}
 .prompt .top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
-.prompt .top span{font:400 .72rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#8f95c7}
-.prompt pre{margin:0;font:400 .9rem/1.7 var(--mono);white-space:pre-wrap}
-.prompt pre b{color:var(--orange);font-weight:400}
-.copybtn{font:600 .85rem var(--mono);border:1px solid #6a71ad;background:var(--dark2);color:#fff;border-radius:8px;padding:8px 14px;cursor:pointer}
-.copybtn:hover{background:#3a3f78}
+.prompt .top span{font:400 .7rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#8ea3b4}
+.prompt pre{margin:0;font:400 .9rem/1.8 var(--mono);white-space:pre-wrap;color:#e0eddb}
+.prompt pre b{color:var(--lime);font-weight:400}
+.copybtn{font:600 .82rem var(--mono);border:1px solid #abc0d0;background:#2b4158;color:#fff;border-radius:8px;padding:8px 14px;cursor:pointer}
+.copybtn:hover{background:#47617c}
 
 /* ---------- 10 · plot twist ---------- */
-.twist{max-width:900px;margin:0 auto}
-.twist h2{font-size:clamp(2.6rem,6vw,5.2rem)}
-.markup{margin-top:16px;font-size:1.05rem;line-height:1.55;color:var(--muted);max-width:680px}
-.ask{font:800 clamp(1.4rem,2.4vw,1.9rem)/1.15 var(--display);letter-spacing:-.02em;margin-top:40px}
+.lastword{background:var(--lime);color:#1a272b;border-radius:24px;padding:clamp(30px,6vw,72px)}
+.lastword .kicker{color:#334b33}
+.lastword .kicker::before{background:#334b33;box-shadow:0 0 0 5px rgba(51,75,51,.15)}
+.lastword h2{font-size:clamp(2.4rem,5.4vw,4.6rem);max-width:900px}
+.lastword h2 em{color:var(--accent-dark)}
+.lastword .lead{max-width:760px}
+.markup{margin-top:14px;font-size:1.05rem;line-height:1.6;color:#3b4a40;max-width:700px}
+.ask{font:600 clamp(1.4rem,2.4vw,1.85rem)/1.3 var(--serif);margin-top:30px;padding-top:26px;border-top:1px solid rgba(17,36,28,.22)}
 .poll{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;max-width:640px}
-.poll button{display:flex;flex-direction:column;gap:4px;text-align:left;padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;font:600 1.05rem/1.2 var(--sans);transition:border-color .2s,background .2s}
-.poll button small{font:400 .78rem var(--mono);color:var(--muted)}
-.poll button:hover{border-color:#b9c2fb}
-.poll button[aria-pressed=true]{border-color:var(--blue);background:var(--soft)}
-.pollres{min-height:3em;margin-top:12px;font:400 .88rem/1.55 var(--mono);color:var(--blue)}
+.poll button{display:flex;flex-direction:column;gap:4px;text-align:left;padding:16px 20px;border:1px solid rgba(17,36,28,.3);border-radius:12px;background:rgba(255,254,250,.6);cursor:pointer;font:700 1.02rem/1.2 var(--sans);transition:background .2s,color .2s}
+.poll button small{font:400 .78rem var(--mono);color:#4c5a51}
+.poll button:hover{background:var(--paper)}
+.poll button[aria-pressed=true]{background:var(--ink);color:var(--page);border-color:var(--ink)}
+.poll button[aria-pressed=true] small{color:#c9d4cc}
+.pollres{min-height:3em;margin-top:12px;font:600 .88rem/1.55 var(--mono);color:#334b33}
 
 /* ---------- 11 · sources ---------- */
-.srcs{display:flex;flex-direction:column;border-top:1px solid var(--line)}
-.srcs a{display:grid;grid-template-columns:70px 1fr auto;gap:14px;align-items:baseline;padding:14px 6px;border-bottom:1px solid var(--line);text-decoration:none;font-size:1.02rem;line-height:1.35;transition:background .2s}
-.srcs a:hover{background:var(--soft)}
-.srcs a span:first-child{font:600 .88rem var(--mono);color:var(--blue)}
-.srcs a span:last-child{font:400 .9rem var(--mono);color:var(--muted)}
-.author{display:flex;align-items:center;gap:16px;margin-top:28px}
-.av{flex:none;width:56px;height:56px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:800 1.2rem var(--display)}
-.author b{font:800 1.25rem var(--display);letter-spacing:-.02em}
+.srcs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.srcs a{display:block;background:var(--paper);border:1px solid var(--line);padding:16px 18px;border-radius:12px;text-decoration:none;transition:border-color .2s,transform .2s}
+.srcs a:hover{border-color:var(--accent);transform:translateY(-1px)}
+.srcs strong{display:flex;align-items:center;gap:7px;font-size:.95rem;margin-bottom:3px}
+.srcs span{display:block;font:400 .78rem var(--mono);color:var(--muted)}
+@media (max-width:640px){.srcs{grid-template-columns:1fr}}
+.author{display:flex;align-items:center;gap:16px;margin-top:34px;padding-top:26px;border-top:1px solid var(--line)}
+.av{flex:none;width:56px;height:56px;border-radius:50%;background:var(--ink);color:var(--lime);display:grid;place-items:center;font:600 1.2rem var(--serif)}
+.author b{font:600 1.25rem var(--serif)}
 .author span{display:block;color:var(--muted)}
-.credit2{margin-top:24px;font:400 .82rem/1.6 var(--mono);color:var(--muted);max-width:520px}
+.author .mini{margin-left:auto}
 footer{padding:28px 0 40px;font:400 .8rem/1.6 var(--mono);color:var(--muted)}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 /* ---------- Markdown mode: the whole page as source ---------- */
-.mdsrc{display:none;margin:0;max-width:880px;font:400 clamp(.9rem,1.25vw,1.05rem)/1.8 var(--mono);color:#3a3e5c;white-space:pre-wrap;overflow-wrap:anywhere}
+.mdsrc{display:none;margin:0;max-width:880px;font:400 clamp(.9rem,1.25vw,1.05rem)/1.8 var(--mono);color:#39434a;white-space:pre-wrap;overflow-wrap:anywhere}
 body.md .inner{display:none}
 body.md .mdsrc{display:block}
-body.md .sec{background:var(--paper);color:var(--ink);border-color:var(--line);min-height:0;padding:56px 0}
+body.md .sec{background:var(--page);color:var(--ink);border-color:var(--line);min-height:0;padding:56px 0}
 body.md .scrollcue{display:none}
-#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,12px);padding:11px 18px;border-radius:10px;background:var(--ink);color:#fff;font:13px var(--mono);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;max-width:calc(100% - 32px)}
+#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,12px);padding:11px 18px;border-radius:10px;background:var(--ink);color:var(--page);font:13px var(--mono);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;max-width:calc(100% - 32px)}
 #toast.show{opacity:1;transform:translate(-50%,0)}
 
 @media (prefers-reduced-motion:reduce){
@@ -290,6 +331,9 @@ body.md .scrollcue{display:none}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="anthropic" viewBox="0 0 1040 1040"><g transform="translate(0.000000,1040.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"> <path d="M2865 8788 c-21 -51 -38 -98 -39 -104 -1 -7 -7 -18 -13 -25 -5 -8 -14 -27 -18 -44 -10 -37 -10 -35 -22 -65 -41 -98 -63 -155 -63 -167 0 -7 -3 -13 -8 -13 -4 0 -16 -27 -26 -60 -11 -33 -22 -60 -26 -60 -4 0 -7 -6 -7 -12 0 -12 -142 -378 -163 -423 -5 -11 -43 -105 -84 -210 -144 -371 -208 -530 -222 -559 -8 -16 -14 -33 -14 -38 0 -5 -10 -30 -21 -56 -12 -25 -22 -51 -24 -57 -2 -10 -6 -21 -38 -97 -8 -20 -13 -38 -11 -41 3 -2 -2 -10 -11 -17 -8 -7 -15 -21 -15 -31 0 -11 -4 -27 -9 -37 -20 -35 -61 -135 -61 -146 0 -6 -6 -22 -13 -36 -7 -14 -24 -54 -37 -90 -13 -36 -30 -76 -37 -90 -7 -14 -13 -30 -13 -36 0 -5 -9 -29 -20 -52 -11 -22 -20 -47 -20 -55 0 -7 -5 -18 -11 -24 -6 -6 -12 -17 -13 -24 -2 -8 -7 -23 -11 -34 -4 -11 -73 -184 -152 -385 -79 -201 -164 -414 -189 -475 -25 -60 -47 -117 -49 -125 -1 -8 -10 -31 -18 -50 -40 -90 -87 -213 -87 -226 0 -8 -4 -14 -10 -14 -5 0 -10 -9 -10 -19 0 -11 -5 -23 -10 -26 -6 -4 -8 -11 -4 -16 3 -5 1 -15 -4 -22 -5 -7 -41 -93 -80 -192 -39 -99 -77 -193 -83 -210 -7 -16 -13 -32 -14 -35 -1 -3 -5 -14 -10 -25 -48 -116 -135 -342 -135 -352 0 -7 -5 -13 -12 -13 -6 0 -8 -3 -5 -7 4 -3 3 -11 -2 -17 -5 -6 -14 -29 -21 -51 -7 -22 -20 -56 -28 -75 -9 -19 -16 -37 -17 -40 -1 -3 -5 -14 -10 -25 -4 -11 -44 -110 -87 -220 -43 -110 -82 -209 -87 -220 -5 -11 -19 -47 -31 -80 -13 -33 -29 -73 -36 -90 -18 -42 -58 -149 -59 -157 0 -4 -6 -13 -12 -19 -7 -7 -13 -21 -13 -31 0 -10 -4 -26 -10 -36 -5 -9 -53 -127 -106 -262 -53 -135 -100 -254 -105 -265 -4 -11 -27 -67 -49 -125 -23 -58 -47 -118 -54 -135 -8 -16 -22 -52 -31 -80 -10 -27 -23 -56 -28 -62 -5 -7 -6 -13 -3 -13 4 0 0 -12 -8 -27 -8 -16 -31 -71 -51 -123 -21 -52 -46 -116 -56 -142 l-19 -48 813 0 812 0 35 93 c19 50 35 94 35 97 1 3 9 22 18 44 9 21 17 41 17 43 0 5 44 119 64 168 7 17 30 75 51 130 21 55 43 114 50 130 6 17 18 46 25 65 6 19 16 44 21 55 11 26 139 357 143 370 2 6 8 24 15 40 6 17 19 50 28 75 9 25 21 51 26 58 5 6 7 12 4 12 -3 0 10 35 28 78 l34 77 1517 0 1517 0 74 -190 c40 -104 76 -197 79 -205 3 -8 19 -51 36 -95 16 -44 34 -89 39 -100 4 -11 31 -81 59 -155 28 -74 57 -151 65 -170 25 -60 38 -95 39 -102 1 -3 4 -10 9 -14 4 -4 7 -14 7 -21 0 -8 11 -39 25 -69 14 -30 25 -58 25 -62 0 -8 68 -185 95 -247 7 -16 18 -47 25 -67 l12 -38 810 0 810 0 -6 26 c-4 14 -15 45 -25 68 -10 22 -42 102 -71 176 -29 74 -58 149 -65 165 -7 17 -43 107 -79 200 -37 94 -70 179 -75 190 -5 11 -13 31 -19 45 -6 14 -56 142 -112 285 -56 143 -106 269 -111 280 -4 11 -18 45 -29 75 -12 30 -28 70 -37 89 -8 18 -16 39 -18 45 -1 6 -10 29 -19 50 -10 22 -19 48 -21 58 -2 10 -7 24 -12 31 -4 6 -8 14 -9 17 0 3 -4 14 -9 25 -4 11 -18 45 -30 75 -12 30 -26 64 -30 75 -5 11 -9 22 -10 25 -1 3 -5 14 -10 25 -67 166 -135 342 -135 352 0 7 -4 13 -8 13 -5 0 -9 6 -9 13 -1 12 -50 141 -79 204 -8 17 -14 33 -14 36 0 2 -6 20 -14 38 -8 19 -14 36 -14 39 -1 3 -15 39 -32 80 -42 102 -48 116 -61 143 -5 13 -11 29 -13 37 -2 8 -8 26 -13 40 -6 14 -36 90 -68 170 -31 80 -60 154 -65 165 -23 51 -65 157 -92 229 -16 44 -35 94 -43 111 -8 16 -27 64 -43 105 -16 41 -33 84 -37 95 -5 11 -9 22 -10 25 -6 16 -18 48 -26 65 -4 11 -22 56 -39 100 -17 44 -35 90 -40 103 -14 31 -24 56 -58 142 -16 41 -33 84 -37 95 -5 11 -9 22 -10 25 -1 3 -7 18 -13 33 -7 16 -12 34 -12 41 0 6 -4 16 -8 22 -5 5 -15 25 -22 44 -7 19 -20 51 -28 70 -8 19 -18 44 -22 55 -5 11 -50 126 -100 255 -108 276 -102 262 -129 322 -12 26 -21 52 -21 58 0 6 -4 18 -9 28 -15 29 -29 63 -61 147 -17 44 -35 90 -40 103 -6 12 -14 32 -19 45 -17 43 -40 103 -85 218 -26 64 -46 121 -46 127 0 6 -3 12 -7 14 -5 2 -16 24 -25 51 -10 26 -26 68 -35 95 -10 26 -22 50 -28 54 -5 4 -7 8 -3 8 4 0 -5 28 -18 63 -23 58 -30 75 -54 130 -5 12 -44 110 -85 217 -42 107 -82 209 -89 225 -7 17 -51 126 -97 243 l-83 212 -832 0 -832 0 -37 -92z m910 -1869 c4 -13 13 -37 20 -54 7 -16 35 -88 63 -160 27 -71 53 -139 57 -150 5 -11 9 -22 10 -25 9 -26 47 -125 58 -150 6 -14 11 -27 12 -30 1 -3 5 -12 8 -20 3 -8 29 -76 57 -150 28 -74 57 -148 64 -165 8 -16 19 -48 26 -70 7 -22 16 -44 20 -50 5 -5 8 -12 9 -15 0 -8 12 -43 27 -77 8 -17 14 -34 14 -38 0 -4 6 -21 14 -38 8 -18 42 -106 76 -197 34 -91 70 -183 80 -205 9 -22 23 -57 30 -79 7 -21 30 -82 52 -135 22 -53 41 -103 43 -111 2 -8 22 -62 45 -120 23 -58 50 -130 61 -160 11 -30 24 -59 29 -64 6 -6 10 -19 10 -29 0 -10 7 -31 15 -45 22 -42 47 -125 38 -131 -4 -3 -450 -4 -989 -1 l-982 5 24 60 c12 33 47 123 77 200 30 77 57 149 62 160 4 11 9 25 10 30 3 11 60 157 74 190 5 11 24 58 41 105 18 47 39 100 47 119 8 18 16 39 17 45 4 22 48 131 58 143 6 7 8 13 4 13 -4 0 0 13 9 30 8 16 15 32 15 35 0 3 7 21 15 41 8 20 15 38 15 40 0 1 5 15 12 31 6 15 12 30 13 33 5 20 20 61 35 95 9 22 33 83 53 135 20 52 56 147 81 210 95 244 300 780 322 840 5 14 32 -36 49 -91z"/> <path d="M5910 8866 c0 -8 4 -17 9 -20 4 -3 14 -26 21 -51 7 -25 17 -45 21 -45 5 0 9 -9 9 -20 0 -11 4 -28 9 -38 5 -9 17 -37 27 -62 10 -25 25 -63 34 -85 39 -91 94 -241 92 -247 -1 -5 2 -8 8 -8 6 0 10 -6 10 -13 0 -12 18 -59 63 -167 5 -14 11 -29 13 -35 1 -5 34 -89 74 -185 39 -96 73 -182 75 -190 2 -8 9 -28 16 -45 7 -16 13 -32 14 -35 1 -3 6 -16 13 -30 6 -14 49 -124 97 -245 47 -121 94 -240 104 -265 11 -25 36 -88 56 -140 54 -140 64 -166 83 -210 9 -22 118 -298 219 -555 20 -49 41 -103 48 -120 7 -16 25 -61 40 -100 14 -38 30 -79 35 -90 5 -11 19 -45 30 -75 12 -30 27 -66 33 -80 6 -14 11 -27 11 -30 1 -6 21 -56 44 -110 49 -118 92 -235 92 -247 0 -7 5 -13 10 -13 6 0 10 -6 10 -12 0 -13 49 -144 76 -203 7 -16 25 -61 40 -100 14 -38 29 -74 32 -80 4 -5 7 -17 9 -25 1 -8 6 -23 12 -35 6 -11 74 -182 151 -380 78 -198 150 -379 161 -402 10 -24 19 -46 19 -51 0 -5 9 -27 20 -50 11 -22 20 -48 20 -56 0 -8 4 -17 9 -20 5 -3 12 -18 16 -33 3 -16 13 -41 20 -58 8 -16 43 -104 79 -195 35 -91 125 -319 200 -508 75 -189 136 -345 136 -348 0 -2 9 -23 19 -47 10 -23 26 -62 36 -87 20 -53 43 -108 56 -132 5 -10 9 -24 9 -31 0 -7 11 -37 25 -65 14 -29 25 -55 25 -59 0 -8 37 -101 66 -170 8 -17 14 -33 14 -36 0 -2 8 -22 17 -43 9 -22 17 -41 18 -44 1 -3 5 -14 10 -25 59 -146 175 -447 175 -455 0 -7 276 -10 800 -10 l800 0 -19 48 c-10 26 -40 101 -66 167 -26 66 -55 138 -65 160 -9 22 -23 57 -30 78 -7 22 -18 51 -26 65 -8 15 -14 31 -14 35 0 5 -6 23 -14 40 -22 49 -107 261 -109 272 -4 16 -87 228 -98 247 -4 9 -32 77 -60 150 -28 73 -56 144 -61 158 -6 14 -12 30 -13 35 -2 6 -12 32 -24 57 -11 25 -28 68 -37 94 -9 27 -24 67 -34 89 -18 40 -32 76 -34 85 -3 12 -250 630 -267 667 -10 24 -19 49 -19 57 0 8 -4 18 -10 21 -5 3 -10 13 -10 21 0 8 -9 33 -19 57 -11 23 -40 94 -64 157 -116 296 -179 457 -187 475 -14 32 -59 145 -203 510 -73 187 -137 349 -142 360 -5 11 -9 22 -10 25 -1 3 -6 16 -12 30 -6 14 -19 45 -28 70 -9 25 -21 54 -25 65 -28 65 -161 403 -165 415 -2 8 -11 33 -21 55 -10 22 -18 42 -19 45 0 5 -120 309 -135 345 -5 11 -19 45 -30 75 -34 86 -37 93 -54 132 -9 20 -16 38 -16 41 0 3 -4 16 -9 29 -5 13 -9 25 -8 28 0 3 -10 23 -22 45 -11 22 -21 43 -21 47 0 5 -46 122 -101 261 -56 138 -108 270 -116 291 -8 22 -17 45 -21 50 -3 6 -7 18 -9 26 -1 8 -7 26 -14 40 -17 36 -25 55 -59 145 -17 44 -35 89 -40 100 -4 11 -38 97 -75 190 -89 229 -155 396 -165 420 -5 11 -18 43 -28 70 -11 28 -32 80 -47 118 l-27 67 -794 0 c-685 0 -794 -2 -794 -14z"/> </g></symbol>
+</svg>
 
 <header class="topbar">
   <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -309,7 +353,7 @@ body.md .scrollcue{display:none}
   <!-- 1 · hook -->
   <section class="sec" id="s1" data-file="is-html-the-new-markdown.html">
     <div class="wrap"><div class="inner">
-      <p class="cmt">&lt;!-- 01 · you scrolled past it --&gt;</p>
+      <p class="kicker">Is HTML the new Markdown?</p>
       <h1 class="hero">You scrolled past<br>my <span class="strike">text post.</span><br>So I rebuilt it in <mark>HTML</mark>.<span class="caret" aria-hidden="true"></span></h1>
       <p class="lead" style="margin-top:26px">Which is kind of the whole point of this post.</p>
       <span class="stamp">rendered for humans, not for parsers</span>
@@ -320,35 +364,23 @@ body.md .scrollcue{display:none}
   </section>
 
   <!-- 2 · the irony -->
-  <section class="sec alt" id="s2" data-file="the-irony.html">
-    <div class="wrap"><div class="inner two">
-      <div>
-        <p class="cmt">&lt;!-- 02 · the irony --&gt;</p>
-        <h2>Same tags.<br>22 years apart.</h2>
-        <p class="sub">In 2004 we invented Markdown so we'd never have to type HTML again. In 2026 we ask AI to generate entire HTML pages for us.</p>
-        <p class="ironyline later" id="irony"><b>The web has an excellent sense of irony.</b> It just renders it differently.</p>
+  <section class="sec paper" id="s2" data-file="the-irony.html">
+    <div class="wrap"><div class="inner center">
+      <p class="kicker">02 / A 22-year plot twist</p>
+      <div class="comic">
+        <div class="line reveal" id="l2004"><span class="yr">2004:</span><q>Can we please stop typing HTML?</q></div>
+        <div class="line now reveal" id="l2026"><span class="yr">2026:</span><q>Can the AI please generate an entire HTML experience?</q></div>
+        <p class="punch reveal" id="lpunch"><b>The web has an excellent sense of irony.</b> It just renders it differently.</p>
       </div>
-      <div class="eras">
-        <div class="era">
-          <div class="yr">2004</div>
-          <p class="say">“Can we please stop typing HTML?”</p>
-          <div class="flowline"><span>you type</span><code>**bold**</code><span>→ a script writes</span><code>&lt;strong&gt;</code></div>
-        </div>
-        <button class="mini ff" id="ff">⏩ fast-forward 22 years</button>
-        <div class="era now later" id="era2026">
-          <div class="yr">2026</div>
-          <p class="say">“Can the AI please generate an entire HTML experience?”</p>
-          <div class="flowline"><span>you type</span><code>explain this to me</code><span>→ AI writes</span><code class="h">&lt;section&gt;&lt;svg&gt;&lt;input&gt;</code></div>
-        </div>
-      </div>
+      <button class="mini replay" id="replay">↺ replay</button>
     </div></div>
   </section>
 
   <!-- 3 · who said what -->
-  <section class="sec" id="s3" data-file="how-html-left-and-came-back.html">
+  <section class="sec" id="s3" data-file="who-put-html-back.html">
     <div class="wrap"><div class="inner">
-      <p class="cmt">&lt;!-- 03 · who said what --&gt;</p>
-      <h2>How HTML left.<br>And how it came back.</h2>
+      <p class="kicker">03 / Who said what</p>
+      <h2>So who put HTML back in the <em>group chat?</em></h2>
       <div class="axis" id="axis"><span class="fillln" id="axisFill"></span></div>
       <div class="tl-track" id="tlTrack">
         <article class="tl-card">
@@ -367,7 +399,7 @@ body.md .scrollcue{display:none}
         </article>
         <article class="tl-card">
           <div class="yr">2024</div>
-          <div class="who"><b>Anthropic</b> · Artifacts</div>
+          <div class="who"><span class="badge"><svg class="am"><use href="#anthropic"/></svg>Anthropic</span> Artifacts</div>
           <div class="big">Make AI output <mark>openable</mark>.</div>
           <p>Generated pages sit beside the chat as things you use, not code you copy.</p>
           <a href="https://www.anthropic.com/news/claude-3-5-sonnet" target="_blank" rel="noopener">The announcement ↗</a>
@@ -381,7 +413,7 @@ body.md .scrollcue{display:none}
         </article>
         <article class="tl-card last">
           <div class="yr">2026</div>
-          <div class="who"><b>Thariq Shihipar</b> · Claude Code team</div>
+          <div class="who"><b>Thariq Shihipar</b> <span class="badge"><svg class="am"><use href="#anthropic"/></svg>Claude Code team</span></div>
           <div class="big">Make agent output <mark>explorable</mark>.</div>
           <p>HTML is back, as the format AI uses to show its work to people.</p>
           <a href="https://claude.dev/blog/using-claude-code-the-unreasonable-effectiveness-of-html/" target="_blank" rel="noopener">The Unreasonable Effectiveness of HTML ↗</a>
@@ -398,12 +430,14 @@ body.md .scrollcue{display:none}
   </section>
 
   <!-- 4 · the spark -->
-  <section class="sec alt" id="s4" data-file="claude.dev/blog/the-unreasonable-effectiveness-of-html">
+  <section class="sec paper" id="s4" data-file="claude.dev/blog/the-unreasonable-effectiveness-of-html">
     <div class="wrap"><div class="inner quote" id="quote">
-      <p class="cmt">&lt;!-- 04 · the spark --&gt;</p>
-      <div class="qmark" aria-hidden="true">“</div>
-      <blockquote class="big">I find it difficult to read a Markdown file of more than a hundred lines.</blockquote>
-      <p class="attr"><b>Thariq Shihipar</b>, Claude Code team, in “Using Claude Code: The Unreasonable Effectiveness of HTML” (May 2026). He has stopped using Markdown for almost everything.</p>
+      <p class="kicker">04 / The spark</p>
+      <div class="pull"><blockquote>I find it difficult to read a Markdown file of more than a hundred lines.</blockquote></div>
+      <div class="attr">
+        <span class="amchip" aria-hidden="true"><svg class="am"><use href="#anthropic"/></svg></span>
+        <p><b>Thariq Shihipar</b>, Claude Code team at Anthropic, in “Using Claude Code: The Unreasonable Effectiveness of HTML” (May 2026). He has stopped using Markdown for almost everything.</p>
+      </div>
       <div class="btnrow">
         <button class="mini" id="tryLong">Try reading 120 lines ↓</button>
         <a class="mini" href="https://thariqs.github.io/html-effectiveness/" target="_blank" rel="noopener">See his HTML examples ↗</a>
@@ -418,60 +452,64 @@ body.md .scrollcue{display:none}
 
   <!-- 5 · break it (safely) -->
   <section class="sec dark" id="s5" data-theme="dark" data-file="customer-analytics.md" data-file-html="customer-analytics.html">
-    <div class="wrap"><div class="inner two l">
-      <div>
-        <p class="cmt">&lt;!-- 05 · don't just read it --&gt;</p>
-        <h2>Don't just read it.<br><mark>Break it</mark> (safely).</h2>
-        <p class="challenge">Same spec, two formats. Your job: if we rename <code>customer_id</code>, what breaks?</p>
+    <div class="wrap"><div class="inner">
+      <div class="demohead">
+        <p class="kicker">05 / Don't just read it. Break it (safely)</p>
+        <h2>A Markdown doc <em>describes</em> your system. An HTML doc lets you <em>question</em> it.</h2>
+        <p class="sub">Same spec, two formats. Ask it one thing: <b style="color:#fff">“what breaks if I change this?”</b> The Markdown makes you work it out. The HTML just answers.</p>
+      </div>
+      <div class="fmtwrap">
         <div class="fmt" role="group" aria-label="Format">
-          <button aria-pressed="true" data-fmt="md">📄 Read the Markdown</button>
-          <button aria-pressed="false" data-fmt="html" class="nudge">✦ Explore the HTML</button>
+          <button aria-pressed="true" data-fmt="md">01 / Read the Markdown</button>
+          <button aria-pressed="false" data-fmt="html" class="nudge">02 / Explore the HTML ✦</button>
         </div>
-        <p class="dcap" id="dcap">To answer, you read every line and hold the pipeline in your head.</p>
-        <p class="note" style="margin-top:14px">Fictional pipeline · not a real lineage engine</p>
       </div>
       <div class="dstage">
         <div class="dpanel" id="pMd">
-          <div class="dlabel">customer-analytics.md</div>
+          <div class="dlabel">customer-analytics.md · fictional example</div>
+          <div class="mdbox">
 <pre class="mdspec"><b>#</b> Customer analytics data product
 
 <b>##</b> Pipeline
-Source → CDC → Transform → Semantic → Dashboard
+Source → CDC → Transform → Semantic model → Dashboard
 
 <b>##</b> Proposed changes
-A. Rename source.customer_id to account_id
+A. Increase precision of order_amount
+   Review cast logic, metric aggregation, display.
+B. Rename the semantic metric net_revenue
+   Review dashboard references to the metric.
+C. Rename source.customer_id to account_id
    Possible impact: CDC mapping, transformation,
    semantic relationship, downstream dashboard.
-B. Increase precision of order_amount
-   Review casts, aggregation and display.
-C. Rename the metric net_revenue
-   Review dashboard references to the metric.
 
 <b>##</b> Open question
 Which consumers must be updated together?</pre>
+          </div>
         </div>
         <div class="dpanel" id="pHtml" hidden>
-          <div class="dlabel">pick a change</div>
-          <div class="scen" role="group" aria-label="Proposed change">
-            <button aria-pressed="true" data-scen="rename">Rename customer_id</button>
-            <button aria-pressed="false" data-scen="precision">Amount precision</button>
-            <button aria-pressed="false" data-scen="metric">Rename metric</button>
+          <div class="dtop">
+            <div><div class="dlabel" style="margin-bottom:4px">customer analytics · change-impact explorer</div><p class="note" style="color:#b6c6d1">Pick a change, then tap any step to see why it's affected.</p></div>
+            <span class="livepill">live in your browser</span>
           </div>
-          <div class="dlabel">then tap any step</div>
+          <div class="scen" role="group" aria-label="Proposed change" style="margin-top:14px">
+            <button aria-pressed="true" data-scen="precision">Change amount precision</button>
+            <button aria-pressed="false" data-scen="metric">Rename revenue metric</button>
+            <button aria-pressed="false" data-scen="rename">Rename customer_id</button>
+          </div>
           <div class="pipe" id="pipe">
-            <button class="node" data-node="contract"><span class="ic">▤</span><b>Source</b><small></small></button>
-            <button class="node" data-node="cdc"><span class="ic">⇄</span><b>CDC</b><small></small></button>
-            <button class="node" data-node="model"><span class="ic">◇</span><b>Transform</b><small></small></button>
-            <button class="node" data-node="semantic"><span class="ic">◎</span><b>Semantic</b><small></small></button>
-            <button class="node" data-node="dashboard"><span class="ic">▥</span><b>Dashboard</b><small></small></button>
+            <button class="node" data-node="contract"><span class="ic">▤</span><b>Source contract</b><small></small></button>
+            <button class="node" data-node="cdc"><span class="ic">⇄</span><b>CDC ingestion</b><small></small></button>
+            <button class="node" data-node="model"><span class="ic">◇</span><b>Transformation</b><small></small></button>
+            <button class="node" data-node="semantic"><span class="ic">◎</span><b>Semantic layer</b><small></small></button>
+            <button class="node" data-node="dashboard"><span class="ic">▥</span><b>BI dashboard</b><small></small></button>
           </div>
-          <div class="dres" aria-live="polite">
-            <span class="cnt" id="cnt">5/5</span>
-            <b id="nodeName">Source contract</b>
-            <span id="nodeText"></span>
+          <div class="dres">
+            <div class="rcard" aria-live="polite"><div class="dlabel">Review surface</div><h4><span class="cnt" id="cnt">4</span> of 5 components</h4><p id="summary"></p></div>
+            <div class="rcard" aria-live="polite"><div class="dlabel">Selected step</div><h4 id="nodeName">Source contract</h4><p id="nodeText"></p></div>
           </div>
         </div>
       </div>
+      <p class="dcap" id="dcap">To answer, you read every line and hold the pipeline in your head.</p>
     </div></div>
   </section>
 
@@ -479,8 +517,8 @@ Which consumers must be updated together?</pre>
   <section class="sec" id="s6" data-file="why-now.html">
     <div class="wrap"><div class="inner two">
       <div>
-        <p class="cmt">&lt;!-- 06 · why now --&gt;</p>
-        <h2>The browser didn't get smarter. Building for it got <mark>cheaper</mark>.</h2>
+        <p class="kicker">06 / Why now</p>
+        <h2>The browser didn't get smarter. Building for it got <em>cheaper</em>.</h2>
         <p class="callout">Markdown won because it was easy for humans to write. HTML is coming back because it's easy for machines to generate.</p>
       </div>
       <div class="panel">
@@ -505,14 +543,14 @@ Which consumers must be updated together?</pre>
   </section>
 
   <!-- 7 · choose -->
-  <section class="sec alt" id="s7" data-file="pick-your-format.html">
+  <section class="sec paper" id="s7" data-file="pick-your-format.html">
     <div class="wrap"><div class="inner">
-      <p class="cmt">&lt;!-- 07 · choose responsibly --&gt;</p>
-      <h2>Does every document need to become an app? Absolutely <mark>not</mark>.</h2>
-      <div class="two" style="align-items:start;margin-top:12px">
-        <div>
-          <p class="sub" style="margin-bottom:16px">What are you making? Pick one.</p>
+      <p class="kicker">07 / Choose your weapon (responsibly)</p>
+      <h2>Does every document need to become an app? Absolutely <em>not.</em></h2>
+      <div class="chooser" style="margin-top:8px">
+        <div class="chooser-grid">
           <div class="tasks" id="tasks" role="group" aria-label="What are you making?">
+            <div class="tl">What are you making?</div>
             <button data-task="prompt" aria-pressed="true">🤖 Prompt / CLAUDE.md</button>
             <button data-task="readme" aria-pressed="false">📘 README / runbook</button>
             <button data-task="contract" aria-pressed="false">🔗 Data contract</button>
@@ -520,19 +558,17 @@ Which consumers must be updated together?</pre>
             <button data-task="arch" aria-pressed="false">🧭 Architecture review</button>
             <button data-task="pr" aria-pressed="false">🔍 Complex PR review</button>
           </div>
-        </div>
-        <div>
-          <div class="spec">
-            <div class="bar2"></div>
-            <span class="pin" id="pin" aria-hidden="true"></span>
-            <div class="ends"><span>Markdown</span><span>both</span><span>HTML</span></div>
-          </div>
-          <div class="verdict" aria-live="polite">
+          <div class="answer" aria-live="polite">
+            <div class="spec">
+              <div class="bar2"></div>
+              <span class="pin" id="pin" aria-hidden="true"></span>
+              <div class="ends"><span>Markdown</span><span>both</span><span>HTML</span></div>
+            </div>
             <div class="vw" id="vWord">Markdown.</div>
             <div class="rd" id="vReader">who reads it: the model</div>
-            <p id="vWhy">Light, cheap on tokens and easy to diff. Models read it best.</p>
+            <p class="why" id="vWhy"></p>
+            <p class="moral" id="vMoral"></p>
           </div>
-          <p class="note" style="margin-top:14px">Rule of thumb: pick the format by who reads it.</p>
         </div>
       </div>
     </div></div>
@@ -542,7 +578,7 @@ Which consumers must be updated together?</pre>
   <section class="sec" id="s8" data-file="the-catch.html">
     <div class="wrap"><div class="inner two">
       <div>
-        <p class="cmt">&lt;!-- 08 · the catch --&gt;</p>
+        <p class="kicker">08 / The catch</p>
         <p class="quote2">A beautiful page can make a shallow answer look deep.</p>
         <p class="note" style="margin-top:22px">The format improved. Our judgment has to keep up.</p>
       </div>
@@ -556,15 +592,15 @@ Which consumers must be updated together?</pre>
   </section>
 
   <!-- 9 · try it -->
-  <section class="sec alt" id="s9" data-file="try-it.html">
+  <section class="sec paper" id="s9" data-file="try-it.html">
     <div class="wrap"><div class="inner two l">
       <div>
-        <p class="cmt">&lt;!-- 09 · take it into your next review --&gt;</p>
+        <p class="kicker">09 / Take it into your next review</p>
         <h2>Give your agent a better job than “write me a document.”</h2>
         <p class="sub">Try it on one real review and compare what people catch in five minutes. Measure understanding, not animations.</p>
       </div>
       <div class="prompt">
-        <div class="top"><span>copy into your coding agent</span><button class="copybtn" id="copyPrompt">Copy prompt</button></div>
+        <div class="top"><span>copy into your coding agent</span><button class="copybtn" id="copyPrompt">Copy prompt ↗</button></div>
 <pre id="agentPrompt">Create a single, self-contained HTML explainer for this topic.
 
 Audience: people reviewing a decision, not passively reading.
@@ -584,9 +620,9 @@ Only add interaction where it helps understanding.</pre>
 
   <!-- 10 · plot twist -->
   <section class="sec" id="s10" data-file="the-plot-twist.html">
-    <div class="wrap"><div class="inner twist">
-      <p class="cmt">&lt;!-- 10 · the actual plot twist --&gt;</p>
-      <h2>HTML isn't the new Markdown. It's Markdown's <mark>new partner</mark>.</h2>
+    <div class="wrap"><div class="inner lastword">
+      <p class="kicker">10 / The actual plot twist</p>
+      <h2>HTML isn't the new Markdown. It's Markdown's <em>new partner.</em></h2>
       <p class="lead">Markdown for the record. HTML for the reasoning. Your judgment for both.</p>
       <p class="markup">We spent 22 years trying not to write HTML, only to ask our agents to write it for us. Markup my words.</p>
       <p class="ask">Would you rather get a clean page of text or an interactive page from AI?</p>
@@ -599,33 +635,29 @@ Only add interaction where it helps understanding.</pre>
   </section>
 
   <!-- 11 · sources -->
-  <section class="sec alt" id="s11" data-file="receipts.html">
-    <div class="wrap"><div class="inner two" style="align-items:start">
-      <div>
-        <p class="cmt">&lt;!-- 11 · sources --&gt;</p>
-        <h2>Receipts.</h2>
-        <p class="sub">Primary sources and the conversation around them. The opinions are mine.</p>
-        <div class="author">
-          <div class="av" aria-hidden="true">AS</div>
-          <div><b>Aayushi Solanki</b><span>Exploring how we work with AI</span></div>
-        </div>
-        <p class="credit2">Timeline and pipeline demo adapted from Rakesh Vishvakarma's “HTML is the new Markdown? Well, that's a plot twist.”</p>
-        <a class="mini" href="#s1" style="margin-top:20px">↑ back to the top</a>
-      </div>
+  <section class="sec paper" id="s11" data-file="receipts.html">
+    <div class="wrap"><div class="inner">
+      <p class="kicker">Sources / The real paper trail</p>
+      <h2>Receipts, because the internet remembers. <em>Sometimes.</em></h2>
       <div class="srcs">
-        <a href="https://daringfireball.net/2004/03/introducing_markdown" target="_blank" rel="noopener"><span>2004</span><span>John Gruber · Introducing Markdown</span><span>↗</span></a>
-        <a href="https://worrydream.com/ExplorableExplanations/" target="_blank" rel="noopener"><span>2011</span><span>Bret Victor · Explorable Explanations</span><span>↗</span></a>
-        <a href="https://www.anthropic.com/news/claude-3-5-sonnet" target="_blank" rel="noopener"><span>2024</span><span>Anthropic · Artifacts launch</span><span>↗</span></a>
-        <a href="https://simonwillison.net/2025/Dec/10/html-tools/" target="_blank" rel="noopener"><span>2025</span><span>Simon Willison · Useful patterns for HTML tools</span><span>↗</span></a>
-        <a href="https://simonwillison.net/2026/May/8/unreasonable-effectiveness-of-html/" target="_blank" rel="noopener"><span>2026</span><span>Simon Willison · on Thariq's essay</span><span>↗</span></a>
-        <a href="https://claude.dev/blog/using-claude-code-the-unreasonable-effectiveness-of-html/" target="_blank" rel="noopener"><span>2026</span><span>Thariq Shihipar · The Unreasonable Effectiveness of HTML</span><span>↗</span></a>
-        <a href="https://thariqs.github.io/html-effectiveness/" target="_blank" rel="noopener"><span>2026</span><span>Thariq Shihipar · 20 HTML examples</span><span>↗</span></a>
+        <a href="https://daringfireball.net/2004/03/introducing_markdown" target="_blank" rel="noopener"><strong>John Gruber · Introducing Markdown</strong><span>2004 · the original announcement ↗</span></a>
+        <a href="https://worrydream.com/ExplorableExplanations/" target="_blank" rel="noopener"><strong>Bret Victor · Explorable Explanations</strong><span>2011 · the older idea of active reading ↗</span></a>
+        <a href="https://www.anthropic.com/news/claude-3-5-sonnet" target="_blank" rel="noopener"><strong><svg class="am"><use href="#anthropic"/></svg>Anthropic · Artifacts launch</strong><span>2024 · June announcement ↗</span></a>
+        <a href="https://simonwillison.net/2025/Dec/10/html-tools/" target="_blank" rel="noopener"><strong>Simon Willison · Useful patterns for HTML tools</strong><span>2025 · single-file tool building ↗</span></a>
+        <a href="https://claude.dev/blog/using-claude-code-the-unreasonable-effectiveness-of-html/" target="_blank" rel="noopener"><strong><svg class="am"><use href="#anthropic"/></svg>Thariq Shihipar · The Unreasonable Effectiveness of HTML</strong><span>2026 · the essay, May 20 ↗</span></a>
+        <a href="https://thariqs.github.io/html-effectiveness/" target="_blank" rel="noopener"><strong>Thariq Shihipar · 20 HTML examples</strong><span>2026 · the companion gallery ↗</span></a>
+        <a href="https://simonwillison.net/2026/May/8/unreasonable-effectiveness-of-html/" target="_blank" rel="noopener"><strong>Simon Willison · on Thariq's essay</strong><span>2026 · contemporary discussion ↗</span></a>
+      </div>
+      <div class="author">
+        <div class="av" aria-hidden="true">AS</div>
+        <div><b>Aayushi Solanki</b><span>Exploring how we work with AI. Opinions are my own.</span></div>
+        <a class="mini" href="#s1">↑ back to the top</a>
       </div>
     </div></div>
   </section>
 </main>
 
-<footer><div class="wrap"><span>One HTML file. No framework, no trackers.</span><a href="https://github.com/Aayushi096/is-html-the-new-markdown" target="_blank" rel="noopener">source on GitHub ↗</a></div></footer>
+<footer><div class="wrap"><span>One HTML file. No framework, no trackers. Just a few tags with ambition.</span><a href="https://github.com/Aayushi096/is-html-the-new-markdown" target="_blank" rel="noopener">source on GitHub ↗</a></div></footer>
 <div id="toast" role="status"></div>
 
 <script>
@@ -647,20 +679,15 @@ Only add interaction where it helps understanding.</pre>
     document.body.appendChild(el); el.select(); let ok = false; try { ok = document.execCommand('copy'); } catch {} el.remove(); return ok;
   }
 
-  /* ---------- 02 · fast-forward 22 years ---------- */
-  function revealNow() {
-    $('#era2026').classList.add('show'); $('#irony').classList.add('show');
-    $('#ff').textContent = '↺ back to 2004';
+  /* ---------- 02 · the irony, line by line ---------- */
+  let ironyTimers = [];
+  function playIrony() {
+    ironyTimers.forEach(clearTimeout); ironyTimers = [];
+    const parts = ['#l2004', '#l2026', '#lpunch'].map(s => $(s));
+    parts.forEach(p => p.classList.remove('show'));
+    parts.forEach((p, i) => ironyTimers.push(setTimeout(() => p.classList.add('show'), reduced ? 0 : 200 + i * 1100)));
   }
-  let ffTimer;
-  $('#ff').addEventListener('click', () => {
-    clearTimeout(ffTimer);
-    if ($('#era2026').classList.contains('show')) {
-      $('#era2026').classList.remove('show'); $('#irony').classList.remove('show');
-      $('#ff').textContent = '⏩ fast-forward 22 years';
-    } else revealNow();
-  });
-  const enterIrony = () => { ffTimer = setTimeout(revealNow, reduced ? 0 : 1400); };
+  $('#replay').addEventListener('click', playIrony);
 
   /* ---------- 03 · timeline scroller ---------- */
   const YEARS = ['2004', '2011', '2024', '2025', '2026'];
@@ -708,36 +735,43 @@ Only add interaction where it helps understanding.</pre>
   /* ---------- 05 · break it (safely) ---------- */
   const NAMES = { contract: 'Source contract', cdc: 'CDC ingestion', model: 'Transformation', semantic: 'Semantic layer', dashboard: 'BI dashboard' };
   const SCEN = {
-    rename: { hit: ['contract', 'cdc', 'model', 'semantic', 'dashboard'], why: {
-      contract: 'The public field name changes. Consumers need a migration plan or an alias.',
-      cdc: 'Connectors may emit the renamed field. Check schema evolution and mappings.',
-      model: 'Joins and SQL that reference customer_id need review.',
-      semantic: 'Entity relationships built on customer_id need new definitions and tests.',
-      dashboard: 'Filters and fields that depend on the identifier may break quietly.' } },
-    precision: { hit: ['contract', 'model', 'semantic', 'dashboard'], why: {
-      contract: 'The type changes. Decide what compatibility the contract promises.',
-      cdc: 'Assumed to carry the new type without custom mapping. Verify that in real life.',
-      model: 'Casts and rounding may change. Add boundary-case tests.',
-      semantic: 'Check aggregations for rounding and overflow.',
-      dashboard: 'Formatting and comparisons of amounts need a look.' } },
-    metric: { hit: ['semantic', 'dashboard'], why: {
-      contract: 'No source change. The raw contract stays stable.',
-      cdc: 'No change at ingestion. Events keep the same shape.',
-      model: 'Same data, same calculation. Nothing to do here.',
-      semantic: 'Rename net_revenue and decide whether to keep an alias.',
-      dashboard: 'Visuals that reference net_revenue need updating.' } }
+    precision: { hit: ['contract', 'model', 'semantic', 'dashboard'],
+      summary: 'A precision change ripples through the contract, casts, metric maths and display. The CDC layer carries it through untouched in this setup.',
+      why: {
+        contract: 'The field type changes. Decide what compatibility the contract promises consumers.',
+        cdc: 'Assumed to carry the new type without custom mapping. Verify that in a real system.',
+        model: 'Casts, rounding and decimal handling may change. Add boundary-case tests.',
+        semantic: 'Check metric aggregations for rounding and overflow.',
+        dashboard: 'Formatting and comparisons of displayed amounts need a look.' } },
+    metric: { hit: ['semantic', 'dashboard'],
+      summary: 'Renaming a metric only touches the semantic layer and the reports that use it. Ingestion and transformation stay as they are.',
+      why: {
+        contract: 'No source change. The raw contract stays stable.',
+        cdc: 'No change at ingestion. Events keep the same shape.',
+        model: 'Same data, same calculation. Nothing to do here.',
+        semantic: 'Rename net_revenue and decide whether to keep a compatibility alias.',
+        dashboard: 'Queries and visuals that reference net_revenue need updating.' } },
+    rename: { hit: ['contract', 'cdc', 'model', 'semantic', 'dashboard'],
+      summary: 'Renaming a source identifier travels the whole way: mappings, joins, relationships and dashboard fields.',
+      why: {
+        contract: 'The public field name changes. Consumers need a migration plan or an alias.',
+        cdc: 'Connectors may emit the renamed field. Check schema evolution and mappings.',
+        model: 'Joins and SQL that reference customer_id need review.',
+        semantic: 'Entity relationships built on customer_id need new definitions and tests.',
+        dashboard: 'Filters and fields that depend on the identifier may break quietly.' } }
   };
-  let scen = 'rename', node = 'contract';
+  let scen = 'precision', node = 'contract';
   function renderPipe() {
     const s = SCEN[scen];
     $$('[data-scen]').forEach(b => b.setAttribute('aria-pressed', b.dataset.scen === scen));
     $$('#pipe .node').forEach(b => {
       const hit = s.hit.includes(b.dataset.node);
       b.classList.toggle('hit', hit); b.classList.toggle('sel', b.dataset.node === node);
-      $('small', b).textContent = hit ? 'review' : 'safe';
+      $('small', b).textContent = hit ? 'review needed' : 'not affected';
     });
-    $('#cnt').textContent = `${s.hit.length}/5`;
-    $('#nodeName').textContent = NAMES[node] + (s.hit.includes(node) ? ' · needs review' : ' · safe');
+    $('#cnt').textContent = s.hit.length;
+    $('#summary').textContent = s.summary;
+    $('#nodeName').textContent = NAMES[node] + (s.hit.includes(node) ? ' · review needed' : ' · not affected');
     $('#nodeText').textContent = s.why[node];
   }
   $$('[data-scen]').forEach(b => b.addEventListener('click', () => { scen = b.dataset.scen; node = SCEN[scen].hit[0]; renderPipe(); }));
@@ -745,7 +779,7 @@ Only add interaction where it helps understanding.</pre>
   renderPipe();
   const CAP = {
     md: 'To answer, you read every line and hold the pipeline in your head.',
-    html: '<b>To answer, you click.</b> The page holds the pipeline for you. Try another change.'
+    html: '<b>To answer, you click.</b> The doc holds the pipeline for you. That is a capability, not decoration.'
   };
   let demoFmt = 'md';
   function setFmt(f) {
@@ -776,12 +810,12 @@ Only add interaction where it helps understanding.</pre>
 
   /* ---------- 07 · chooser ---------- */
   const TASKS = {
-    prompt:   { pos: 5,  word: 'Markdown.', reader: 'the model', why: 'Light, cheap on tokens and easy to diff. Models read it best.' },
-    readme:   { pos: 16, word: 'Markdown.', reader: 'whoever installs it', why: 'Setup steps need search and clean diffs, not hover animations.' },
-    contract: { pos: 46, word: 'Source + an HTML view.', reader: 'machines and people', why: 'Keep the contract versioned. Generate a view to see who it breaks.' },
-    incident: { pos: 56, word: 'Both.', reader: 'the team, later', why: 'Facts in an auditable record. An interactive timeline to explain them.' },
-    arch:     { pos: 76, word: 'HTML view.', reader: 'reviewers deciding', why: 'Dependencies and options are easier to compare when you can click them.' },
-    pr:       { pos: 90, word: 'HTML to explore.', reader: 'the reviewer', why: 'The diff stays in Git. A map of the logic saves the archaeology.' }
+    prompt:   { pos: 5,  word: 'Markdown.', reader: 'the model', why: 'Light, cheap on tokens and easy to diff. Models read it best.', moral: 'Your CLAUDE.md does not need a carousel.' },
+    readme:   { pos: 16, word: 'Markdown first.', reader: 'whoever installs it', why: 'Setup steps and reference content need search and clean diffs.', moral: 'A README does not need a hover animation to install dependencies.' },
+    contract: { pos: 46, word: 'Structured source + HTML.', reader: 'machines and people', why: 'Keep the contract versioned and machine-readable. Generate a view to see who it breaks.', moral: 'A schema is a promise. The dashboard should not find out last.' },
+    incident: { pos: 56, word: 'Both, often.', reader: 'the team, later', why: 'Facts in an auditable record. An interactive timeline to explain them.', moral: 'A chart can explain the fire. It should not invent the smoke.' },
+    arch:     { pos: 76, word: 'Both. Intentionally.', reader: 'reviewers deciding', why: 'Decision record in Git, plus an HTML walkthrough where dependencies and options need exploring.', moral: 'The source of truth stays boring. The review can be interesting.' },
+    pr:       { pos: 90, word: 'HTML for exploration.', reader: 'the reviewer', why: 'The diff stays in Git. An annotated map of the logic makes review less painful.', moral: 'Keep the diff. Lose the archaeological expedition.' }
   };
   function pick(k) {
     const t = TASKS[k];
@@ -790,6 +824,7 @@ Only add interaction where it helps understanding.</pre>
     $('#vWord').textContent = t.word;
     $('#vReader').textContent = 'who reads it: ' + t.reader;
     $('#vWhy').textContent = t.why;
+    $('#vMoral').textContent = t.moral;
   }
   $$('#tasks button').forEach(b => b.addEventListener('click', () => pick(b.dataset.task)));
   pick('prompt');
@@ -817,63 +852,54 @@ Only add interaction where it helps understanding.</pre>
 
   /* ---------- the whole page as Markdown ---------- */
   const MD = [
-    () => `<!-- 01 · you scrolled past it -->
-
-# You scrolled past my ~~text post.~~ So I rebuilt it in **HTML**.
+    () => `# You scrolled past my ~~text post.~~ So I rebuilt it in **HTML**.
 
 Which is kind of the whole point of this post.
 
 > rendered for humans, not for parsers
 
 Aayushi Solanki · Exploring how we work with AI`,
-    () => `<!-- 02 · the irony -->
+    () => `## 02 / A 22-year plot twist
 
-# Same tags. 22 years apart.
+2004: "Can we please stop typing HTML?"
 
-**2004:** "Can we please stop typing HTML?"
-**2026:** "Can the AI please generate an entire HTML experience?"
+2026: "Can the AI please generate an entire HTML experience?"
 
-The web has an excellent sense of irony.
-It just renders it differently.`,
-    () => `<!-- 03 · who said what -->
-
-# How HTML left. And how it came back.
+The web has an excellent sense of irony. It just renders it differently.`,
+    () => `## 03 / So who put HTML back in the group chat?
 
 - **2004** · John Gruber: make *writing* simpler. HTML moves backstage.
 - **2011** · Bret Victor: make *reading* active.
-- **2024** · Anthropic Artifacts: make AI output *openable*.
+- **2024** · Anthropic, Artifacts: make AI output *openable*.
 - **2025** · Simon Willison: make tiny tools *cheap*.
-- **2026** · Thariq Shihipar: make agent output *explorable*.
+- **2026** · Thariq Shihipar, Claude Code team: make agent output *explorable*.
 
 (There was a timeline you could scrub here. Lists don't scrub.)`,
-    () => `<!-- 04 · the spark -->
+    () => `## 04 / The spark
 
 > I find it difficult to read a Markdown file
 > of more than a hundred lines.
 
-**Thariq Shihipar**, Claude Code team, in "Using Claude Code:
+**Thariq Shihipar**, Claude Code team at Anthropic, in "Using Claude Code:
 The Unreasonable Effectiveness of HTML" (May 2026).
 
 If someone on the team that builds the AI reads it that way,
 it's worth asking who Markdown is really for.`,
-    () => `<!-- 05 · don't just read it -->
+    () => `## 05 / Don't just read it. Break it (safely)
 
-# Don't just read it. Break it (safely).
+A Markdown doc describes your system. An HTML doc lets you question it.
 
-If we rename customer_id, what breaks?
-
+# Customer analytics data product
 ## Pipeline
-Source → CDC → Transform → Semantic → Dashboard
-
+Source → CDC → Transform → Semantic model → Dashboard
 ## Proposed changes
-A. Rename source.customer_id to account_id
-   Possible impact: CDC mapping, transformation,
-   semantic relationship, downstream dashboard.
-B. Increase precision of order_amount
-C. Rename the metric net_revenue
+A. Increase precision of order_amount
+B. Rename the semantic metric net_revenue
+C. Rename source.customer_id to account_id
 
+Which consumers must be updated together?
 (Good luck. In HTML you could have just clicked.)`,
-    () => `<!-- 06 · why now -->
+    () => `## 06 / Why now
 
 # The browser didn't get smarter. Building for it got cheaper.
 
@@ -882,27 +908,21 @@ C. Rename the metric net_revenue
 | 2004 | days of hand-coding                 |
 | 2026 | one sentence to an agent            |
 
-- Generation got cheap
-- Attention didn't scale
-- The runtime is everywhere
-
 Markdown won because it was easy for humans to write.
 HTML is coming back because it's easy for machines to generate.`,
-    () => `<!-- 07 · choose responsibly -->
+    () => `## 07 / Choose your weapon (responsibly)
 
 # Does every document need to become an app? Absolutely not.
 
-| you're making       | pick                  |
-|---------------------|-----------------------|
-| Prompt / CLAUDE.md  | Markdown              |
-| README / runbook    | Markdown              |
-| Data contract       | Source + an HTML view |
-| Incident review     | Both                  |
-| Architecture review | HTML view             |
-| Complex PR review   | HTML to explore       |
-
-Pick the format by who reads it.`,
-    () => `<!-- 08 · the catch -->
+| you're making       | pick                      |
+|---------------------|---------------------------|
+| Prompt / CLAUDE.md  | Markdown                  |
+| README / runbook    | Markdown first            |
+| Data contract       | Structured source + HTML  |
+| Incident review     | Both, often               |
+| Architecture review | Both. Intentionally       |
+| Complex PR review   | HTML for exploration      |`,
+    () => `## 08 / The catch
 
 > A beautiful page can make a shallow answer look deep.
 
@@ -910,27 +930,22 @@ Pick the format by who reads it.`,
 2. **Polish isn't proof.** Easier to read doesn't mean true.
 3. **Generated code is code.** Never put secrets on a static page.
 4. **Complexity must earn its keep.** If a paragraph works, publish a paragraph.`,
-    () => `<!-- 09 · take it into your next review -->
-
-# Give your agent a better job than "write me a document."
+    () => `## 09 / Take it into your next review
 
 \`\`\`
 ${$('#agentPrompt').textContent.trim()}
 \`\`\``,
-    () => `<!-- 10 · the actual plot twist -->
+    () => `## 10 / The actual plot twist
 
-# HTML isn't the new Markdown. It's Markdown's ==new partner==.
+# HTML isn't the new Markdown. It's Markdown's new partner.
 
-Markdown for the record. HTML for the reasoning.
-Your judgment for both.
+Markdown for the record. HTML for the reasoning. Your judgment for both.
 
 **Would you rather get a clean page of text or an interactive page from AI?**
 
 - [ ] Clean page of text
 - [ ] Interactive page`,
-    () => `<!-- 11 · sources -->
-
-# Receipts
+    () => `## Sources
 
 - [Introducing Markdown](https://daringfireball.net/2004/03/introducing_markdown) (2004)
 - [Explorable Explanations](https://worrydream.com/ExplorableExplanations/) (2011)
@@ -963,7 +978,7 @@ Your judgment for both.
     const a = document.createElement('a'); a.href = '#' + s.id; a.setAttribute('aria-label', `Section ${i + 1}`);
     side.appendChild(a);
   });
-  const ONCE = { 1: enterIrony, 5: sweepYears };
+  const ONCE = { 1: playIrony, 5: sweepYears };
   function syncBar() {
     const s = secs[cur];
     let file = s.dataset.fileHtml && demoFmt === 'html' ? s.dataset.fileHtml : s.dataset.file;
