@@ -6,7 +6,8 @@ An interactive, HTML version of my LinkedIn post. Same story, rebuilt for people
 
 What's on the page:
 
-1. The hook: you scrolled past my text post
+- HTML is the new Markdown? Well, that's a plot twist.
+1. The problem: AI does the work in seconds, then hands you a 500-line scroll
 2. The irony: 2004 "stop typing HTML" vs 2026 "generate an entire HTML experience"
 3. So who put HTML back in the group chat? A timeline from Gruber to Shihipar
 4. The spark: Thariq Shihipar's "hundred lines" quote, plus a 120-line file to try reading
