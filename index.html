@@ -152,6 +152,32 @@ mark{color:inherit;background:linear-gradient(transparent 58%,var(--lime) 58%) n
 .midlife{max-width:760px;margin:32px auto 0;font:600 italic clamp(1.3rem,2.4vw,1.9rem)/1.3 var(--serif);color:var(--ink)}
 .midlife::before{content:"So…";display:block;font:700 .74rem var(--mono);font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:10px}
 
+/* ---------- 3 · fact-check ---------- */
+.yearpills{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 16px}
+.yp{font:700 .85rem var(--mono);padding:8px 15px;border-radius:99px;border:1px solid var(--ink);background:var(--paper);cursor:pointer;transition:background .2s,color .2s}
+.yp:hover{background:var(--soft)}
+.yp[aria-pressed=true]{background:var(--ink);color:var(--lime)}
+.fc-wrap{border:1px solid var(--line);border-radius:16px;background:var(--page);overflow:hidden;box-shadow:0 24px 60px rgba(35,47,48,.08)}
+.fc{width:100%;border-collapse:collapse}
+.fc th,.fc td{padding:14px 18px;text-align:left;vertical-align:middle;border-bottom:1px solid var(--line)}
+.fc thead th{font:700 .7rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--soft)}
+.fc thead th:first-child{width:96px}.fc thead th:last-child{width:150px}
+.fc tr.phase td{background:var(--paper);font:700 .74rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dark);padding:10px 18px}
+.fc tr.phase td span{color:var(--muted);font-weight:400;letter-spacing:.04em;text-transform:none;margin-left:8px}
+.fc tr.f{transition:opacity .25s,background .25s}
+.fc tr.f.dim{opacity:.28}
+.fc tr.f.hot{background:var(--lime-soft)}
+.fc .ypill{display:inline-block;font:700 .8rem var(--mono);padding:4px 10px;border-radius:99px;background:var(--ink);color:var(--lime)}
+.fc .claim{font:600 1.05rem/1.35 var(--serif)}
+.fc .src{display:block;margin-top:4px;font:400 .8rem var(--mono);color:var(--muted)}
+.fc .src a{color:var(--accent-dark);text-decoration:none;font-weight:600}
+.fc .src a:hover{text-decoration:underline}
+.vt{display:inline-flex;align-items:center;gap:6px;font:700 .8rem var(--mono);padding:5px 11px;border-radius:99px;white-space:nowrap}
+.vt.true{background:var(--lime-soft);color:#2f5d22;border:1px solid #c6e3a4}
+.vt.false{background:#fbe1db;color:var(--accent-dark);border:1px solid #f2b8aa}
+.vt.partly{background:#fff1c9;color:#7a5200;border:1px solid #f1d58a}
+@media (max-width:640px){.fc th,.fc td{padding:12px 10px}.fc thead th:first-child{width:auto}.fc thead th:last-child{width:auto}.fc .claim{font-size:.98rem}}
+
 /* ---------- 4 · quote ---------- */
 .quote{max-width:940px;margin:0 auto}
 .pull{background:var(--lime);color:#16222a;border-radius:18px;padding:clamp(28px,4.5vw,48px);transform:rotate(-1.2deg);box-shadow:0 24px 60px rgba(35,47,48,.12);margin-bottom:34px}
@@ -237,10 +263,6 @@ mark{color:inherit;background:linear-gradient(transparent 58%,var(--lime) 58%) n
 .three b{display:block;font:600 1.02rem/1.2 var(--serif);margin-top:8px}
 .three.duo{grid-template-columns:1fr 1fr}
 .three p{margin-top:4px;font-size:.88rem;line-height:1.45;color:var(--muted)}
-.mile{display:flex;gap:12px;align-items:flex-start;min-height:74px;margin:-6px 0 22px;padding:12px 14px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:.96rem;line-height:1.45}
-.mile .my{flex:none;font:700 .8rem var(--mono);background:var(--ink);color:var(--lime);border-radius:6px;padding:3px 8px;margin-top:2px}
-.mile p a{font:600 .8rem var(--mono);color:var(--accent-dark);text-decoration:none;white-space:nowrap}
-.mile p a:hover{text-decoration:underline}
 .callout{background:var(--lime);color:#16222a;border-radius:14px;padding:22px 24px;font:600 clamp(1.15rem,1.7vw,1.4rem)/1.35 var(--serif);margin-top:26px;transform:rotate(-1deg);box-shadow:0 18px 40px rgba(35,47,48,.1)}
 
 /* ---------- 6 · decision matrix ---------- */
@@ -418,11 +440,22 @@ body.md .scrollcue{display:none}
     </div></div>
   </section>
 
-  <!-- 3 · why now (with the history) -->
-  <section class="sec paper" id="s6" data-file="why-now.html">
+  <!-- 3 · who said what: a fact-check -->
+  <section class="sec paper" id="s3" data-file="who-put-html-back.html">
+    <div class="wrap"><div class="inner">
+      <p class="kicker">03 / Who said what</p>
+      <h2>So who put HTML back in the <em>group chat?</em></h2>
+      <p class="sub" style="max-width:720px">The 22-year story, fact-checked. Tap a year to see what happened.</p>
+      <div class="yearpills" id="yearpills" role="group" aria-label="Filter by year"></div>
+      <div class="fc-wrap"><table class="fc"><thead><tr><th>Year</th><th>Claim</th><th>Verdict</th></tr></thead><tbody id="fcrows"></tbody></table></div>
+    </div></div>
+  </section>
+
+  <!-- 4 · why now (with the history) -->
+  <section class="sec" id="s6" data-file="why-now.html">
     <div class="wrap"><div class="inner two">
       <div>
-        <p class="kicker">03 / Why now</p>
+        <p class="kicker">04 / Why now</p>
         <h2>The browser didn't get smarter. Building for it got <em>cheaper</em>.</h2>
         <p class="sub">HTML never left the browser. It left our keyboards, because writing it by hand cost too much. Drag through 22 years: the cost of building collapses, the time you have to read doesn't move.</p>
         <p class="callout">Markdown won because it was easy for humans to write. HTML is coming back because it's easy for machines to generate.</p>
@@ -432,7 +465,6 @@ body.md .scrollcue{display:none}
           <input type="range" id="yr" min="0" max="4" step="1" value="0" aria-label="Year">
           <div class="yticks" id="yticks"><span>2004</span><span>2011</span><span>2024</span><span>2025</span><span>2026</span></div>
         </div>
-        <div class="mile" aria-live="polite"><span class="my" id="mileYear">2004</span><p id="mileText"></p></div>
         <div class="cost">
           <div class="row"><span>Effort to build an interactive page</span><span id="effLbl">days of hand-coding</span></div>
           <div class="track"><div class="fill" id="effFill" style="width:100%"></div></div>
@@ -449,9 +481,9 @@ body.md .scrollcue{display:none}
   </section>
 
   <!-- 4 · the spark -->
-  <section class="sec" id="s4" data-file="claude.dev/blog/the-unreasonable-effectiveness-of-html">
+  <section class="sec paper" id="s4" data-file="claude.dev/blog/the-unreasonable-effectiveness-of-html">
     <div class="wrap"><div class="inner quote" id="quote">
-      <p class="kicker">04 / The spark</p>
+      <p class="kicker">05 / The spark</p>
       <div class="pull"><blockquote>I find it difficult to read a Markdown file of more than a hundred lines.</blockquote></div>
       <div class="attr">
         <span class="amchip" aria-hidden="true"><svg class="am"><use href="#anthropic"/></svg></span>
@@ -473,7 +505,7 @@ body.md .scrollcue{display:none}
   <section class="sec dark" id="s5" data-theme="dark" data-file="customer-analytics.md" data-file-html="customer-analytics.html">
     <div class="wrap"><div class="inner">
       <div class="demohead">
-        <p class="kicker">05 / Don't just read it. Break it (safely)</p>
+        <p class="kicker">06 / Don't just read it. Break it (safely)</p>
         <h2><span class="ln">A Markdown doc <em>describes</em> your system.</span> <span class="ln">An HTML doc lets you <em>question</em> it.</span></h2>
         <p class="sub">Same spec, two formats. Ask it one thing: <b style="color:#fff">“what breaks if I change this?”</b> The Markdown makes you work it out. The HTML just answers.</p>
       </div>
@@ -535,7 +567,7 @@ Which consumers must be updated together?</pre>
   <!-- 6 · decision matrix -->
   <section class="sec paper" id="s7" data-file="decision-matrix.html">
     <div class="wrap"><div class="inner">
-      <p class="kicker">06 / Choose your weapon (responsibly)</p>
+      <p class="kicker">07 / Choose your weapon (responsibly)</p>
       <h2>Does every document need to become an app? Absolutely <em>not.</em></h2>
       <p class="sub" style="max-width:760px">Score it on four questions. Every answer that leans HTML adds a point. <b>0–1</b> stay in Markdown. <b>2</b> use both. <b>3–4</b> keep a plain source and add an HTML view.</p>
       <div class="legend"><span><i class="dot h"></i>leans HTML (+1)</span><span><i class="dot"></i>leans Markdown (0)</span><span>tap a row for the reasoning</span></div>
@@ -554,7 +586,7 @@ Which consumers must be updated together?</pre>
   <section class="sec" id="s8" data-file="the-catch.html">
     <div class="wrap"><div class="inner two">
       <div>
-        <p class="kicker">07 / The catch</p>
+        <p class="kicker">08 / The catch</p>
         <p class="quote2">A beautiful page can make a shallow answer look deep.</p>
         <p class="note" style="margin-top:22px">The format improved. Our judgment has to keep up.</p>
       </div>
@@ -571,7 +603,7 @@ Which consumers must be updated together?</pre>
   <section class="sec paper" id="s9" data-file="try-it.html">
     <div class="wrap"><div class="inner two l">
       <div>
-        <p class="kicker">08 / Take it into your next review</p>
+        <p class="kicker">09 / Take it into your next review</p>
         <h2>Give your agent a better job than “write me a document.”</h2>
         <p class="sub">Try it on one real review and compare what people catch in five minutes. Measure understanding, not animations.</p>
       </div>
@@ -597,7 +629,7 @@ Only add interaction where it helps understanding.</pre>
   <!-- 10 · plot twist -->
   <section class="sec" id="s10" data-file="the-plot-twist.html">
     <div class="wrap"><div class="inner lastword">
-      <p class="kicker">09 / The actual plot twist</p>
+      <p class="kicker">10 / The actual plot twist</p>
       <h2>HTML isn't the new Markdown. It's Markdown's <em>new partner.</em></h2>
       <p class="lead">Markdown for the record. HTML for the reasoning. Your judgment for both.</p>
       <p class="markup">We spent 22 years trying not to write HTML, only to ask our agents to write it for us. Markup my words.</p>
@@ -757,15 +789,33 @@ Only add interaction where it helps understanding.</pre>
   }
   $$('[data-fmt]').forEach(b => b.addEventListener('click', () => setFmt(b.dataset.fmt)));
 
-  /* ---------- 03 · why now: the history on a slider ---------- */
-  const EFFORT = [['days of hand-coding', 100], ['a whole frontend project', 82], ['a chat message', 34], ['one prompt, one file', 16], ['one sentence to an agent', 6]];
-  const MILES = [
-    ['2004', '<b>John Gruber</b> ships Markdown so nobody has to type tags. HTML goes backstage.', 'https://daringfireball.net/2004/03/introducing_markdown'],
-    ['2011', '<b>Bret Victor</b> pitches explorable explanations. Great idea, expensive to build.', 'https://worrydream.com/ExplorableExplanations/'],
-    ['2024', '<svg class="am"><use href="#anthropic"/></svg> <b>Anthropic</b> launches Artifacts. AI output becomes something you open, not copy.', 'https://www.anthropic.com/news/claude-3-5-sonnet'],
-    ['2025', '<b>Simon Willison</b> has built 150+ single-file HTML tools, mostly written by LLMs.', 'https://simonwillison.net/2025/Dec/10/html-tools/'],
-    ['2026', '<svg class="am"><use href="#anthropic"/></svg> <b>Thariq Shihipar</b>, Claude Code team, makes HTML the agent\'s output format.', 'https://claude.dev/blog/using-claude-code-the-unreasonable-effectiveness-of-html/']
+  /* ---------- 03 · who put HTML back: fact-check ---------- */
+  const FACTS = [
+    ['How HTML left', '2004'],
+    ['2004', 'Markdown was introduced so people could write for the web without typing raw HTML.', 'John Gruber · Daring Fireball', 'https://daringfireball.net/2004/03/introducing_markdown', 'true'],
+    ['2004', 'Markdown converts into HTML.', 'It shipped as a text-to-HTML conversion tool', 'https://daringfireball.net/projects/markdown/', 'true'],
+    ['2004', 'Markdown completely replaced HTML.', 'It still turns into HTML. HTML just moved backstage.', '', 'false'],
+    ['How it came back', '2011 – 2026'],
+    ['2011', 'Bret Victor argues readers should explore an explanation, not just read it.', 'Explorable Explanations', 'https://worrydream.com/ExplorableExplanations/', 'true'],
+    ['2024', 'Anthropic turns AI output into pages you open, not code you copy.', '<svg class="am"><use href="#anthropic"/></svg> Artifacts launch', 'https://www.anthropic.com/news/claude-3-5-sonnet', 'true'],
+    ['2025', 'LLMs make single-file HTML tools cheap enough to build for one job.', 'Simon Willison · 150+ HTML tools', 'https://simonwillison.net/2025/Dec/10/html-tools/', 'true'],
+    ['2026', 'A Claude Code engineer argues HTML beats Markdown for agent output.', '<svg class="am"><use href="#anthropic"/></svg> Thariq Shihipar · Claude Code team', 'https://claude.dev/blog/using-claude-code-the-unreasonable-effectiveness-of-html/', 'true'],
+    ['2026', 'HTML is the new Markdown.', 'Prompts, READMEs and CLAUDE.md files still live in Markdown.', '', 'partly']
   ];
+  const VT = { true: '✓ True', false: '✗ False', partly: '≈ Not quite' };
+  $('#fcrows').innerHTML = FACTS.map(f => f.length === 2
+    ? `<tr class="phase"><td colspan="3">${f[0]}<span>${f[1]}</span></td></tr>`
+    : `<tr class="f" data-y="${f[0]}"><td><span class="ypill">${f[0]}</span></td><td><div class="claim">${f[1]}</div><div class="src">${f[2]}${f[3] ? ` <a href="${f[3]}" target="_blank" rel="noopener">source ↗</a>` : ''}</div></td><td><span class="vt ${f[4]}">${VT[f[4]]}</span></td></tr>`).join('');
+  const YP = ['All', '2004', '2011', '2024', '2025', '2026'];
+  $('#yearpills').innerHTML = YP.map(y => `<button class="yp" data-y="${y}" aria-pressed="${y === 'All'}">${y}</button>`).join('');
+  $$('#yearpills .yp').forEach(b => b.addEventListener('click', () => {
+    const y = b.dataset.y;
+    $$('#yearpills .yp').forEach(x => x.setAttribute('aria-pressed', x === b));
+    $$('#fcrows tr.f').forEach(r => { r.classList.toggle('dim', y !== 'All' && r.dataset.y !== y); r.classList.toggle('hot', y !== 'All' && r.dataset.y === y); });
+  }));
+
+  /* ---------- 04 · why now ---------- */
+  const EFFORT = [['days of hand-coding', 100], ['a whole frontend project', 82], ['a chat message', 34], ['one prompt, one file', 16], ['one sentence to an agent', 6]];
   const yr = $('#yr');
   let yrTouched = false;
   function setYear(i) {
@@ -773,13 +823,11 @@ Only add interaction where it helps understanding.</pre>
     $('#effLbl').textContent = EFFORT[i][0];
     $('#effFill').style.width = EFFORT[i][1] + '%';
     $$('#yticks span').forEach((s, k) => s.classList.toggle('on', k === +i));
-    $('#mileYear').textContent = MILES[i][0];
-    $('#mileText').innerHTML = `${MILES[i][1]} <a href="${MILES[i][2]}" target="_blank" rel="noopener">source ↗</a>`;
   }
   yr.addEventListener('input', () => { yrTouched = true; setYear(+yr.value); });
   function sweepYears() {
     if (reduced) return setYear(4);
-    [1, 2, 3, 4].forEach((v, k) => setTimeout(() => { if (!yrTouched) setYear(v); }, 900 + k * 1300));
+    [1, 2, 3, 4].forEach((v, k) => setTimeout(() => { if (!yrTouched) setYear(v); }, 700 + k * 800));
   }
   setYear(0);
 
@@ -875,7 +923,21 @@ The web has an excellent sense of irony. It just renders it differently.
 
 So are documents turning into tiny apps, or are we just giving
 our READMEs a midlife crisis?`,
-    () => `## 03 / Why now
+    () => `## 03 / Who said what
+
+# So who put HTML back in the group chat?
+
+| year | claim                                                    | verdict   |
+|------|----------------------------------------------------------|-----------|
+| 2004 | Markdown was introduced to avoid typing raw HTML         | True      |
+| 2004 | Markdown converts into HTML                              | True      |
+| 2004 | Markdown completely replaced HTML                        | False     |
+| 2011 | Readers should explore an explanation, not just read it  | True      |
+| 2024 | AI output became pages you open (Artifacts)              | True      |
+| 2025 | LLMs made single-file HTML tools cheap                   | True      |
+| 2026 | A Claude Code engineer argues HTML beats Markdown        | True      |
+| 2026 | HTML is the new Markdown                                 | Not quite |`,
+    () => `## 04 / Why now
 
 # The browser didn't get smarter. Building for it got cheaper.
 
@@ -889,7 +951,7 @@ our READMEs a midlife crisis?`,
 
 Markdown won because it was easy for humans to write.
 HTML is coming back because it's easy for machines to generate.`,
-    () => `## 04 / The spark
+    () => `## 05 / The spark
 
 > I find it difficult to read a Markdown file
 > of more than a hundred lines.
@@ -899,7 +961,7 @@ The Unreasonable Effectiveness of HTML" (May 2026).
 
 If someone on the team that builds the AI reads it that way,
 it's worth asking who Markdown is really for.`,
-    () => `## 05 / Don't just read it. Break it (safely)
+    () => `## 06 / Don't just read it. Break it (safely)
 
 A Markdown doc describes your system. An HTML doc lets you question it.
 
@@ -913,7 +975,7 @@ C. Rename source.customer_id to account_id
 
 Which consumers must be updated together?
 (Good luck. In HTML you could have just clicked.)`,
-    () => `## 06 / Choose your weapon (responsibly)
+    () => `## 07 / Choose your weapon (responsibly)
 
 # Does every document need to become an app? Absolutely not.
 
@@ -928,7 +990,7 @@ Which consumers must be updated together?
 | Stakeholder explainer | people | no     | yes     | yes    | 4/4   | HTML page          |
 
 (A table you can read. Not one you can score your own doc in.)`,
-    () => `## 07 / The catch
+    () => `## 08 / The catch
 
 > A beautiful page can make a shallow answer look deep.
 
@@ -936,12 +998,12 @@ Which consumers must be updated together?
 2. **Polish isn't proof.** Easier to read doesn't mean true.
 3. **Generated code is code.** Never put secrets on a static page.
 4. **Complexity must earn its keep.** If a paragraph works, publish a paragraph.`,
-    () => `## 08 / Take it into your next review
+    () => `## 09 / Take it into your next review
 
 \`\`\`
 ${$('#agentPrompt').textContent.trim()}
 \`\`\``,
-    () => `## 09 / The actual plot twist
+    () => `## 10 / The actual plot twist
 
 # HTML isn't the new Markdown. It's Markdown's new partner.
 
@@ -984,7 +1046,7 @@ Markdown for the record. HTML for the reasoning. Your judgment for both.
     const a = document.createElement('a'); a.href = '#' + s.id; a.setAttribute('aria-label', `Section ${i + 1}`);
     side.appendChild(a);
   });
-  const ONCE = { 1: autoScroll, 2: playIrony, 3: sweepYears };
+  const ONCE = { 1: autoScroll, 2: playIrony, 4: sweepYears };
   function syncBar() {
     const s = secs[cur];
     let file = s.dataset.fileHtml && demoFmt === 'html' ? s.dataset.fileHtml : s.dataset.file;
