@@ -12,7 +12,7 @@ What's on the page:
 3. So who put HTML back in the group chat? The story in one table, with year pills
 4. Why now: a year slider showing building got cheap while review time didn't
 5. The spark: Thariq Shihipar's "hundred lines" quote, plus a 120-line file to try reading
-6. A document you can break: the same spec as Markdown and as a clickable change-impact explorer
+6. A document you can break: an orders pipeline, its dashboard, ML model and AI assistant, with loud and silent breakages
 7. Which format: a 2×2 of who reads it and what they need to do with it
 8. The catch, in four points
 9. A copyable prompt for your next review
