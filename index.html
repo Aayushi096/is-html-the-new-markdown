@@ -268,7 +268,12 @@ mark{color:inherit;background:linear-gradient(transparent 58%,var(--lime) 58%) n
 .panel{border:1px solid var(--line);border-radius:18px;background:var(--paper);padding:clamp(22px,3vw,32px);box-shadow:0 24px 60px rgba(35,47,48,.07)}
 .yearsl input{width:100%;accent-color:var(--accent)}
 .yticks{display:flex;justify-content:space-between;font:400 .8rem var(--mono);color:var(--muted);margin:4px 0 22px}
-.yticks span.on{color:var(--accent-dark);font-weight:700}
+.yticks button{background:none;border:0;padding:4px 2px;cursor:pointer;font:inherit;color:inherit}
+.yticks button:hover{color:var(--accent-dark)}
+.yticks button.on{color:var(--accent-dark);font-weight:700}
+.try{display:flex;align-items:center;gap:10px;margin-bottom:16px;font:600 .85rem var(--mono);color:var(--ink)}
+.try i{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(228,83,57,.5);animation:ping 1.8s ease-out infinite;flex:none}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(228,83,57,.5)}100%{box-shadow:0 0 0 10px rgba(228,83,57,0)}}
 .cost .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font:400 .88rem var(--mono);margin-bottom:8px}
 .cost .row span:last-child{color:var(--muted);text-align:right}
 .cost .track{height:16px;border-radius:99px;background:var(--soft);border:1px solid var(--line);overflow:hidden;margin-bottom:20px}
@@ -283,21 +288,24 @@ mark{color:inherit;background:linear-gradient(transparent 58%,var(--lime) 58%) n
 .callout{background:var(--lime);color:#16222a;border-radius:14px;padding:22px 24px;font:600 clamp(1.15rem,1.7vw,1.4rem)/1.35 var(--serif);margin-top:26px;transform:rotate(-1deg);box-shadow:0 18px 40px rgba(35,47,48,.1)}
 
 /* ---------- 7 · which format ---------- */
-.quad{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;margin-top:28px}
-.yaxis{display:flex;justify-content:space-between;writing-mode:vertical-rl;transform:rotate(180deg);font:700 .72rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:6px 0}
-.qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.q{display:flex;flex-direction:column;gap:8px;min-height:180px;padding:clamp(18px,2.6vw,28px);border:1px solid var(--line);border-radius:18px;background:var(--page);transition:transform .2s,box-shadow .2s}
-.q:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(35,47,48,.1)}
-.qv{font:600 clamp(1.5rem,2.8vw,2.3rem)/1.05 var(--serif);letter-spacing:-.02em}
-.qx{font:600 .82rem/1.5 var(--mono);color:var(--muted)}
-.qw{font-size:1rem;line-height:1.5;color:var(--muted)}
-.q.html{background:var(--accent);border-color:var(--accent);color:#fff}
-.q.html .qx,.q.html .qw{color:#ffe6df}
-.q.both{background:var(--lime);border-color:var(--lime)}
-.q.both .qx,.q.both .qw{color:#3b4a40}
-.here{align-self:flex-start;margin-top:auto;font:700 .72rem var(--mono);background:var(--paper);color:var(--accent-dark);padding:4px 10px;border-radius:99px}
-.xaxis{grid-column:2;display:flex;justify-content:space-between;font:700 .72rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 6px}
-@media (max-width:560px){.quad,.qgrid{gap:8px}.q{min-height:0;padding:14px;border-radius:14px}.qv{font-size:1.2rem}.qw{display:none}.qx{font-size:.72rem}.xaxis,.yaxis{font-size:.62rem;letter-spacing:.06em}}
+.pick{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,5vw,72px);align-items:start;margin-top:12px}
+@media (max-width:860px){.pick{grid-template-columns:1fr}}
+.rules{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:22px}
+.rules li{display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:start}
+.rules li>span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--ink);font:700 .85rem var(--mono)}
+.rules b{display:block;font:600 1.2rem/1.3 var(--serif)}
+.rules p{margin-top:4px;color:var(--muted);line-height:1.55}
+.ref{width:100%;border-collapse:collapse;border-top:2px solid var(--ink)}
+.ref th{padding:12px 10px;text-align:left;font:700 .7rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+.ref td{padding:15px 10px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:.95rem;color:var(--muted)}
+.ref td b{display:block;font:600 1.02rem/1.3 var(--sans);color:var(--ink)}
+.ref td small{display:block;margin-top:2px;font-size:.85rem;color:var(--muted)}
+.ref tr.this td{background:var(--soft)}
+.ref tr.this td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+.fmtb{display:inline-block;white-space:nowrap;font:600 .74rem var(--mono);padding:4px 9px;border-radius:6px;border:1px solid var(--ink);color:var(--ink)}
+.fmtb.both{border-color:#9aa29c;color:#4c5751}
+.fmtb.html{border-color:var(--accent);color:var(--accent-dark)}
+@media (max-width:560px){.ref td small{display:none}.ref th,.ref td{padding:12px 6px}}
 
 /* ---------- 8 · catch ---------- */
 .quote2{font:600 clamp(2rem,4.2vw,3.3rem)/1.1 var(--serif);letter-spacing:-.025em;padding-left:24px;border-left:8px solid var(--accent)}
@@ -459,9 +467,10 @@ body.md .scrollcue{display:none}
         <p class="callout">Markdown won because it was easy for humans to write. HTML is coming back because it's easy for machines to generate.</p>
       </div>
       <div class="panel">
+        <p class="try"><i></i>Drag the slider or tap a year, from 2004 to 2026</p>
         <div class="yearsl">
           <input type="range" id="yr" min="0" max="4" step="1" value="0" aria-label="Year">
-          <div class="yticks" id="yticks"><span>2004</span><span>2011</span><span>2024</span><span>2025</span><span>2026</span></div>
+          <div class="yticks" id="yticks"><button>2004</button><button>2011</button><button>2024</button><button>2025</button><button>2026</button></div>
         </div>
         <div class="cost">
           <div class="row"><span>Effort to build an interactive page</span><span id="effLbl">days of hand-coding</span></div>
@@ -469,7 +478,7 @@ body.md .scrollcue{display:none}
           <div class="row"><span>Time you have to review it</span><span>unchanged</span></div>
           <div class="track"><div class="fill att" style="width:100%"></div></div>
         </div>
-        <p class="note" style="margin:-6px 0 18px">Illustrative, not measured. Drag the year.</p>
+        <p class="note" style="margin:-6px 0 18px">Illustrative, not measured.</p>
         <div class="three duo">
           <div><span class="e">⚙️</span><b>Generation got cheap</b><p>An agent builds a one-off interface for a single question.</p></div>
           <div><span class="e">👀</span><b>Attention didn't scale</b><p>You still have the same few minutes to review it.</p></div>
@@ -582,16 +591,26 @@ Which of these will fail silently?</pre>
     <div class="wrap"><div class="inner">
       <p class="kicker">07 / Choose your weapon (responsibly)</p>
       <h2>Does every document need to become an app? Absolutely <em>not.</em></h2>
-      <p class="sub">Two questions decide it. Who reads it, and what do they need to do with it?</p>
-      <div class="quad">
-        <div class="yaxis"><span>Just read</span><span>Explore &amp; decide ↑</span></div>
-        <div class="qgrid">
-          <div class="q both"><span class="qv">Source + HTML view</span><p class="qx">Data contracts · schemas · specs</p><p class="qw">Keep it machine-readable. Generate a view people can explore.</p></div>
-          <div class="q html"><span class="qv">HTML</span><p class="qx">Architecture &amp; incident reviews · big PRs · explainers</p><p class="qw">Let people question it, not just scroll it.</p><span class="here">● this page</span></div>
-          <div class="q"><span class="qv">Markdown</span><p class="qx">Prompts · CLAUDE.md · agent instructions</p><p class="qw">Light, cheap on tokens, easy to diff.</p></div>
-          <div class="q"><span class="qv">Markdown</span><p class="qx">READMEs · runbooks · notes</p><p class="qw">Searchable, versioned, no hover animations needed.</p></div>
+      <div class="pick">
+        <div>
+          <p class="sub" style="margin-bottom:26px">Pick the format by who reads it, and what they need to do with it.</p>
+          <ol class="rules">
+            <li><span>1</span><div><b>Will a model read it?</b><p>Keep it in Markdown. Light, cheap on tokens, easy to diff.</p></div></li>
+            <li><span>2</span><div><b>Do people need to explore or decide?</b><p>Keep the source, and add an HTML view on top.</p></div></li>
+            <li><span>3</span><div><b>Neither?</b><p>Write a good paragraph. Not everything needs to be an app.</p></div></li>
+          </ol>
         </div>
-        <div class="xaxis"><span>The model reads it</span><span>People read it →</span></div>
+        <table class="ref">
+          <thead><tr><th>Document</th><th>Read by</th><th>Format</th></tr></thead>
+          <tbody>
+            <tr><td><b>Prompts &amp; CLAUDE.md</b><small>Light, cheap on tokens, easy to diff</small></td><td>The model</td><td><span class="fmtb md"># Markdown</span></td></tr>
+            <tr><td><b>READMEs &amp; runbooks</b><small>Searchable and versioned</small></td><td>Developers</td><td><span class="fmtb md"># Markdown</span></td></tr>
+            <tr><td><b>Data contracts &amp; specs</b><small>Versioned source, generated view</small></td><td>Machines and people</td><td><span class="fmtb both"># + &lt;/&gt; Both</span></td></tr>
+            <tr><td><b>Incident reviews</b><small>Facts in the record, timeline in HTML</small></td><td>The team, later</td><td><span class="fmtb both"># + &lt;/&gt; Both</span></td></tr>
+            <tr><td><b>Architecture reviews</b><small>Compare options, trace dependencies</small></td><td>Reviewers</td><td><span class="fmtb html">&lt;/&gt; HTML view</span></td></tr>
+            <tr class="this"><td><b>Explainers like this page</b><small>Nobody diffs it. Everyone needs to get it.</small></td><td>Everyone else</td><td><span class="fmtb html">&lt;/&gt; HTML</span></td></tr>
+          </tbody>
+        </table>
       </div>
     </div></div>
   </section>
@@ -852,9 +871,10 @@ Only add interaction where it helps understanding.</pre>
     yr.value = i;
     $('#effLbl').textContent = EFFORT[i][0];
     $('#effFill').style.width = EFFORT[i][1] + '%';
-    $$('#yticks span').forEach((s, k) => s.classList.toggle('on', k === +i));
+    $$('#yticks button').forEach((s, k) => s.classList.toggle('on', k === +i));
   }
   yr.addEventListener('input', () => { yrTouched = true; setYear(+yr.value); });
+  $$('#yticks button').forEach((b, k) => b.addEventListener('click', () => { yrTouched = true; setYear(k); }));
   function sweepYears() {
     if (reduced) return setYear(4);
     [1, 2, 3, 4].forEach((v, k) => setTimeout(() => { if (!yrTouched) setYear(v); }, 700 + k * 800));
@@ -970,10 +990,18 @@ Which of these will fail silently?
 
 # Does every document need to become an app? Absolutely not.
 
-| who reads it | just read | explore & decide   |
-|--------------|-----------|--------------------|
-| the model    | Markdown  | Source + HTML view |
-| people       | Markdown  | HTML               |`,
+1. **Will a model read it?** Keep it in Markdown.
+2. **Do people need to explore or decide?** Keep the source, add an HTML view.
+3. **Neither?** Write a good paragraph.
+
+| document               | read by             | format    |
+|------------------------|---------------------|-----------|
+| Prompts & CLAUDE.md    | the model           | Markdown  |
+| READMEs & runbooks     | developers          | Markdown  |
+| Data contracts & specs | machines and people | Both      |
+| Incident reviews       | the team, later     | Both      |
+| Architecture reviews   | reviewers           | HTML view |
+| Explainers like this   | everyone else       | HTML      |`,
     () => `## 08 / The catch
 
 > A beautiful page can make a shallow answer look deep.
